@@ -3,10 +3,8 @@ package Team5.onlinebookingsystem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class appController {
@@ -21,11 +19,12 @@ public class appController {
 		return "index";
 	}
 */
-	@RequestMapping(value = "/search")
-	public String search(@RequestParam(value="id", required=false, defaultValue = "1") Long id, Model model) {
+	@RequestMapping(value = "/search/{id}")
+	public ModelAndView search(@PathVariable(name = "id") Long id) {
+		ModelAndView mav = new ModelAndView("MatchedFlights");
 		Flight flight= service.get(id);
-		model.addAttribute("flight", flight);
-		return "MatchedFlights";
+		mav.addObject("flight", flight);
+		return mav;
 	}
 
 }

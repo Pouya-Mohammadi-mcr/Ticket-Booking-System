@@ -16,8 +16,28 @@ public class Flight {
     private String Date;
     private String Price;
 
-    protected Flight() {
-        super();
+    public Flight(long id, String flight_No, String seat, String from, String to, String time, String date, String price) {
+        this.id = id;
+        Flight_No = flight_No;
+        Seat = seat;
+        From = from;
+        To = to;
+        Time = time;
+        Date = date;
+        Price = price;
+    }
+
+    public Flight(String flight_No, String seat, String from, String to, String time, String date, String price) {
+        Flight_No = flight_No;
+        Seat = seat;
+        From = from;
+        To = to;
+        Time = time;
+        Date = date;
+        Price = price;
+    }
+
+    public Flight() {
     }
 
     public String getPrice() {
