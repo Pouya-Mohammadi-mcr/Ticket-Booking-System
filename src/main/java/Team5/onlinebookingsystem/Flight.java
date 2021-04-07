@@ -101,7 +101,6 @@ public class Flight {
     }
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getId() {
         return id;
     }

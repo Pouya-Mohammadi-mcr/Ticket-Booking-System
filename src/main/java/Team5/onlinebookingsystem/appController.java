@@ -19,11 +19,20 @@ public class appController {
 		return "index";
 	}
 */
-	@RequestMapping(value = "/search/{id}")
-	public ModelAndView search(@PathVariable(name = "id") Long id) {
+
+	@RequestMapping("/SearchPage")
+	public String showSearchPage(Model model){
+		Flight flight = new Flight();
+		model.addAttribute("flight", flight);
+		return "SearchPage";
+	}
+
+	@RequestMapping(value = "/search", method = RequestMethod.POST)
+	public ModelAndView search(@ModelAttribute(name = "Flight") Flight flight) {
 		ModelAndView mav = new ModelAndView("MatchedFlights");
-		Flight flight= service.get(id);
-		mav.addObject("flight", flight);
+		Long id = flight.getId();
+		Flight matchedFlight= service.get(id);
+		mav.addObject("flight", matchedFlight);
 		return mav;
 	}
 
