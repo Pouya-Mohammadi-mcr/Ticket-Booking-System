@@ -11,11 +11,10 @@
 <body>
 
     <div class="container">
-        <h1>Matched Flight</h1>
-        <br/><br/>
-        <table class="table" border="1" cellpadding="10">
+        <h1 class="h1 text-center text-info mt-3">Matched Flights</h1>
+        <table class="table" >
             <thead>
-            <tr>
+            <tr class="table-info">
                 <th>Flight ID</th>
                 <th>Flight Number</th>
                 <th>Seat</th>
@@ -28,7 +27,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
+            <tr th:each="flight : ${matchedFlights}">
                 <td th:text="${flight.id}">Flight ID</td>
                 <td th:text="${flight.Flight_No}">Flight Number</td>
                 <td th:text="${flight.Seat}">Seat</td>

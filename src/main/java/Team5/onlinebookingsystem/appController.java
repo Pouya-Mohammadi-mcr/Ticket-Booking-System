@@ -6,6 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 @Controller
 public class appController {
 
@@ -27,12 +29,20 @@ public class appController {
 		return "SearchPage";
 	}
 
-	@RequestMapping(value = "/search", method = RequestMethod.POST)
+	/*@RequestMapping(value = "/search", method = RequestMethod.POST)
 	public ModelAndView search(@ModelAttribute(name = "Flight") Flight flight) {
 		ModelAndView mav = new ModelAndView("MatchedFlights");
 		Long id = flight.getId();
 		Flight matchedFlight= service.get(id);
 		mav.addObject("flight", matchedFlight);
+		return mav;
+	}*/
+
+	@RequestMapping(value = "/search", method = RequestMethod.POST)
+	public ModelAndView search(@ModelAttribute(name = "Flight") Flight flight) {
+		ModelAndView mav = new ModelAndView("MatchedFlights");
+		List<Flight> matchedFlights = service.find(flight.getFrom(), flight.getTo(), flight.getDate(), flight.getTime());
+		mav.addObject("matchedFlights", matchedFlights);
 		return mav;
 	}
 

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Booking System</title>
+    <title>Find Flights</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -11,10 +11,28 @@
 <body>
 
 <div class="container">
-    <form class="col-12, form my-5"  action="#" th:action="@{/search}" th:object="${flight}" method="post">
-        <div class="input-group">
-            <input type="text" class="form-control" placeholder="Enter ID" th:field="*{id}"  >
-            <button type="submit" class="btn btn-primary">Search</button>
+    <h1 class="h1 text-center text-info mt-3">Find Flights</h1>
+    <form class="col-12, form my-3"  action="#" th:action="@{/search}" th:object="${flight}" method="post">
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="2">From</span>
+            <input type="text" class="form-control  " aria-describedby="2" placeholder="Origin" th:field="*{From}"  >
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="3">To</span>
+            <input type="text" class="form-control  " aria-describedby="3" placeholder="Destination" th:field="*{To}"  >
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="4">Date</span>
+            <input type="text" class="form-control  " aria-describedby="4" placeholder="yyyy/mm/dd" th:field="*{Date}"  >
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="5">Time</span>
+            <input type="text" class="form-control  " aria-describedby="5" placeholder="hh:mm" th:field="*{Time}"  >
+        </div>
+
+        <div class="d-grid gap-2">
+
+        <button type="submit" class="btn btn-primary ">Search</button>
         </div>
     </form>
 
