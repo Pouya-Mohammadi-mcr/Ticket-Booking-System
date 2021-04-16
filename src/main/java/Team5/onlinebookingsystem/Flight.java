@@ -1,103 +1,112 @@
 package Team5.onlinebookingsystem;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class Flight {
     private long id;
-    private String Flight_No;
-    private String Seat;
-    private String From;
-    private String To;
-    private String Time;
-    private String Date;
-    private String Price;
+    private String flightNumber;
+    private String availableSeats;
+    private String from;
+    private String to;
+    private String departureTime;
+    private String arrivalTime;
+    private String date;
+    private String price;
 
-    public Flight(long id, String flight_No, String seat, String from, String to, String time, String date, String price) {
+    public Flight(long id, String flightNumber, String availableSeats, String from, String to, String departureTime, String arrivalTime, String date, String price) {
         this.id = id;
-        Flight_No = flight_No;
-        Seat = seat;
-        From = from;
-        To = to;
-        Time = time;
-        Date = date;
-        Price = price;
+        this.flightNumber = flightNumber;
+        this.availableSeats = availableSeats;
+        this.from = from;
+        this.to = to;
+        this.departureTime = departureTime;
+        this.arrivalTime = arrivalTime;
+        this.date = date;
+        this.price = price;
     }
 
-    public Flight(String flight_No, String seat, String from, String to, String time, String date, String price) {
-        Flight_No = flight_No;
-        Seat = seat;
-        From = from;
-        To = to;
-        Time = time;
-        Date = date;
-        Price = price;
+    public Flight(String flightNumber, String availableSeats, String from, String to, String departureTime, String arrivalTime, String date, String price) {
+        this.flightNumber = flightNumber;
+        this.availableSeats = availableSeats;
+        this.from = from;
+        this.to = to;
+        this.departureTime = departureTime;
+        this.arrivalTime = arrivalTime;
+        this.date = date;
+        this.price = price;
     }
 
     public Flight() {
     }
 
     public String getPrice() {
-        return Price;
+        return price;
     }
 
     public void setPrice(String price) {
-        Price = price;
+        this.price = price;
     }
 
-    public String getFlight_No() {
-        return Flight_No;
+    public String getFlightNumber() {
+        return flightNumber;
     }
 
-    public void setFlight_No(String flight_No) {
-        Flight_No = flight_No;
+    public void setFlightNumber(String flightNo) {
+        this.flightNumber = flightNo;
     }
 
-    public String getSeat() {
-        return Seat;
+    public String getAvailableSeats() {
+        return availableSeats;
     }
 
-    public void setSeat(String seat) {
-        Seat = seat;
+    public void setAvailableSeats(String availableSeats) {
+        this.availableSeats = availableSeats;
     }
 
     public String getFrom() {
-        return From;
+        return from;
     }
 
     public void setFrom(String from) {
-        From = from;
+        this.from = from;
     }
 
     public String getTo() {
-        return To;
+        return to;
     }
 
     public void setTo(String to) {
-        To = to;
+        this.to = to;
     }
 
-    public String getTime() {
-        return Time;
+    public String getDepartureTime() {
+        return departureTime;
     }
 
-    public void setTime(String time) {
-        Time = time;
+    public void setDepartureTime(String departureTime) {
+        this.departureTime = departureTime;
     }
 
     public String getDate() {
-        return Date;
+        return date;
     }
 
     public void setDate(String date) {
-        Date = date;
+        this.date = date;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getArrivalTime() {
+        return arrivalTime;
+    }
+
+    public void setArrivalTime(String arrivalTime) {
+        this.arrivalTime = arrivalTime;
     }
 
     @Id
