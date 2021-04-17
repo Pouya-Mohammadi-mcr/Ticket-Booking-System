@@ -31,11 +31,11 @@ public class FlightService {
         repo.deleteById(id);
     }
 
-    public List<Flight> find(String from, String to, String date, String time){
+    public List<Flight> find(String from, String to, String date){
         List<Flight> allFlights = listAll();
         List<Flight> matchedFlights = new ArrayList<Flight>();
         for (int i=0 ; i<allFlights.size(); i++){
-            if ( allFlights.get(i).getFrom().equals(from)  && allFlights.get(i).getTo().equals(to)  && allFlights.get(i).getDate().equals(date) && allFlights.get(i).getTime().equals(time)) {
+            if ( allFlights.get(i).getFrom().equals(from)  && allFlights.get(i).getTo().equals(to)  && allFlights.get(i).getDate().equals(date) ) {
                 matchedFlights.add(allFlights.get(i));
             }
         }

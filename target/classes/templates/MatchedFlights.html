@@ -17,10 +17,11 @@
             <tr class="table-info">
                 <th>Flight ID</th>
                 <th>Flight Number</th>
-                <th>Seat</th>
+                <th>Available Seats</th>
                 <th>From</th>
                 <th>To</th>
-                <th>Time</th>
+                <th>Departure Time</th>
+                <th>Arrival Time</th>
                 <th>Date</th>
                 <th>Price</th>
 
@@ -29,12 +30,13 @@
             <tbody>
             <tr th:each="flight : ${matchedFlights}">
                 <td th:text="${flight.id}">Flight ID</td>
-                <td th:text="${flight.Flight_No}">Flight Number</td>
-                <td th:text="${flight.Seat}">Seat</td>
-                <td th:text="${flight.From}">From</td>
-                <td th:text="${flight.To}">To</td>
-                <td th:text="${flight.Time}">Time</td>
-                <td th:text="${flight.Date}">Date</td>
+                <td th:text="${flight.flightNumber}">Flight Number</td>
+                <td th:text="${flight.availableSeats}">Available Seats</td>
+                <td th:text="${flight.from}">From</td>
+                <td th:text="${flight.to}">To</td>
+                <td th:text="${flight.departureTime}">Departure Time</td>
+                <td th:text="${flight.arrivalTime}">Arrival Time</td>
+                <td th:text="${flight.date}">Date</td>
                 <td th:text="${flight.price}">Price</td>
             </tr>
             </tbody>

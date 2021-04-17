@@ -15,19 +15,15 @@
     <form class="col-12, form my-3"  action="#" th:action="@{/search}" th:object="${flight}" method="post">
         <div class="input-group mb-3">
             <span class="input-group-text" id="2">From</span>
-            <input type="text" class="form-control  " aria-describedby="2" placeholder="Origin" th:field="*{From}"  >
+            <input type="text" class="form-control  " aria-describedby="2" placeholder="Origin" th:field="*{from}"  >
         </div>
         <div class="input-group mb-3">
             <span class="input-group-text" id="3">To</span>
-            <input type="text" class="form-control  " aria-describedby="3" placeholder="Destination" th:field="*{To}"  >
+            <input type="text" class="form-control  " aria-describedby="3" placeholder="Destination" th:field="*{to}"  >
         </div>
         <div class="input-group mb-3">
             <span class="input-group-text" id="4">Date</span>
-            <input type="text" class="form-control  " aria-describedby="4" placeholder="yyyy/mm/dd" th:field="*{Date}"  >
-        </div>
-        <div class="input-group mb-3">
-            <span class="input-group-text" id="5">Time</span>
-            <input type="text" class="form-control  " aria-describedby="5" placeholder="hh:mm" th:field="*{Time}"  >
+            <input type="text" class="form-control  " aria-describedby="4" placeholder="yyyy/mm/dd" th:field="*{date}"  >
         </div>
 
         <div class="d-grid gap-2">
