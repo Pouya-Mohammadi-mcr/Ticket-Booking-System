@@ -38,6 +38,10 @@ public class Flight {
         this.price = price;
     }
 
+    ///testing
+    public  Flight(String price){
+        this.price = price;
+    }
     public Flight() {
     }
 

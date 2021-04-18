@@ -44,4 +44,11 @@ public class FlightService {
         }
         return matchedFlights;
     }
+
+    public List<Flight> sort(SortingStrategy sortingStrategy, List<Flight> flightList){
+        SortingContext sortingContext = new SortingContext();
+        sortingContext.setStrategy(sortingStrategy);
+        sortingContext.sortFlights(flightList);
+        return flightList;
+    }
 }
