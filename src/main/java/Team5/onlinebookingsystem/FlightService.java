@@ -5,7 +5,9 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -43,5 +45,32 @@ public class FlightService {
             System.out.print("NO RESULTS");
         }
         return matchedFlights;
+    }
+
+//    Service for fetching airport-city names -- ck
+    public List<String> fetchOriginAirports(String keyword){
+        List<Flight> listOfAirports = repo.findByOrigin(keyword);
+        List<String> suggestions = new ArrayList<String>();
+        for (int i=0 ; i<listOfAirports.size(); i++){
+            suggestions.add(listOfAirports.get(i).getFrom());
+		}
+        Set<String> uniqueAirports = new HashSet<String>(suggestions);
+        List<String> uniqueSuggestions = new ArrayList<String>();
+        uniqueSuggestions.addAll(uniqueAirports);
+        return uniqueSuggestions;
+    }
+
+    //    Service for fetching airport-city names -- ck
+    public List<String> fetchDestinationAirports(String keyword){
+        List<Flight> listOfAirports = repo.findByDestination(keyword);
+        List<String> suggestions = new ArrayList<String>();
+
+        for (int i=0 ; i<listOfAirports.size(); i++){
+            suggestions.add(listOfAirports.get(i).getTo());
+        }
+        Set<String> uniqueAirports = new HashSet<String>(suggestions);
+        List<String> uniqueSuggestions = new ArrayList<String>();
+        uniqueSuggestions.addAll(uniqueAirports);
+        return uniqueSuggestions;
     }
 }
