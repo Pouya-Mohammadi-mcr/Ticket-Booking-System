@@ -4,19 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3926670-ad68-407f-83d1-4d76823b76fe" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Team5/onlinebookingsystem/FlightRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Team5/onlinebookingsystem/FlightRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Team5/onlinebookingsystem/FlightService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Team5/onlinebookingsystem/FlightService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Team5/onlinebookingsystem/appController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Team5/onlinebookingsystem/appController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/SearchPage.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/SearchPage.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Team5/onlinebookingsystem/FlightRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Team5/onlinebookingsystem/FlightRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Team5/onlinebookingsystem/FlightService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Team5/onlinebookingsystem/FlightService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Team5/onlinebookingsystem/appController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Team5/onlinebookingsystem/appController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/SearchPage.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/SearchPage.html" afterDir="false" />
-    </list>
+    <list default="true" id="f3926670-ad68-407f-83d1-4d76823b76fe" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -76,5 +64,16 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>
