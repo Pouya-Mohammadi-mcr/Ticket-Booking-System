@@ -13,9 +13,9 @@
     <div class="container">
         <h1 class="h1 text-center text-info mt-3">Matched Flights</h1>
         <div>
-            <form class="col-6, form my-3"  action="#" th:action="@{/sortByPriceAscending}" th:object="${flightList}" method="post">
+            <form class="col-6, form my-3"  action="#" th:action="@{/sortByPriceAscending}"  method="post">
                 <div class="d-grid gap-2">
-                    <input type="hidden" th:field="*{flightList}" th:value="${matchedFlights}"  />
+                    <input type="text" th:value="${matchedFlights}" name="mf"   />
                     <select name="myselect" id="myselect" onchange="this.form.submit()">
                         <option value="1">Sort by Price Ascending </option>
                         <option value="2">Sort by Name (Z-A)</option>
@@ -43,7 +43,7 @@
             </thead>
             <tbody>
             <tr th:if="${matchedFlights.isEmpty()}">
-                <td > No Flights Available </td>
+                <td class="h3 text-center text-danger"> No matching flights found! </td>
             </tr>
             <tr th:each="flight : ${matchedFlights}">
                 <td th:text="${flight.id}">Flight ID</td>

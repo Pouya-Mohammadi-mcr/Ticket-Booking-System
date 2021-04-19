@@ -2,17 +2,17 @@ package Team5.onlinebookingsystem;
 
 import java.util.List;
 
-public class FlightList {
+public class ListOfFlights {
 
     private List<Flight> flightList;
 
-    public FlightList() {
+    public ListOfFlights() {
     }
     public void addFlight(Flight flight) {
         this.flightList.add(flight);
     }
 
-    public FlightList(List<Flight> flightList) {
+    public ListOfFlights(List<Flight> flightList) {
         this.flightList = flightList;
     }
 

@@ -26,16 +26,14 @@ public class AppController {
 	public ModelAndView search(@ModelAttribute(name = "Flight") Flight flight) {
 		ModelAndView mav = new ModelAndView("MatchedFlights");
 		List<Flight> matchedFlights = service.find(flight.getFrom(), flight.getTo(), flight.getDate());
+		System.out.print(matchedFlights);
 		mav.addObject("matchedFlights", matchedFlights);
-		FlightList flightList = new FlightList();
-		mav.addObject("flightList",flightList);
 		return mav;
 	}
 
 	@RequestMapping(value = "/sortByPriceAscending", method = RequestMethod.POST)
-	public ModelAndView sortByPriceAscending(@ModelAttribute( name = "flightList") FlightList flightListIntance) {
+	public ModelAndView sortByPriceAscending(@RequestParam("mf") List<Flight> flightList) {
 		ModelAndView mav = new ModelAndView("MatchedFlights");
-		List<Flight> flightList = flightListIntance.getFlightList();
 		System.out.print(flightList);
 		List<Flight> matchedFlights = service.sort(new SortByPriceAscending(), flightList);
 		System.out.print(matchedFlights);
