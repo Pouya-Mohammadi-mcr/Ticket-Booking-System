@@ -45,17 +45,17 @@ public class AppController<HttpPost> {
 		List<Flight> matchedFlights = new ArrayList<Flight>();
 		if (sortingMethod.equals("Sort by Price Ascending")) {
 			matchedFlights = service.sort(new SortByPriceAscending(), flightList);
-		}
-		else if (sortingMethod.equals("Sort by Price Descending")) {
+		} else if (sortingMethod.equals("Sort by Price Descending")) {
 			matchedFlights = service.sort(new SortByPriceDescending(), flightList);
 		}
 		mav.addObject("matchedFlights", matchedFlights);
 		Flight flightInfo = new Flight(flight.getFrom(), flight.getTo(), flight.getDate());
 		mav.addObject("flightInfo", flightInfo);
 		Flight newFlight = new Flight();
-		mav.addObject("newFlight",newFlight);
+		mav.addObject("newFlight", newFlight);
 		mav.addObject(sortingMethod);
 		return mav;
+	}
 	// ck function get origin Airport name from search form
 	@RequestMapping(value = "/setOrigin", method = RequestMethod.POST)
 	public ModelAndView setOrigin(@RequestBody String origin) {
