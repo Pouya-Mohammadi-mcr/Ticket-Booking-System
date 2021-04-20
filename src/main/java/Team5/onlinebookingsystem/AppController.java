@@ -32,6 +32,7 @@ public class AppController<HttpPost> {
 		return mav;
 	}
 
+	// ck function get origin Airport name from search form
 	@RequestMapping(value = "/setOrigin", method = RequestMethod.POST)
 	public ModelAndView setOrigin(@RequestBody String origin) {
 		String[] origin_parts = origin.split("=");
@@ -40,6 +41,7 @@ public class AppController<HttpPost> {
 		return null;
 	}
 
+	// ck function fetching airports name based on origin input
 	@GetMapping("/townOriginAirportNames")
 	@ResponseBody
 	public List<String> townOriginAirportNames(@RequestParam(value="term" , required=false,defaultValue = "") String term){
@@ -48,7 +50,7 @@ public class AppController<HttpPost> {
 		return suggestions;
 	}
 
-
+	// ck function fetching airports name based on destination input
 	@GetMapping("/townDestinationAirportNames")
 	@ResponseBody
 	public List<String> townDestinationAirportNames(@RequestParam(value="term" , required=false,defaultValue = "") String term){

@@ -5,22 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f3926670-ad68-407f-83d1-4d76823b76fe" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__jakarta_activation_jakarta_activation_api_1_2_22.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_javassist_javassist_3_27_0_GA2.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_sun_activation_jakarta_activation_1_2_2.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__net_bytebuddy_byte_buddy_agent_1_10_22.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_bytebuddy_byte_buddy_agent_1_10_222.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_logging_log4j_log4j_api_2_13_32.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_autoconfigure_2_4_42.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_tx_5_3_5.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__jakarta_activation_jakarta_activation_api_1_2_2.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_logging_log4j_log4j_api_2_13_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_logging_log4j_log4j_api_2_13_3.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_javassist_javassist_3_27_0_GA.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_javassist_javassist_3_27_0_GA.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_aspects_5_3_5.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_aspects_5_3_52.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_tx_5_3_5.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/team-5.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/team-5.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Team5/onlinebookingsystem/Flight.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Team5/onlinebookingsystem/Flight.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/MatchedFlights.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/MatchedFlights.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/SearchPage.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/SearchPage.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Team5/onlinebookingsystem/Flight.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Team5/onlinebookingsystem/Flight.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/MatchedFlights.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/MatchedFlights.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/templates/SearchPage.html" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/templates/SearchPage.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Team5/onlinebookingsystem/AppController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Team5/onlinebookingsystem/AppController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,13 +59,15 @@
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RunManager">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="class" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
