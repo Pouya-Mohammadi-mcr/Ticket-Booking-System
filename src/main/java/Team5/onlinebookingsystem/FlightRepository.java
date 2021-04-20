@@ -6,11 +6,15 @@ import java.util.List;
 
 public interface FlightRepository extends JpaRepository<Flight, Long> {
 
+    // Query to get all connecting flights -- ck
+    @Query("select a from Flight a Where a.from LIKE ?1 and a.date LIKE ?2")
+    public List<Flight> getAllConnectingFlights(String from,String date);
+
     //    Query to return all fligths where from starts with the keyword -- ck
     @Query("select a from Flight a Where a.from LIKE ?1%")
     public List<Flight> findByOrigin(String keyword);
     //    Query to return all fligths where to starts with the keyword -- ck
-    @Query("select a from Flight a Where a.to LIKE ?1%")
-    public List<Flight> findByDestination(String keyword);
+    @Query("select a from Flight a Where a.to LIKE ?1% and a.from LIKE ?2")
+    public List<Flight> findByDestination(String keyword,String origin);
 
 }

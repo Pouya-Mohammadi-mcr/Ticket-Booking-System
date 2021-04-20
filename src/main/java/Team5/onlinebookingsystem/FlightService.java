@@ -34,13 +34,21 @@ public class FlightService {
     }
 
     public List<Flight> find(String from, String to, String date){
-        List<Flight> allFlights = listAll();
         List<Flight> matchedFlights = new ArrayList<Flight>();
-        for (int i=0 ; i<allFlights.size(); i++){
-            if ( allFlights.get(i).getFrom().equals(from)  && allFlights.get(i).getTo().equals(to)  && allFlights.get(i).getDate().equals(date) ) {
+        if(to.equals("anywhere") ){
+            List<Flight> allFlights = repo.getAllConnectingFlights(from,date);
+            for (int i=0 ; i<allFlights.size(); i++){
                 matchedFlights.add(allFlights.get(i));
             }
+        }else{
+            List<Flight> allFlights = listAll();
+            for (int i=0 ; i<allFlights.size(); i++){
+                if ( allFlights.get(i).getFrom().equals(from)  && allFlights.get(i).getTo().equals(to)  && allFlights.get(i).getDate().equals(date) ) {
+                    matchedFlights.add(allFlights.get(i));
+                }
+            }
         }
+
         if (matchedFlights.size() == 0) {
             System.out.print("NO RESULTS");
         }
@@ -61,8 +69,8 @@ public class FlightService {
     }
 
     //    Service for fetching airport-city names -- ck
-    public List<String> fetchDestinationAirports(String keyword){
-        List<Flight> listOfAirports = repo.findByDestination(keyword);
+    public List<String> fetchDestinationAirports(String keyword,String origin){
+        List<Flight> listOfAirports = repo.findByDestination(keyword,origin);
         List<String> suggestions = new ArrayList<String>();
 
         for (int i=0 ; i<listOfAirports.size(); i++){

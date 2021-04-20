@@ -15,6 +15,7 @@ public class AppController<HttpPost> {
 
 	@Autowired
 	private FlightService service;
+	public Flight temp_flight = new Flight();
 
 	@RequestMapping("/")
 	public String showSearchPage(Model model){
@@ -33,7 +34,9 @@ public class AppController<HttpPost> {
 
 	@RequestMapping(value = "/setOrigin", method = RequestMethod.POST)
 	public ModelAndView setOrigin(@RequestBody String origin) {
-		System.out.println(origin);
+		String[] origin_parts = origin.split("=");
+		temp_flight.setFrom(origin_parts[1]);
+//		System.out.println(origin_parts[1]);
 		return null;
 	}
 
@@ -49,8 +52,8 @@ public class AppController<HttpPost> {
 	@GetMapping("/townDestinationAirportNames")
 	@ResponseBody
 	public List<String> townDestinationAirportNames(@RequestParam(value="term" , required=false,defaultValue = "") String term){
-//		System.out.println();
-		List<String> suggestions = service.fetchDestinationAirports(term);
+//		System.out.println(temp_flight.getFrom());
+		List<String> suggestions = service.fetchDestinationAirports(term,temp_flight.getFrom());
 		return suggestions;
 	}
 
