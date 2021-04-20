@@ -37,8 +37,8 @@ public class AppController {
 		return mav;
 	}
 
-	@RequestMapping(value = "/sortByPriceAscending", method = RequestMethod.POST)
-	public ModelAndView sortByPriceAscending(@ModelAttribute(name = "Flight") Flight flight,@ModelAttribute(name = "sortingMethod") String sortingMethod) {
+	@RequestMapping(value = "/sort", method = RequestMethod.POST)
+	public ModelAndView sort(@ModelAttribute(name = "Flight") Flight flight,@ModelAttribute(name = "sortingMethod") String sortingMethod) {
 		ModelAndView mav = new ModelAndView("MatchedFlights");
 		List<Flight> flightList = service.find(flight.getFrom(), flight.getTo(), flight.getDate());
 		List<Flight> matchedFlights = new ArrayList<Flight>();
