@@ -9,9 +9,7 @@
       <change beforePath="$PROJECT_DIR$/src/main/java/Team5/onlinebookingsystem/AppController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Team5/onlinebookingsystem/AppController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Team5/onlinebookingsystem/FlightRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Team5/onlinebookingsystem/FlightRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Team5/onlinebookingsystem/FlightService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Team5/onlinebookingsystem/FlightService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/SearchPage.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/SearchPage.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Team5/onlinebookingsystem/FlightService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Team5/onlinebookingsystem/FlightService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Team5/onlinebookingsystem/appController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Team5/onlinebookingsystem/appController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/MatchedFlights.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/MatchedFlights.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,8 +53,20 @@
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RunManager">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="OnlineBookingSystemApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="team-5" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="Team5.onlinebookingsystem.OnlineBookingSystemApplication" />
@@ -75,7 +85,7 @@
       <updated>1618670450538</updated>
       <workItem from="1618670455260" duration="16624000" />
       <workItem from="1618824469136" duration="5565000" />
-      <workItem from="1618923980123" duration="2192000" />
+      <workItem from="1618923980123" duration="4840000" />
     </task>
     <servers />
   </component>

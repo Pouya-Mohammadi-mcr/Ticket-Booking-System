@@ -36,7 +36,19 @@ public class FlightService {
     public List<Flight> find(String from, String to, String date){
         List<Flight> matchedFlights = new ArrayList<Flight>();
         if(to.equals("anywhere") ){
-            List<Flight> allFlights = repo.getAllConnectingFlights(from,date);
+            if(date.equals("alldates")){
+                List<Flight> allFlights = repo.getAllConnectingFlightsAllDates(from);
+                for (int i=0 ; i<allFlights.size(); i++){
+                    matchedFlights.add(allFlights.get(i));
+                }
+            }else{
+                List<Flight> allFlights = repo.getAllConnectingFlights(from,date);
+                for (int i=0 ; i<allFlights.size(); i++){
+                    matchedFlights.add(allFlights.get(i));
+                }
+            }
+        }else if(date.equals("alldates")){
+            List<Flight> allFlights = repo.getFlightsAllDates(from,to);
             for (int i=0 ; i<allFlights.size(); i++){
                 matchedFlights.add(allFlights.get(i));
             }
