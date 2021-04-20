@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f3926670-ad68-407f-83d1-4d76823b76fe" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Team5/onlinebookingsystem/AppController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Team5/onlinebookingsystem/AppController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Team5/onlinebookingsystem/FlightRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Team5/onlinebookingsystem/FlightRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Team5/onlinebookingsystem/FlightService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Team5/onlinebookingsystem/FlightService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/MatchedFlights.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/MatchedFlights.html" afterDir="false" />
-    </list>
+    <list default="true" id="f3926670-ad68-407f-83d1-4d76823b76fe" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -85,7 +79,7 @@
       <updated>1618670450538</updated>
       <workItem from="1618670455260" duration="16624000" />
       <workItem from="1618824469136" duration="5565000" />
-      <workItem from="1618923980123" duration="4840000" />
+      <workItem from="1618923980123" duration="5171000" />
     </task>
     <servers />
   </component>
