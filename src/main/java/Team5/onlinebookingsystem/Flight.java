@@ -51,6 +51,7 @@ public class Flight {
     public Flight() {
     }
 
+
     public String getPrice() {
         return price;
     }
