@@ -13,7 +13,7 @@
     <div class="container">
         <h1 class="h1 text-center text-info mt-3">Matched Flights</h1>
         <div>
-            <form class="col-6, form my-3"  action="#" th:action="@{/sortByPriceAscending}" th:object="${newFlight}"  method="post">
+            <form class="col-6, form my-3"  action="#" th:action="@{/sort}" th:object="${newFlight}"  method="post">
                         <input type="hidden" th:value="${flightInfo.from}"  th:name="from" th:id="from" >
                         <input type="hidden" th:value="${flightInfo.to}" th:name="to" th:id="to" >
                         <input type="hidden" th:value="${flightInfo.date}" th:name="date" th:id="date"  >
