@@ -13,16 +13,17 @@
     <div class="container">
         <h1 class="h1 text-center text-info mt-3">Matched Flights</h1>
         <div>
-            <form class="col-6, form my-3"  action="#" th:action="@{/sortByPriceAscending}"  method="post">
-                <div class="d-grid gap-2">
-                    <input type="text" th:value="${matchedFlights}" name="mf"   />
-                    <select name="myselect" id="myselect" onchange="this.form.submit()">
-                        <option value="1">Sort by Price Ascending </option>
-                        <option value="2">Sort by Name (Z-A)</option>
-                        <option value="3">Newest First</option>
-                        <option value="4">Oldest First</option>
-                    </select>
-                </div>
+            <form class="col-6, form my-3"  action="#" th:action="@{/sortByPriceAscending}" th:object="${newFlight}"  method="post">
+                        <input type="hidden" th:value="${flightInfo.from}"  th:name="from" th:id="from" >
+                        <input type="hidden" th:value="${flightInfo.to}" th:name="to" th:id="to" >
+                        <input type="hidden" th:value="${flightInfo.date}" th:name="date" th:id="date"  >
+
+
+                        <select name="sortingMethod" id="sortingMethod" onchange="this.form.submit()">
+                            <option value="" disabled selected>Select Sorting Method</option>
+                            <option value="Sort by Price Ascending">Price Ascending</option>
+                            <option value="Sort by Price Descending">Price Descending</option>
+                        </select>
             </form>
 
         </div>
