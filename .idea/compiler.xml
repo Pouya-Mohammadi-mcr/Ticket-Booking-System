@@ -6,15 +6,17 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="team-5" />
+        <module name="online-booking-system" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="online-booking-system" target="1.8" />
       <module name="team-5" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="online-booking-system" options="-parameters" />
       <module name="team-5" options="-parameters" />
     </option>
   </component>
