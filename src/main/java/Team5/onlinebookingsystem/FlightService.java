@@ -60,13 +60,18 @@ public class FlightService {
                 }
             }
         }
-
         if (matchedFlights.size() == 0) {
             System.out.print("NO RESULTS");
         }
         return matchedFlights;
     }
 
+    public List<Flight> sort(SortingStrategy sortingStrategy, List<Flight> flightList) {
+        SortingContext sortingContext = new SortingContext();
+        sortingContext.setStrategy(sortingStrategy);
+        sortingContext.sortFlights(flightList);
+        return flightList;
+    }
 //    Service for fetching airport-city names -- ck
     public List<String> fetchOriginAirports(String keyword){
         List<Flight> listOfAirports = repo.findByOrigin(keyword);

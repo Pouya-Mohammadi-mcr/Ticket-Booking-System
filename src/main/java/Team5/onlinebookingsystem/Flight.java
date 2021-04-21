@@ -38,8 +38,19 @@ public class Flight {
         this.price = price;
     }
 
+    public Flight(String from, String to, String date) {
+        this.from = from;
+        this.to = to;
+        this.date = date;
+    }
+
+    ///testing
+    public  Flight(String price){
+        this.price = price;
+    }
     public Flight() {
     }
+
 
     public String getPrice() {
         return price;
