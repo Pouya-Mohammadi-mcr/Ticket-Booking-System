@@ -83,4 +83,21 @@ public class AppController<HttpPost> {
 		return suggestions;
 	}
 
+	// ck observer pattern -- get all new input values
+	@RequestMapping(value = "/updateFlightTable", method = RequestMethod.POST)
+	public ModelAndView observerPattern(@ModelAttribute(name = "Flight") Flight flight) {
+		ModelAndView mav = new ModelAndView("MatchedFlights");
+//		System.out.println("From:" + flight.getFrom() + "To:" + flight.getTo() + "Date:" + flight.getDate());
+		List<Flight> matchedFlights = service.find(flight.getFrom(), flight.getTo(), flight.getDate());
+		mav.addObject("matchedFlights", matchedFlights);
+		Flight flightInfo = new Flight(flight.getFrom(), flight.getTo(), flight.getDate());
+		mav.addObject("flightInfo", flightInfo);
+		Flight newFlight = new Flight();
+		mav.addObject("newFlight",newFlight);
+		String sortingMethod = new String();
+		mav.addObject(sortingMethod);
+		return mav;
+	}
+
+
 }

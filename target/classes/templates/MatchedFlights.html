@@ -15,12 +15,62 @@
         #updateForm {
             display:none;
         }
+        #formButton {
+            position: absolute;
+            top: 20px;
+        }
     </style>
 
     <script type="text/javascript">
         $(function() {
             $("#formButton").click(function () {
                 $("#updateForm").toggle();
+            });
+        });
+        $(function() {
+            $("#Origin").autocomplete({
+                source: "townOriginAirportNames",
+                minLength: 1,
+            });
+            $("#Destination").autocomplete({
+                source: "townDestinationAirportNames",
+                minLength: 1,
+            });
+            $('#Origin').on('change', function() {
+                // alert( this.value );
+                console.log( 'Sending data' );
+
+                const XHR = new XMLHttpRequest();
+
+                let urlEncodedData = "",
+                    urlEncodedDataPairs = [],
+                    name;
+
+                // Turn the data object into an array of URL-encoded key/value pairs.
+                urlEncodedDataPairs.push( 'origin=' + encodeURIComponent( this.value ) );
+
+                // Combine the pairs into a single string and replace all %-encoded spaces to
+                // the '+' character; matches the behavior of browser form submissions.
+                urlEncodedData = urlEncodedDataPairs.join( '&' ).replace( /%20/g, '+' );
+
+                // Define what happens on successful data submission
+                // XHR.addEventListener( 'load', function(event) {
+                //     alert( 'Yeah! Data sent and response loaded.' );
+                // } );
+
+                // Define what happens in case of error
+                // XHR.addEventListener( 'error', function(event) {
+                //     alert( 'Oops! Something went wrong.' );
+                // } );
+
+                // Set up our request
+                XHR.open( 'POST', 'setOrigin' );
+
+                // Add the required HTTP header for form data POST requests
+                XHR.setRequestHeader( 'Content-Type', 'application/x-www-form-urlencoded' );
+
+                // Finally, send our data.
+                XHR.send( urlEncodedData );
             });
         });
     </script>
@@ -33,19 +83,19 @@
 <div class="container">
 <!--    <h1 class="h1 text-center text-info mt-3">Find Flights</h1>-->
     <button type="button" class="btn btn-primary " id="formButton">Update</button>
-    <form class="col-12, form my-3" id="updateForm" action="#"  method="post">
+    <form class="col-12, form my-3" id="updateForm" action="#" th:action="@{/updateFlightTable}" th:object="${newFlight}" method="post">
         <h1 class="h1 text-center text-info mt-3">Update your flight query</h1>
         <div class="input-group mb-3">
             <span class="input-group-text" id="2">From</span>
-            <input type="text" class="form-control" name="Origin" aria-describedby="2" placeholder="Origin"  id="Origin" required>
+            <input type="text" class="form-control" name="Origin" aria-describedby="2" th:name="from" placeholder="Origin" th:value="${flightInfo.from}"  id="Origin" required>
         </div>
         <div class="input-group mb-3">
             <span class="input-group-text" id="3">To</span>
-            <input type="text" class="form-control  " aria-describedby="3" placeholder="Destination"   id="Destination" required>
+            <input type="text" class="form-control  " aria-describedby="3" placeholder="Destination" th:name="to" th:value="${flightInfo.to}"  id="Destination" required>
         </div>
         <div class="input-group mb-3">
             <span class="input-group-text" id="4">Date</span>
-            <input type="text" class="form-control  " aria-describedby="4" placeholder="yyyy/mm/dd"  id="Date"  required>
+            <input type="text" class="form-control  " aria-describedby="4" placeholder="yyyy/mm/dd" th:name="date" th:value="${flightInfo.date}" id="Date"  required>
         </div>
         <div class="d-grid gap-2">
             <button type="submit" class="btn btn-primary ">Search</button>
