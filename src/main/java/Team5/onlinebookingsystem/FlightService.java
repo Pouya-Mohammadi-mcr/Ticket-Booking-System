@@ -99,7 +99,7 @@ public class FlightService {
         return uniqueSuggestions;
     }
 
-    //    Service for fetching airport-city names -- ck
+    //    Service for fetching the flight information by ID -- ck
     public Flight fetchById(long id){
         List<Flight> matchedFlights = new ArrayList<Flight>();
 //        String longToString = String.valueOf(id);

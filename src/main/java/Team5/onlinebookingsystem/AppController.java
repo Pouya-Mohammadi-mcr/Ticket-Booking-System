@@ -99,27 +99,13 @@ public class AppController<HttpPost> {
 		return mav;
 	}
 
-	// ck function get flight id for ticket constructor
-	@RequestMapping(value = "/selectedFlightId", method = RequestMethod.POST)
-	public ModelAndView selectedFlightId(@RequestBody String flightId) {
-		String[] flightId_parts = flightId.split("=");
-		int the_flightId = Integer.parseInt(flightId_parts[1]);
-		System.out.println(the_flightId);
-		//Flight theFlight = service.fetchById(the_flightId);
-		System.out.println("Waaat!!");
-		//Flight flightInfo = new Flight(theFlight.getFrom(), theFlight.getTo(), theFlight.getDate());
-		ModelAndView modelAndView = new ModelAndView("Checkout");
-		//modelAndView.addObject("theFlight",theFlight);
-		return modelAndView;
-	}
 
+	// ck function get flight id for ticket constructor
 	@RequestMapping("/selectedFlightId/{id}")
 	public String selectedFlightId(@PathVariable("id") String id, Model model) {
 		long the_flightId = Long.parseLong(id);
 		Flight flight = service.fetchById(the_flightId);
 		model.addAttribute("flight", flight);
-
-
 		return "Checkout";
 	}
 
