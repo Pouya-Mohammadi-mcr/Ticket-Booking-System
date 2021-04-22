@@ -19,7 +19,6 @@ public class SortingContextTest {
         return new SortingStrategy[]{strategy, null};
     }
 
-
     @ParameterizedTest
     @MethodSource(value =  "data")
     void SortingStrategyTest_temp(SortingStrategy data){
@@ -85,7 +84,7 @@ public class SortingContextTest {
         assertEquals(sortedList, sortedFlights);
     }
 
-    //ToDo--------------
+    //ToDo
     // Can strategy possibly be null?
     // If yes, then throw exception in the prod method and handle it in the test code
 

@@ -8,16 +8,16 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class OnlineBookingSystemApplicationTests {
 
 	@Test
-	void contextLoads() {
+	// The main method should run without any exceptions
+	void MainTest() {
+		assertDoesNotThrow(() -> OnlineBookingSystemApplication.main(new String[]{}));
 	}
-
 
 		private SortByPriceAscending sortByPriceAscending;
 		private Flight flight1;

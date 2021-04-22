@@ -80,7 +80,6 @@ class FlightTest {
         String actualPrice  = flight.getPrice();
 
         //Assert
-//        verify(model, times(1)).addAttribute(any(String.class), any(Flight.class) );
         assertEquals(expectedPrice, actualPrice);
     }
 

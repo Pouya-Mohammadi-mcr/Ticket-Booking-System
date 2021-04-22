@@ -15,6 +15,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 public class AppControllerTest {
+    // ToDo Needs more test methods
 
     @Test
     void showSearchPageTest_ValidCase(){
@@ -110,6 +111,7 @@ public class AppControllerTest {
     @DisplayName("Not a proper test")
     void SearchTest_1() {
         // Not a proper test
+        // ToDo: Needs rework
 
         //Arrange
         Flight inputFlightMock = Mockito.mock(Flight.class);

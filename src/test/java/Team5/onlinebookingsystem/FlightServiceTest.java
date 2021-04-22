@@ -2,23 +2,19 @@ package Team5.onlinebookingsystem;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 public class FlightServiceTest {
+    // ToDo: Needs more test methods
 
     @Test
     @DisplayName("listAll Test")
     void ListAllTest()
     {
+        // ToDo: Not complete, needs rework
         //Arrange
         FlightRepository flightRepository = Mockito.mock(FlightRepository.class);
 
