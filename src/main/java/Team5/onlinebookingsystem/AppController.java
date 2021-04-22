@@ -100,4 +100,14 @@ public class AppController<HttpPost> {
 	}
 
 
+	// ck function get flight id for ticket constructor
+	@RequestMapping("/selectedFlightId/{id}")
+	public String selectedFlightId(@PathVariable("id") String id, Model model) {
+		long the_flightId = Long.parseLong(id);
+		Flight flight = service.fetchById(the_flightId);
+		model.addAttribute("flight", flight);
+		return "Checkout";
+	}
+
+
 }

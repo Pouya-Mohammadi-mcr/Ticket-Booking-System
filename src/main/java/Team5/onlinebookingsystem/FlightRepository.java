@@ -6,6 +6,10 @@ import java.util.List;
 
 public interface FlightRepository extends JpaRepository<Flight, Long> {
 
+//    // Query to get all connecting flights by id -- ck
+    @Query("select a from Flight a Where a.id = ?1")
+    public List<Flight> getFlightById(long id);
+
     // Query to get all connecting flights -- ck
     @Query("select a from Flight a Where a.from LIKE ?1 and a.date LIKE ?2")
     public List<Flight> getAllConnectingFlights(String from,String date);
