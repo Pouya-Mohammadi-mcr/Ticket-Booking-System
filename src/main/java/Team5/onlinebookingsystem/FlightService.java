@@ -98,4 +98,22 @@ public class FlightService {
         uniqueSuggestions.addAll(uniqueAirports);
         return uniqueSuggestions;
     }
+
+    //    Service for fetching airport-city names -- ck
+    public Flight fetchById(long id){
+        List<Flight> matchedFlights = new ArrayList<Flight>();
+//        String longToString = String.valueOf(id);
+//        int stringToInt = Integer.parseInt(longToString);
+        List<Flight> theFlight = new ArrayList<Flight>();
+        theFlight = repo.getFlightById(id);
+        for (int i=0 ; i<theFlight.size(); i++){
+            matchedFlights.add(theFlight.get(i));
+        }
+        if (matchedFlights.size() == 0) {
+            System.out.print("NO RESULTS");
+        }
+        return matchedFlights.get(0);
+    }
+
+
 }
