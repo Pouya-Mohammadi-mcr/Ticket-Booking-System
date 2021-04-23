@@ -44,13 +44,8 @@ public class Flight {
         this.date = date;
     }
 
-    ///testing
-    public  Flight(String price){
-        this.price = price;
-    }
     public Flight() {
     }
-
 
     public String getPrice() {
         return price;

@@ -18,37 +18,7 @@ class OnlineBookingSystemApplicationTests {
 	void MainTest() {
 		assertDoesNotThrow(() -> OnlineBookingSystemApplication.main(new String[]{}));
 	}
-
-		private SortByPriceAscending sortByPriceAscending;
-		private Flight flight1;
-		private Flight flight2;
-		private List<Flight> flightList;
-		private List<Flight> sortedFlightList;
-
-	@BeforeEach
-		public void setUp() throws Exception {
-			sortByPriceAscending = new SortByPriceAscending();
-			flight1 = new Flight("200");
-			flight2 = new Flight("300");
-
-			flightList= new ArrayList<Flight>();
-			flightList.add(flight2);
-			flightList.add(flight1);
-
-			sortedFlightList= new ArrayList<Flight>();
-			sortedFlightList.add(flight1);
-			sortedFlightList.add(flight2);
-
-	}
-
-		@Test
-		@DisplayName(" should work")
-		public void testSort() {
-			assertEquals(sortedFlightList, sortByPriceAscending.sort(flightList),
-					"Regular multiplication should work");
-		}
-
-	}
+}
 
 
 
