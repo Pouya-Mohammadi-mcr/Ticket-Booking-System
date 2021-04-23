@@ -14,7 +14,7 @@ public class AppController<HttpPost> {
 
 	@Autowired
 	private FlightService service;
-	private SortingStrategyFactory sortFactory = new SortingStrategyFactory();
+	private SortingStrategyFactory sortFactory = SortingStrategyFactory.getInstance();
 	public Flight temp_flight = new Flight();
 
 	@RequestMapping("/")
@@ -97,7 +97,6 @@ public class AppController<HttpPost> {
 		mav.addObject(sortingMethod);
 		return mav;
 	}
-
 
 	// ck function get flight id for ticket constructor
 	@RequestMapping("/selectedFlightId/{id}")
