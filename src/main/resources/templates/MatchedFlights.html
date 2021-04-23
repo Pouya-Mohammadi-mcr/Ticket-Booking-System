@@ -174,19 +174,25 @@
                 <td th:text="${flight.availableSeats}">Available Seats</td>
                 <td th:text="${flight.from}">From</td>
                 <td th:text="${flight.to}">To</td>
-                <!--        <td th:text="${flight.departureTime}">Departure Time</td>-->
-                <td th:if="*{flight.departureTime!=null and #strings.length(flight.departureTime)>3}" th:text="${#strings.substring(flight.departureTime,0,2)} + ':'+${#strings.substring(flight.departureTime,2,4)}">Departure Time</td>
-                <td th:if="*{flight.departureTime!=null and #strings.length(flight.departureTime)<4}" th:text="${#strings.substring(flight.departureTime,0,1)} + ':'+${#strings.substring(flight.departureTime,1,3)}">Departure Time</td>
+<!--                        <td th:text="${flight.departureTime}">Departure Time</td>-->
+                <td th:if="*{flight.departureTime!=null and flight.departureTime=='NA'}" th:text="${flight.departureTime}">Departure Time</td>
+                <td th:if="*{flight.departureTime!=null and #strings.length(flight.departureTime)==4 and flight.departureTime!='NA'}" th:text="${#strings.substring(flight.departureTime,0,2)} + ':'+${#strings.substring(flight.departureTime,2,4)}">Departure Time</td>
+                <td th:if="*{flight.departureTime!=null and #strings.length(flight.departureTime)==3 and flight.departureTime!='NA'}" th:text="${#strings.substring(flight.departureTime,0,1)} + ':'+${#strings.substring(flight.departureTime,1,3)}">Departure Time</td>
+                <td th:if="*{flight.departureTime!=null and #strings.length(flight.departureTime)<3 and flight.departureTime!='NA'}" th:text="${flight.departureTime}+':00'">Departure Time</td>
 
-                <!--        <td th:text="${flight.arrivalTime}">Arrival Time</td>-->
-                <td th:if="*{flight.arrivalTime!=null and #strings.length(flight.arrivalTime)>3}" th:text="${#strings.substring(flight.arrivalTime,0,2)} + ':'+${#strings.substring(flight.arrivalTime,2,4)}">Arrival Time</td>
-                <td th:if="*{flight.arrivalTime!=null and #strings.length(flight.arrivalTime)<4}" th:text="${#strings.substring(flight.arrivalTime,0,1)} + ':'+${#strings.substring(flight.arrivalTime,1,3)}">Arrival Time</td>
+<!--                        <td th:text="${flight.arrivalTime}">Arrival Time</td>-->
+                <td th:if="*{flight.arrivalTime!=null and flight.arrivalTime=='NA'}" th:text="${flight.arrivalTime}">Arrival Time</td>
+                <td th:if="*{flight.arrivalTime!=null and #strings.length(flight.arrivalTime)==4  and flight.arrivalTime!='NA'}" th:text="${#strings.substring(flight.arrivalTime,0,2)} + ':'+${#strings.substring(flight.arrivalTime,2,4)}">Arrival Time</td>
+                <td th:if="*{flight.arrivalTime!=null and #strings.length(flight.arrivalTime)==3 and flight.arrivalTime!='NA'}" th:text="${#strings.substring(flight.arrivalTime,0,1)} + ':'+${#strings.substring(flight.arrivalTime,1,3)}">Arrival Time</td>
+                <td th:if="*{flight.arrivalTime!=null and #strings.length(flight.arrivalTime)<3 and flight.arrivalTime!='NA'}" th:text="${flight.arrivalTime}+':00'">Arrival Time</td>
 
 
                 <td th:text="${flight.date}">Date</td>
                 <td th:text="${flight.price} + '£'">Price</td>
                 <!-- ck --- Sending the id to the controller   -->
-                <td><a  id="selectedFlight" href="selectedFlightId" th:href="@{/selectedFlightId/__${flight.id}__}"  class="btn btn-primary ">Select</a></td>
+                <td th:if="*{flight.departureTime!='NA' and flight.arrivalTime!='NA'}"><a  id="selectedFlight" href="selectedFlightId" th:href="@{/selectedFlightId/__${flight.id}__}"  class="btn btn-primary ">Select</a></td>
+                <td th:if="*{flight.departureTime=='NA' and flight.arrivalTime=='NA'}" ><a>Not Available</a></td>
+
             </tr>
             </tbody>
         </table>
