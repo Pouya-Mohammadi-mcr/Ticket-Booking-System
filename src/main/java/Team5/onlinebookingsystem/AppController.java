@@ -1,7 +1,6 @@
 package Team5.onlinebookingsystem;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +14,7 @@ public class AppController<HttpPost> {
 
 	@Autowired
 	private FlightService service;
+	private SortingStrategyFactory sortFactory = new SortingStrategyFactory();
 	public Flight temp_flight = new Flight();
 
 	@RequestMapping("/")
@@ -43,11 +43,10 @@ public class AppController<HttpPost> {
 		ModelAndView mav = new ModelAndView("MatchedFlights");
 		List<Flight> flightList = service.find(flight.getFrom(), flight.getTo(), flight.getDate());
 		List<Flight> matchedFlights = new ArrayList<Flight>();
-		if (sortingMethod.equals("Sort by Price Ascending")) {
-			matchedFlights = service.sort(new SortByPriceAscending(), flightList);
-		} else if (sortingMethod.equals("Sort by Price Descending")) {
-			matchedFlights = service.sort(new SortByPriceDescending(), flightList);
-		}
+
+		SortingStrategy strategy = sortFactory.getStrategy(sortingMethod);
+		matchedFlights = service.sort(strategy, flightList);
+
 		mav.addObject("matchedFlights", matchedFlights);
 		Flight flightInfo = new Flight(flight.getFrom(), flight.getTo(), flight.getDate());
 		mav.addObject("flightInfo", flightInfo);
