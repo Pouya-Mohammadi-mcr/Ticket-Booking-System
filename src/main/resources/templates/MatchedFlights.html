@@ -102,6 +102,19 @@
                 XHR.send( urlEncodedData );
             });
         });
+
+        function anyValCheck(var_id, text_id, var_input) {
+            const checkBox = document.getElementById(var_id);
+            const textBox = document.getElementById(text_id);
+            if (checkBox.checked){
+                textBox.value = var_input;
+                textBox.readOnly = true;
+            }
+            else{
+                textBox.value = "";
+                textBox.readOnly = false;
+            }
+        }
     </script>
 </head>
 
@@ -115,21 +128,43 @@
                     <!--    <h1 class="h1 text-center text-info mt-3">Find Flights</h1>-->
                     <button type="button" class="btn btn-dark " id="formButton">Update</button>
                     <form class="col-12, form my-3" id="updateForm" action="#" th:action="@{/updateFlightTable}" th:object="${newFlight}" method="post">
-                        <h1 class="h1 text-center text-info mt-3">Update your flight query</h1>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text" id="2">From</span>
-                            <input type="text" class="form-control" name="Origin" aria-describedby="2" th:name="from" placeholder="Origin" th:value="${flightInfo.from}"  id="Origin" required>
+                        <h1 class="h1 text-center mt-3">Update your flight query</h1>
+                        <div class="col-10 my-4">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="2">From</span>
+                                <input type="text" class="form-control" name="Origin" aria-describedby="2" th:name="from" placeholder="Origin" th:value="${flightInfo.from}"  id="Origin" required>
+                            </div>
                         </div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text" id="3">To</span>
-                            <input type="text" class="form-control  " aria-describedby="3" placeholder="Destination" th:name="to" th:value="${flightInfo.to}"  id="Destination" required>
+                        <div class="row mb-3">
+                            <div class="col-10 my-1">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="3">To</span>
+                                    <input type="text" class="form-control  " aria-describedby="3" placeholder="Destination" th:name="to" th:value="${flightInfo.to}"  id="Destination" required>
+                                </div>
+                            </div>
+                            <div class="col-2 my-1">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="destinationBox" onclick="anyValCheck('destinationBox', 'Destination', 'anywhere')">
+                                    <label class="form-check-label" for="destinationBox">Anywhere</label>
+                                </div>
+                            </div>
                         </div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text" id="4">Date</span>
-                            <input type="text" class="form-control  " aria-describedby="4" placeholder="yyyy/mm/dd" th:name="date" th:value="${flightInfo.date}" id="Date"  required>
+                        <div class="row mb-3">
+                            <div class="col-10 my-1">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="4">Date</span>
+                                    <input type="text" class="form-control  " aria-describedby="4" placeholder="yyyy/mm/dd" th:name="date" th:value="${flightInfo.date}" id="Date"  required>
+                                </div>
+                            </div>
+                            <div class="col-2 my-1">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="dateBox" onclick="anyValCheck('dateBox', 'Date', 'alldates')">
+                                    <label class="form-check-label" for="dateBox">All Dates</label>
+                                </div>
+                            </div>
                         </div>
                         <div class="d-grid gap-2">
-                            <button type="submit" class="btn btn-primary ">Search</button>
+                            <button type="submit" class="btn btn-dark btn-lg">Search</button>
                         </div>
                     </form>
                 </div>
