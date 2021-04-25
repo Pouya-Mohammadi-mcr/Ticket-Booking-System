@@ -11,6 +11,7 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 
     <script type="text/javascript">
         $(function() {
@@ -75,9 +76,9 @@
     </script>
 </head>
 <body>
-
-<div class="container">
-    <h1 class="h1 text-center text-info mt-3">Find Flights</h1>
+<!--<img th:src="@{/images/index_bg.jpeg}">-->
+<div class="container" id="flightContainer">
+    <h1 class="h1 text-center mt-3">Find Flights</h1>
     <form class="col-12, form my-3"  action="#" th:action="@{/search}" th:object="${flight}" method="post">
         <div class="col-10 my-4">
             <div class="input-group mb-3">
@@ -115,7 +116,7 @@
         </div>
 
         <div class="d-grid gap-2">
-            <button type="submit" class="btn btn-primary ">Search</button>
+            <button type="submit" class="btn btn-dark btn-lg">Search</button>
         </div>
     </form>
 
