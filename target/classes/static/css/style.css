@@ -24,3 +24,25 @@ body{
     z-index: -1;
 
 }
+
+#matchedTable{
+
+}
+
+#matchedContent{
+    /*background-color: white;*/
+    position: relative;
+    display: block;
+}
+
+#matchedContent::before{
+    content: "";
+    background-color: white;
+    opacity: 0.95;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: -1;
+}
