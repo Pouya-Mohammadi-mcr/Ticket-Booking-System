@@ -29,13 +29,13 @@ body{
 
 }
 
-#matchedContent{
+.centerDiv{
     /*background-color: white;*/
     position: relative;
     display: block;
 }
 
-#matchedContent::before{
+.centerDiv::before{
     content: "";
     background-color: white;
     opacity: 0.95;
