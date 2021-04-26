@@ -15,15 +15,15 @@
 
     <script type="text/javascript">
         $(function() {
-            $("#Origin").autocomplete({
+            $("#origin").autocomplete({
                 source: "townOriginAirportNames",
                 minLength: 1,
             });
-            $("#Destination").autocomplete({
+            $("#destination").autocomplete({
                 source: "townDestinationAirportNames",
                 minLength: 1,
             });
-            $('#Origin').on('change', function() {
+            $('#origin').on('change', function() {
                 // alert( this.value );
                 console.log( 'Sending data' );
 
@@ -83,19 +83,19 @@
         <div class="col-10 my-4">
             <div class="input-group mb-3">
                 <span class="input-group-text" id="2">From</span>
-                <input type="text" class="form-control" name="Origin" aria-describedby="2" placeholder="Origin" th:field="*{from}" id="Origin" required>
+                <input type="text" class="form-control" name="Origin" aria-describedby="2" placeholder="Origin" th:field="*{from}" id="origin" required>
             </div>
         </div>
         <div class="row mb-3">
             <div class="col-10 my-1">
                 <div class="input-group">
                     <span class="input-group-text" id="3">To</span>
-                    <input type="text" class="form-control " value="" aria-describedby="3" placeholder="Destination"  th:field="*{to}" id="Destination" required>
+                    <input type="text" class="form-control " value="" aria-describedby="3" placeholder="Destination"  th:field="*{to}" id="destination" required>
                 </div>
             </div>
             <div class="col-2 my-1">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="destinationBox" onclick="anyValCheck('destinationBox', 'Destination', 'anywhere')">
+                    <input class="form-check-input" type="checkbox" id="destinationBox" onclick="anyValCheck('destinationBox', 'destination', 'anywhere')">
                     <label class="form-check-label" for="destinationBox">Anywhere</label>
                 </div>
             </div>
@@ -104,12 +104,12 @@
             <div class="col-10 my-1">
                 <div class="input-group">
                     <span class="input-group-text" id="4">Date</span>
-                    <input type="text" class="form-control" value="" aria-describedby="4" placeholder="yyyy/mm/dd" th:field="*{date}" id="Date" required>
+                    <input type="text" class="form-control" value="" aria-describedby="4" placeholder="yyyy/mm/dd" th:field="*{date}" id="date" required>
                 </div>
             </div>
             <div class="col-2 my-1">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="dateBox" onclick="anyValCheck('dateBox', 'Date', 'alldates')">
+                    <input class="form-check-input" type="checkbox" id="dateBox" onclick="anyValCheck('dateBox', 'date', 'alldates')">
                     <label class="form-check-label" for="dateBox">All Dates</label>
                 </div>
             </div>
