@@ -15,7 +15,7 @@ public class AppController<HttpPost> {
 	@Autowired
 	private FlightService service;
 	private SortingStrategyFactory sortFactory = SortingStrategyFactory.getInstance();
-	public Flight temp_flight = new Flight();
+	private String flightOrigin;
 
 	@RequestMapping("/")
 	public String showSearchPage(Model model){
@@ -57,11 +57,9 @@ public class AppController<HttpPost> {
 	}
 	// ck function get origin Airport name from search form
 	@RequestMapping(value = "/setOrigin", method = RequestMethod.POST)
-	public ModelAndView setOrigin(@RequestBody String origin) {
+	public void setOrigin(@RequestBody String origin) {
 		String[] origin_parts = origin.split("=");
-		temp_flight.setFrom(origin_parts[1]);
-//		System.out.println(origin_parts[1]);
-		return null;
+		flightOrigin = origin_parts[1].replace("+"," ");
 	}
 
 	// ck function fetching airports name based on origin input
@@ -69,7 +67,6 @@ public class AppController<HttpPost> {
 	@ResponseBody
 	public List<String> townOriginAirportNames(@RequestParam(value="term" , required=false,defaultValue = "") String term){
 		List<String> suggestions = service.fetchOriginAirports(term);
-		//System.out.println(term);
 		return suggestions;
 	}
 
@@ -77,8 +74,7 @@ public class AppController<HttpPost> {
 	@GetMapping("/townDestinationAirportNames")
 	@ResponseBody
 	public List<String> townDestinationAirportNames(@RequestParam(value="term" , required=false,defaultValue = "") String term){
-//		System.out.println(temp_flight.getFrom());
-		List<String> suggestions = service.fetchDestinationAirports(term,temp_flight.getFrom());
+		List<String> suggestions = service.fetchDestinationAirports(term, flightOrigin);
 		return suggestions;
 	}
 
@@ -86,7 +82,6 @@ public class AppController<HttpPost> {
 	@RequestMapping(value = "/updateFlightTable", method = RequestMethod.POST)
 	public ModelAndView updateFlightTable(@ModelAttribute(name = "Flight") Flight flight) {
 		ModelAndView mav = new ModelAndView("MatchedFlights");
-//		System.out.println("From:" + flight.getFrom() + "To:" + flight.getTo() + "Date:" + flight.getDate());
 		List<Flight> matchedFlights = service.find(flight.getFrom(), flight.getTo(), flight.getDate());
 		mav.addObject("matchedFlights", matchedFlights);
 		Flight flightInfo = new Flight(flight.getFrom(), flight.getTo(), flight.getDate());
