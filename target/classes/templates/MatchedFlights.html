@@ -79,10 +79,7 @@
             <div class="col-sm-8 centerDiv">
                 <div class="container">
                     <!--    <h1 class="h1 text-center text-info mt-3">Find Flights</h1>-->
-                    <div class="container">
                     <button type="button" class="btn btn-dark " id="formButton">Update</button>
-                    <button type="button" class="btn btn-dark " id="homeButton">Home</button>
-                    </div>
                     <form class="col-12, form my-3" id="updateForm" action="#" th:action="@{/updateFlightTable}" th:object="${newFlight}" method="post">
                         <h1 class="h1 text-center mt-3">Update your flight query</h1>
                         <div class="col-10 my-4">
