@@ -57,9 +57,10 @@ public class AppController<HttpPost> {
 	}
 	// ck function get origin Airport name from search form
 	@RequestMapping(value = "/setOrigin", method = RequestMethod.POST)
-	public void setOrigin(@RequestBody String origin) {
+	public ModelAndView setOrigin(@RequestBody String origin) {
 		String[] origin_parts = origin.split("=");
 		flightOrigin = origin_parts[1].replace("+"," ");
+		return null;
 	}
 
 	// ck function fetching airports name based on origin input
