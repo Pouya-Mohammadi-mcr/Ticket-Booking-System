@@ -99,7 +99,7 @@ public class AppController<HttpPost> {
 		long the_flightId = Long.parseLong(id);
 		Flight flight = service.fetchById(the_flightId);
 		model.addAttribute("flight", flight);
-		return "Checkout";
+		return "Checkout-new";
 	}
 
 

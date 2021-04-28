@@ -46,3 +46,10 @@ body{
     position: absolute;
     z-index: -1;
 }
+#updateForm {
+    display:none;
+}
+#formButton {
+    position: absolute;
+    top: 20px;
+}
