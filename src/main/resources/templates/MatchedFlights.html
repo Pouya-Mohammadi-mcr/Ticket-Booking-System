@@ -135,6 +135,9 @@
                                 <option value="" disabled selected>Select Sorting Method</option>
                                 <option value="Sort by Price Ascending">Price Ascending</option>
                                 <option value="Sort by Price Descending">Price Descending</option>
+                                <option value="Sort by Departure Time Ascending">Departure-Time Ascending</option>
+                                <option value="Sort by Departure Time Descending">Departure-Time Descending</option>
+                                <option value="Sort by Duration">Duration</option>
                             </select>
                         </form>
 
@@ -142,7 +145,6 @@
                     <table class="table" id="matchedTable">
                         <thead>
                         <tr class="table-active">
-                            <th>Flight ID</th>
                             <th>Flight Number</th>
                             <th>Available Seats</th>
                             <th>From</th>
@@ -160,7 +162,6 @@
                             <td class="h3 text-center text-danger"> No matching flights found! </td>
                         </tr>
                         <tr th:each="flight : ${matchedFlights}" >
-                            <td th:text="${flight.id}" th:value="${flight.id}" id="flightId">Flight ID</td>
                             <td th:text="${flight.flightNumber}">Flight Number</td>
                             <td th:text="${flight.availableSeats}">Available Seats</td>
                             <td th:text="${flight.from}">From</td>
