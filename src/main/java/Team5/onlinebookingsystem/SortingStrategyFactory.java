@@ -18,25 +18,49 @@ public class SortingStrategyFactory {
 
     // Creating and storing only single instances of the two strategies as once created,
     // the same instance can be returned when an instance is required from the factory
-    private SortingStrategy ascendingStrategy;
-    private SortingStrategy descendingStrategy;
+    private SortingStrategy priceAscendingStrategy;
+    private SortingStrategy priceDescendingStrategy;
+    private SortingStrategy departureTimeAscendingStrategy;
+    private SortingStrategy departureTimeDescendingStrategy;
+    private SortingStrategy durationStrategy;
 
     // Factory returns the appropriate object as per the requested "type"
     public SortingStrategy getStrategy(String type) {
         if (type.equals("Sort by Price Ascending")) {
             // Ensuring only single instance creation
-            if(ascendingStrategy == null){
-                ascendingStrategy = new SortByPriceAscending();
+            if(priceAscendingStrategy == null){
+                priceAscendingStrategy = new SortByPriceAscending();
             }
-            return ascendingStrategy;
+            return priceAscendingStrategy;
         }
 
         else if (type.equals("Sort by Price Descending")) {
             // Ensuring only single instance creation
-            if(descendingStrategy == null){
-                descendingStrategy = new SortByPriceDescending();
+            if(priceDescendingStrategy == null){
+                priceDescendingStrategy = new SortByPriceDescending();
             }
-            return descendingStrategy;
+            return priceDescendingStrategy;
+        }
+        else if (type.equals("Sort by Departure Time Ascending")) {
+            // Ensuring only single instance creation
+            if(departureTimeAscendingStrategy == null){
+                departureTimeAscendingStrategy = new SortByDepartureTimeAscending();
+            }
+            return departureTimeAscendingStrategy;
+        }
+        else if (type.equals("Sort by Departure Time Descending")) {
+            // Ensuring only single instance creation
+            if(departureTimeDescendingStrategy == null){
+                departureTimeDescendingStrategy = new SortByDepartureTimeDescending();
+            }
+            return departureTimeDescendingStrategy;
+        }
+        else if (type.equals("Sort by Duration")) {
+            // Ensuring only single instance creation
+            if(durationStrategy == null){
+                durationStrategy = new SortByDuration();
+            }
+            return durationStrategy;
         }
         return null;
     }
