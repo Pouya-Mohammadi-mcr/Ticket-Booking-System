@@ -14,8 +14,11 @@ public class AppController<HttpPost> {
 
 	@Autowired
 	private FlightService service;
+
 	private SortingStrategyFactory sortFactory = SortingStrategyFactory.getInstance();
 	private String flightOrigin;
+	private long the_flightId;
+//	public Ticket theTicket = new Ticket();
 
 	@RequestMapping("/")
 	public String showSearchPage(Model model){
@@ -97,10 +100,21 @@ public class AppController<HttpPost> {
 	// ck function get flight id for ticket constructor
 	@RequestMapping("/selectedFlightId/{id}")
 	public String selectedFlightId(@PathVariable("id") String id, Model model) {
-		long the_flightId = Long.parseLong(id);
+		the_flightId = Long.parseLong(id);
 		Flight flight = service.fetchById(the_flightId);
 		model.addAttribute("flight", flight);
-		return "Checkout-new";
+		return "BuildTicket";
+	}
+
+
+	// ck --- Here I get and set the ticket information (extra information)
+	@RequestMapping(value = "/setTicketInformation", method = RequestMethod.POST)
+	public String saveTicket(Model model,@ModelAttribute(name = "radio_class") String radio_class,@ModelAttribute(name = "radio_insurance") String radio_insurance,@ModelAttribute(name = "radio_meal") String radio_meal,@ModelAttribute(name = "luggage") String luggage,@ModelAttribute(name = "finalPrice") String finalPrice) {
+		System.out.println(" The class is: "+radio_class + " Luggage: " + luggage  + " Meal: " +radio_meal+ " Insur: " + radio_insurance + "Final price: " + finalPrice);
+//		Flight flight = service.fetchById(the_flightId);
+//		model.addAttribute("flight", flight);
+//		model.addAttribute("customer", new Customer());
+		return "ResultPage";
 	}
 
 
