@@ -14,7 +14,7 @@ import java.util.Set;
 public class FlightService {
 
     @Autowired
-    private FlightRepository repo;
+    protected FlightRepository repo;
 
 
     public List<Flight> listAll() {
@@ -63,6 +63,8 @@ public class FlightService {
         if (matchedFlights.size() == 0) {
             System.out.print("NO RESULTS");
         }
+        matchedFlights.removeIf(flightEntry -> flightEntry.getDepartureTime().equals("NA"));
+        matchedFlights.removeIf(flightEntry -> flightEntry.getPrice().equals("NA"));
         return matchedFlights;
     }
 
