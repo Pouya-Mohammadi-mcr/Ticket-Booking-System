@@ -29,7 +29,7 @@ public class SortByDuration implements SortingStrategy {
                 else if (f1.getDepartureTime().length()==3){
                     f1DT= (Integer.parseInt(f1.getDepartureTime().substring(0,1))*60)+(Integer.parseInt(f1.getDepartureTime().substring(1,3)));
                 }
-                else if (f1.getDepartureTime().length()<3 && !f1.getDepartureTime().equals("NA")){
+                else if (f1.getDepartureTime().length()<3 ){
                     f1DT= (Integer.parseInt(f1.getDepartureTime())*60);
                 }
 
@@ -39,7 +39,7 @@ public class SortByDuration implements SortingStrategy {
                 else if (f1.getArrivalTime().length()==3){
                     f1AT= (Integer.parseInt(f1.getArrivalTime().substring(0,1))*60)+(Integer.parseInt(f1.getArrivalTime().substring(1,3)));
                 }
-                else if (f1.getArrivalTime().length()<3 && !f1.getArrivalTime().equals("NA")){
+                else if (f1.getArrivalTime().length()<3 ){
                     f1AT= (Integer.parseInt(f1.getArrivalTime())*60);
                 }
 
@@ -50,7 +50,7 @@ public class SortByDuration implements SortingStrategy {
                 else if (f2.getDepartureTime().length()==3){
                     f2DT= (Integer.parseInt(f2.getDepartureTime().substring(0,1))*60)+(Integer.parseInt(f2.getDepartureTime().substring(1,3)));
                 }
-                else if (f2.getDepartureTime().length()<3 && !f2.getDepartureTime().equals("NA")){
+                else if (f2.getDepartureTime().length()<3 ){
                     f2DT= (Integer.parseInt(f2.getDepartureTime())*60);
                 }
                 if (f2.getArrivalTime().length()==4){
@@ -59,7 +59,7 @@ public class SortByDuration implements SortingStrategy {
                 else if (f2.getArrivalTime().length()==3){
                     f2AT= (Integer.parseInt(f2.getArrivalTime().substring(0,1))*60)+(Integer.parseInt(f2.getArrivalTime().substring(1,3)));
                 }
-                else if (f2.getArrivalTime().length()<3 && !f2.getArrivalTime().equals("NA")){
+                else if (f2.getArrivalTime().length()<3 ){
                     f2AT= (Integer.parseInt(f2.getArrivalTime())*60);
                 }
 
