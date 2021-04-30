@@ -83,6 +83,10 @@ label {
     float: right;
 }
 
+#btn-ticket{
+    float: right;
+}
+
 .btn:hover {
     background-color: grey;
 }
