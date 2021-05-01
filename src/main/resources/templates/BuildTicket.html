@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <title>Checkout</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" th:href="@{/css/styleForCheckout.css}">
-    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" th:href="@{/css/infoButtonsStyle.css}">
+
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
@@ -56,12 +57,9 @@
                     break;
                 }
             }
-
             document.getElementById("finalPrice").value = (Math.round((+add - +thePrice*percent + +thePrice + +quantity*20 + Number.EPSILON) * 100) / 100).toString();
             document.getElementById("price").innerHTML =  (Math.round((+add - +thePrice*percent + +thePrice + +quantity*20 + Number.EPSILON) * 100) / 100).toString();
-
         }
-
     </script>
 
 </head>
@@ -71,54 +69,103 @@
 <div class="row">
     <div class="col-50">
         <div class="container">
-            <!--    <h1 class="h1 text-center text-info mt-3">Find Flights</h1>-->
             <button type="button"  class="btn" onclick="goBack()" id="return">Go Back</button>
             <form id="extraInfo"  action="#" th:action="@{/setTicketInformation}"  method="post">
                 <h3>Make Your Ticket</h3>
                 <div class="row" >
                     <div class="col-50">
                         <label> <i class="fa fa-user"></i> Class</label>
-                        <input type="radio" id="first" name="radio_class" value="first"  onclick="addToPrice()"> First Class <i class="fa fa-info-circle"></i>
-                        <!--                        <label  for="option1">First Class (+ £50)</label>-->
-                        <input type="radio" id="business" name="radio_class" value="business"  onclick="addToPrice()"> Business Class <i class="fa fa-info-circle"></i>
-                        <!--                        <label  for="option2">Business Class (+ £20)</label>-->
-                        <input type="radio" id="economy" name="radio_class"  value="economy"  onclick="addToPrice()" checked="checked"> Economy Class <i class="fa fa-info-circle"></i>
-                        <!--                        <label  for="option3">Economy Class</label>-->
+                        <ul>
+                            <input type="radio" id="first" name="radio_class" value="first"  onclick="addToPrice()"> First Class
+                            <li><i class="fa fa-info-circle"></i>
+                                <div class="content">
+                                    <h3>First Class</h3>
+                                    <p>Extra £50</p>
+                                </div>
+                            </li>
+                            <input type="radio" id="business" name="radio_class" value="business"  onclick="addToPrice()"> Business Class
+                            <li><i class="fa fa-info-circle"></i>
+                                <div class="content">
+                                    <h3>Business Class</h3>
+                                    <p>Extra £20</p>
+                                </div>
+                            </li>
+                            <input type="radio" id="economy" name="radio_class"  value="economy"  onclick="addToPrice()" checked="checked"> Economy Class
+                            <li><i class="fa fa-info-circle"></i>
+                                <div class="content">
+                                    <h3>Economy Class</h3>
+                                    <p>No extra cost - base ticket</p>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
                 <hr>
                 <div class="row" >
                     <div class="col-50">
                         <label> <i class="fa fa-user"></i> Age Group</label>
-                        <input type="radio" id="adult" name="radio_age" value="adult"  onclick="addToPrice()" checked="checked"> Adult <i class="fa fa-info-circle"></i>
-                        <!--                        <label  for="option1">First Class (+ £50)</label>-->
-                        <input type="radio" id="child" name="radio_age" value="child"  onclick="addToPrice()"> Child <i class="fa fa-info-circle"></i>
-                        <!--                        <label  for="option2">Business Class (+ £20)</label>-->
+                        <ul>
+                            <input type="radio" id="adult" name="radio_age" value="adult"  onclick="addToPrice()" checked="checked"> Adult
+                            <li><i class="fa fa-info-circle"></i>
+                                <div class="content">
+                                    <h3>Adult</h3>
+                                    <p>16+ years</p>
+                                </div>
+                            </li>
+                            <input type="radio" id="child" name="radio_age" value="child"  onclick="addToPrice()"> Child
+                            <li><i class="fa fa-info-circle"></i>
+                                <div class="content">
+                                    <h3>Child</h3>
+                                    <p>0-15 years (Your ticket will cost 20% less)</p>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
                 <hr>
                 <div class="row">
                     <div class="col-50">
-                        <label ><i class="fa fa-life-ring"></i> Flight Insurance <i class="fa fa-info-circle"></i></label>
+                        <ul>
+                            <label ><i class="fa fa-life-ring"></i> Flight Insurance</label>
+                            <li><i class="fa fa-info-circle"></i>
+                                <div class="content">
+                                    <h3>Flight Insurance</h3>
+                                    <p> Extra £20</p>
+                                </div>
+                            </li>
+                        </ul>
                         <input type="checkbox" id="insurance" name="insurance"  value="yes" onclick="addToPrice()"> Add
                     </div>
                 </div>
                 <hr>
                 <div class="row">
                     <div class="col-50">
-                        <label><i class="fa fa-cutlery"></i> Meal <i class="fa fa-info-circle"></i></label>
+                        <ul>
+                            <label><i class="fa fa-cutlery"></i> Meal </label>
+                            <li><i class="fa fa-info-circle"></i>
+                                <div class="content">
+                                    <h3>Meal</h3>
+                                    <p>No extra cost - Choose your preferred meal</p>
+                                </div>
+                            </li>
+                        </ul>
                         <input type="radio" id="omnivore" name="meal"  value="omnivore" checked="checked" > Omnivore
-                        <!--                        <label  for="option6">Omnivore</label>-->
                         <input type="radio" id="vegetarian" name="meal"  value="vegetarian" > Vegetarian
-                        <!--                        <label  for="option7">Vegetarian</label>-->
                         <input type="radio" id="vegan" name="meal"  value="vegan" > Vegan
-                        <!--                        <label  for="option8">Vegan</label>-->
                     </div>
                 </div>
                 <hr>
                 <div class="row">
                     <div class="col-50">
-                        <label for="quantity"><i class="fa fa-suitcase"></i> Extra Luggage <i class="fa fa-info-circle"></i></label>
+                        <ul>
+                            <label for="quantity"><i class="fa fa-suitcase"></i> Extra Luggage</label>
+                            <li><i class="fa fa-info-circle"></i>
+                                <div class="content">
+                                    <h3>Extra Luggage</h3>
+                                    <p>For every extra luggage +£20</p>
+                                </div>
+                            </li>
+                        </ul>
                         <input type="number" id="quantity" name="luggage" value="0" onchange="addToPrice()"  min="0" max="5" >
                     </div>
                     <div hidden class="col-50">
@@ -161,7 +208,6 @@
                     £<b id="hiddenPrice" th:text=" ${flight.price} "></b>
                 </span>
             </p>
-
         </div>
     </div>
 </div>
