@@ -1,5 +1,6 @@
 package Team5.onlinebookingsystem;
 
+import antlr.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +15,8 @@ public class AppController<HttpPost> {
 
 	@Autowired
 	private FlightService service;
+	@Autowired
+	private TicketService tService;
 
 	private SortingStrategyFactory sortFactory = SortingStrategyFactory.getInstance();
 	private String flightOrigin;
@@ -109,11 +112,29 @@ public class AppController<HttpPost> {
 
 	// ck --- Here I get and set the ticket information (extra information)
 	@RequestMapping(value = "/setTicketInformation", method = RequestMethod.POST)
-	public String saveTicket(Model model,@ModelAttribute(name = "radio_class") String radio_class,@ModelAttribute(name = "radio_insurance") String radio_insurance,@ModelAttribute(name = "radio_meal") String radio_meal,@ModelAttribute(name = "luggage") String luggage,@ModelAttribute(name = "finalPrice") String finalPrice) {
-		System.out.println(" The class is: "+radio_class + " Luggage: " + luggage  + " Meal: " +radio_meal+ " Insur: " + radio_insurance + "Final price: " + finalPrice);
+	public String saveTicket(Model model,@ModelAttribute(name = "radio_class") String radio_class,@ModelAttribute(name = "insurance") String insurance,@ModelAttribute(name = "meal") String meal,@ModelAttribute(name = "luggage") String luggage,@ModelAttribute(name = "finalPrice") String finalPrice) {
+		System.out.println(" The class is: "+radio_class + " Luggage: " + luggage  + " Meal: " +meal+ " Insur: " + insurance + "Final price: " + finalPrice);
 //		Flight flight = service.fetchById(the_flightId);
 //		model.addAttribute("flight", flight);
 //		model.addAttribute("customer", new Customer());
+		TicketBuilder ticketBuilder = new FlightTicketBuilder();
+		ticketBuilder.addAgeGroup("Adult");
+		ticketBuilder.addBookingRef("1");
+		ticketBuilder.addFlightId(the_flightId);
+		if (insurance.equals("yes")) {
+			ticketBuilder.addInsurance(insurance);
+		}
+		if (!"".equals(luggage) && !"0".equals(luggage)){
+			ticketBuilder.addLuggage(luggage);
+		}
+
+		ticketBuilder.addSeatClass(radio_class);
+		ticketBuilder.addMeal(meal);
+		ticketBuilder.addPriceBought(finalPrice);
+		Ticket ticket = ticketBuilder.getTicket();
+		System.out.print(ticket.toString());
+		tService.save(ticket);
+		System.out.print(tService.listAll());
 		return "ResultPage";
 	}
 

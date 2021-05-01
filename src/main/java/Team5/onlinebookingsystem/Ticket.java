@@ -1,19 +1,22 @@
 package Team5.onlinebookingsystem;
 
-public class Ticket {
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
+@Entity
+public class Ticket {
+    @Id
     public String bookingRef;
-    public String customerEmail;
     public long flightId;
     public String seatClass;
     public String meal;
     public String priceBought;
-    public int luggage;
+    public String luggage;
     public String insurance;
     public String ageGroup;
 
    @Override
     public String toString(){
-       return "Ticket=" ;
+       return "Ticket=" + "   bookinkRef:" + bookingRef +"    flightID" + flightId + "     sClass" + seatClass +"    meal"+ meal  +"   priceBought" +priceBought +"   luggage" + luggage+ "   insurace" + insurance+"   age"  +ageGroup;
    }
 }
