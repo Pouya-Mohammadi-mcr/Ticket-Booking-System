@@ -10,11 +10,6 @@ public class FlightTicketBuilder implements TicketBuilder {
     }
 
     @Override
-    public void addCustomerEmail(String customerEmail) {
-        ticket.customerEmail=customerEmail;
-    }
-
-    @Override
     public void addFlightId(long flightId) {
         ticket.flightId=flightId;
     }
@@ -30,7 +25,7 @@ public class FlightTicketBuilder implements TicketBuilder {
     }
 
     @Override
-    public void addLuggage(int luggage) {
+    public void addLuggage(String luggage) {
         ticket.luggage=luggage;
     }
 
@@ -43,6 +38,9 @@ public class FlightTicketBuilder implements TicketBuilder {
     public void addAgeGroup(String ageGroup) {
         ticket.ageGroup=ageGroup;
     }
+
+    @Override
+    public void addPriceBought(String priceBought){ ticket.priceBought=priceBought;}
 
     @Override
     public Ticket getTicket(){

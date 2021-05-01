@@ -17,28 +17,48 @@
 
         function addToPrice() {
             const radio_class = document.getElementsByName('radio_class');
-            const radio_insurance = document.getElementsByName('radio_insurance');
+            const radio_insurance = document.getElementsByName('insurance');
+            const radio_age = document.getElementsByName('radio_age');
             const quantity = document.getElementById('quantity').value;
             const thePrice = document.getElementById("hiddenPrice").innerHTML;
-            var add = "";
+            var add = "0";
+            var percent = 0;
             for (var i = 0, lengthC = radio_class.length; i < lengthC; i++) {
                 // alert("Hello");
                 if (radio_class[i].checked){
-                    // alert("Hello");
-                     add = +add + +radio_class[i].value;
-                     break;
+                    if(radio_class[i].value === "first"){
+                        add = +add + 50;
+                    }
+                    if(radio_class[i].value === "business"){
+                        add = +add + 20;
+                    }
+
+                    break;
                 }
             }
             for (var j = 0, lengthR = radio_insurance.length; j < lengthR; j++) {
                 // alert("Hello");
                 if (radio_insurance[j].checked){
-                    // alert("Hello");
-                    add = +add + +radio_insurance[j].value;
+                    if(radio_insurance[j].value === "yes"){
+                        add = +add + 20;
+                    }
+
                     break;
                 }
             }
-            document.getElementById("finalPrice").value = (+add + +thePrice +quantity*20).toString();
-            document.getElementById("price").innerHTML =  (+add + +thePrice +quantity*20).toString();
+            for (var k = 0, lengthA = radio_age.length; k < lengthA; k++) {
+                // alert("Hello");
+                if (radio_age[k].checked){
+                    if(radio_age[k].value === "child"){
+                        percent = 20/100;
+                    }
+
+                    break;
+                }
+            }
+
+            document.getElementById("finalPrice").value = (Math.round((+add - +thePrice*percent + +thePrice + +quantity*20 + Number.EPSILON) * 100) / 100).toString();
+            document.getElementById("price").innerHTML =  (Math.round((+add - +thePrice*percent + +thePrice + +quantity*20 + Number.EPSILON) * 100) / 100).toString();
 
         }
 
@@ -58,41 +78,48 @@
                 <div class="row" >
                     <div class="col-50">
                         <label> <i class="fa fa-user"></i> Class</label>
-                        <input type="radio" id="option1" name="radio_class" value="50"  onclick="addToPrice()"> First Class (+ £50)
-<!--                        <label  for="option1">First Class (+ £50)</label>-->
-                        <input type="radio" id="option2" name="radio_class" value="20"  onclick="addToPrice()"> Business Class (+ £20)
-<!--                        <label  for="option2">Business Class (+ £20)</label>-->
-                        <input type="radio" id="option3" name="radio_class"  value="0"  onclick="addToPrice()"> Economy Class
-<!--                        <label  for="option3">Economy Class</label>-->
+                        <input type="radio" id="first" name="radio_class" value="first"  onclick="addToPrice()"> First Class <i class="fa fa-info-circle"></i>
+                        <!--                        <label  for="option1">First Class (+ £50)</label>-->
+                        <input type="radio" id="business" name="radio_class" value="business"  onclick="addToPrice()"> Business Class <i class="fa fa-info-circle"></i>
+                        <!--                        <label  for="option2">Business Class (+ £20)</label>-->
+                        <input type="radio" id="economy" name="radio_class"  value="economy"  onclick="addToPrice()" checked="checked"> Economy Class <i class="fa fa-info-circle"></i>
+                        <!--                        <label  for="option3">Economy Class</label>-->
+                    </div>
+                </div>
+                <hr>
+                <div class="row" >
+                    <div class="col-50">
+                        <label> <i class="fa fa-user"></i> Age Group</label>
+                        <input type="radio" id="adult" name="radio_age" value="adult"  onclick="addToPrice()" checked="checked"> Adult <i class="fa fa-info-circle"></i>
+                        <!--                        <label  for="option1">First Class (+ £50)</label>-->
+                        <input type="radio" id="child" name="radio_age" value="child"  onclick="addToPrice()"> Child <i class="fa fa-info-circle"></i>
+                        <!--                        <label  for="option2">Business Class (+ £20)</label>-->
                     </div>
                 </div>
                 <hr>
                 <div class="row">
                     <div class="col-50">
-                        <label ><i class="fa fa-life-ring"></i> Flight Insurance (+ £20)</label>
-                        <input type="checkbox" id="option4" name="radio_insurance"  value="20" onclick="addToPrice()"> Add
-<!--&lt;!&ndash;                        <label  for="option4">Yes</label>&ndash;&gt;-->
-<!--                        <input type="radio" id="option5" name="radio_insurance"  value="0" onclick="addToPrice()" > No-->
-<!--&lt;!&ndash;                        <label  for="option5">No</label>&ndash;&gt;-->
+                        <label ><i class="fa fa-life-ring"></i> Flight Insurance <i class="fa fa-info-circle"></i></label>
+                        <input type="checkbox" id="insurance" name="insurance"  value="yes" onclick="addToPrice()"> Add
                     </div>
                 </div>
                 <hr>
                 <div class="row">
                     <div class="col-50">
-                        <label><i class="fa fa-cutlery"></i> Meal (no extra cost)</label>
-                        <input type="radio" id="option5" name="radio_meal"  value="omnivore"> Omnivore
-<!--                        <label  for="option6">Omnivore</label>-->
-                        <input type="radio" id="option6" name="radio_meal"  value="vegetarian" > Vegetarian
-<!--                        <label  for="option7">Vegetarian</label>-->
-                        <input type="radio" id="option7" name="radio_meal"  value="vegan" > Vegan
-<!--                        <label  for="option8">Vegan</label>-->
+                        <label><i class="fa fa-cutlery"></i> Meal <i class="fa fa-info-circle"></i></label>
+                        <input type="radio" id="omnivore" name="meal"  value="omnivore" checked="checked" > Omnivore
+                        <!--                        <label  for="option6">Omnivore</label>-->
+                        <input type="radio" id="vegetarian" name="meal"  value="vegetarian" > Vegetarian
+                        <!--                        <label  for="option7">Vegetarian</label>-->
+                        <input type="radio" id="vegan" name="meal"  value="vegan" > Vegan
+                        <!--                        <label  for="option8">Vegan</label>-->
                     </div>
                 </div>
                 <hr>
                 <div class="row">
                     <div class="col-50">
-                        <label for="quantity"><i class="fa fa-suitcase"></i> Luggage Quantity (each is + £20)</label>
-                        <input type="number" id="quantity" name="luggage" value="0" onchange="addToPrice()"  min="0" max="5">
+                        <label for="quantity"><i class="fa fa-suitcase"></i> Extra Luggage <i class="fa fa-info-circle"></i></label>
+                        <input type="number" id="quantity" name="luggage" value="0" onchange="addToPrice()"  min="0" max="5" >
                     </div>
                     <div hidden class="col-50">
                         <input id="finalPrice" name="finalPrice" value="">
@@ -143,3 +170,4 @@
 
 </body>
 </html>
+
