@@ -61,6 +61,7 @@ public class FlightService {
             }
         }
         if (matchedFlights.size() == 0) {
+            // Todo: ------------------ Remove? ---------------------------
             System.out.print("NO RESULTS");
         }
         matchedFlights.removeIf(flightEntry -> flightEntry.getDepartureTime().equals("NA"));
@@ -76,6 +77,7 @@ public class FlightService {
     }
 //    Service for fetching airport-city names -- ck
     public List<String> fetchOriginAirports(String keyword){
+        // Todo:------------------- Rename List ------------------------
         List<Flight> listOfAirports = repo.findByOrigin(keyword);
         List<String> suggestions = new ArrayList<String>();
         for (int i=0 ; i<listOfAirports.size(); i++){
@@ -89,6 +91,7 @@ public class FlightService {
 
     //    Service for fetching airport-city names -- ck
     public List<String> fetchDestinationAirports(String keyword,String origin){
+        // Todo: ------------------- Rename List ------------------------
         List<Flight> listOfAirports = repo.findByDestination(keyword,origin);
         List<String> suggestions = new ArrayList<String>();
 
@@ -106,16 +109,20 @@ public class FlightService {
         List<Flight> matchedFlights = new ArrayList<Flight>();
 //        String longToString = String.valueOf(id);
 //        int stringToInt = Integer.parseInt(longToString);
+        // Todo: ------------------ Rename List ---------------------------
         List<Flight> theFlight = new ArrayList<Flight>();
         theFlight = repo.getFlightById(id);
         for (int i=0 ; i<theFlight.size(); i++){
             matchedFlights.add(theFlight.get(i));
         }
         if (matchedFlights.size() == 0) {
+            // Todo: ------------------ Remove??? ---------------------------
             System.out.print("NO RESULTS");
+            return null;
         }
         return matchedFlights.get(0);
+// Todo: ------------------ Alternative approach? ---------------------------
+//        matchedFlights = repo.getFlightById(id);
+//        return matchedFlights.get(0);
     }
-
-
 }
