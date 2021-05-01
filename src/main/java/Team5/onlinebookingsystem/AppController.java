@@ -9,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Controller
 public class AppController<HttpPost> {
@@ -109,6 +110,20 @@ public class AppController<HttpPost> {
 		return "BuildTicket";
 	}
 
+	public String buildRandomTicketRef(){
+		Random rand = new Random();
+		// Obtain a number between [0 - 9].
+		int d1 = rand.nextInt(10);
+		int d2 = rand.nextInt(10);
+		int d3 = rand.nextInt(10);
+		int d4 = rand.nextInt(10);
+		int d5 = rand.nextInt(10);
+		int d6 = rand.nextInt(10);
+		String randBookingReference ="";
+		randBookingReference += Integer.toString(d1) + Integer.toString(d2) + Integer.toString(d3) + Integer.toString(d4) + Integer.toString(d5) + Integer.toString(d6);
+
+		return randBookingReference;
+	}
 
 	// ck --- Here I get and set the ticket information (extra information)
 	@RequestMapping(value = "/setTicketInformation", method = RequestMethod.POST)
@@ -119,7 +134,16 @@ public class AppController<HttpPost> {
 //		model.addAttribute("customer", new Customer());
 		TicketBuilder ticketBuilder = new FlightTicketBuilder();
 		ticketBuilder.addAgeGroup("Adult");
-		ticketBuilder.addBookingRef("1");
+
+		/// building new random non existent booking refs - ck
+		String bookingRef= buildRandomTicketRef();
+		System.out.println(bookingRef);
+		while(tService.findByTicketRef(bookingRef).equals("yes")){
+			bookingRef= buildRandomTicketRef();
+		}
+		System.out.println(tService.findByTicketRef(bookingRef));
+		ticketBuilder.addBookingRef(bookingRef);
+
 		ticketBuilder.addFlightId(the_flightId);
 		if (insurance.equals("yes")) {
 			ticketBuilder.addInsurance(insurance);

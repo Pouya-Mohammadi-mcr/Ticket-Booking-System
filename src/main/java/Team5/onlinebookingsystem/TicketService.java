@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -30,5 +31,14 @@ public class TicketService {
 
         public void delete(long id) {
             tRepo.deleteById(id);
+        }
+
+        public String findByTicketRef(String ref){
+            List<Ticket> ticket = new ArrayList<Ticket>();
+            ticket =  tRepo.findByTicketRef(ref);
+            if (ticket.size() == 0) {
+                return "no";
+            }
+            return "yes";
         }
 }
