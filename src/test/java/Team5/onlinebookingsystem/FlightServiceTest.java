@@ -14,8 +14,7 @@ import static org.mockito.Mockito.*;
 
 public class FlightServiceTest {
 
-    // ToDo  ---------Some methods require to be refactored as per the Setup()---------------
-    private Map<String, Object> getSetupObjects(){
+        private Map<String, Object> getSetupObjects(){
         FlightRepository flightRepository = Mockito.mock(FlightRepository.class);
         FlightServiceTestWrapper flightService = new FlightServiceTestWrapper();
         flightService.SetRepository(flightRepository);
@@ -33,24 +32,23 @@ public class FlightServiceTest {
     void listAllTest()
     {
         //Arrange
-        FlightRepository flightRepository = Mockito.mock(FlightRepository.class);
+        Map<String, Object> setupObjects = this.getSetupObjects();
+        FlightRepository flightRepository = (FlightRepository) setupObjects.get("flightRepository");
+        FlightServiceTestWrapper flightService = (FlightServiceTestWrapper) setupObjects.get("flightService");
 
-        List<Flight> dummyList = new ArrayList<Flight>();
+        List<Flight> flightList = new ArrayList<Flight>();
         Flight flightObject1 = Mockito.mock(Flight.class);
         Flight flightObject2 = Mockito.mock(Flight.class);
-        dummyList.add(flightObject1);
-        dummyList.add(flightObject2);
+        flightList.add(flightObject1);
+        flightList.add(flightObject2);
 
-        Mockito.when(flightRepository.findAll()).thenReturn(dummyList);
-
-        FlightServiceTestWrapper flightService = new FlightServiceTestWrapper();
-        flightService.SetRepository(flightRepository);
+        Mockito.when(flightRepository.findAll()).thenReturn(flightList);
 
         //Act
         List<Flight> allFlights = flightService.listAll();
 
         //Assert
-        assertEquals(dummyList, allFlights);
+        assertEquals(flightList, allFlights);
 
     }
 
@@ -60,8 +58,6 @@ public class FlightServiceTest {
         Map<String, Object> setupObjects = this.getSetupObjects();
         FlightRepository flightRepository = (FlightRepository) setupObjects.get("flightRepository");
         FlightServiceTestWrapper flightService = (FlightServiceTestWrapper) setupObjects.get("flightService");
-
-        flightService.SetRepository(flightRepository);
 
         Flight flightMock = Mockito.mock(Flight.class);
 
@@ -76,13 +72,12 @@ public class FlightServiceTest {
     @Test
     void getTest() {
         //Arrange
+        Map<String, Object> setupObjects = this.getSetupObjects();
+        FlightRepository flightRepository = (FlightRepository) setupObjects.get("flightRepository");
+        FlightServiceTestWrapper flightService = (FlightServiceTestWrapper) setupObjects.get("flightService");
+
         Flight flightMock = Mockito.mock(Flight.class);
-
-        FlightRepository flightRepository = Mockito.mock(FlightRepository.class);
         Mockito.when(flightRepository.findById(1000L)).thenReturn(java.util.Optional.ofNullable(flightMock));
-
-        FlightServiceTestWrapper flightService = new FlightServiceTestWrapper();
-        flightService.SetRepository(flightRepository);
 
         // Act
         flightService.get(1000L);
@@ -93,11 +88,11 @@ public class FlightServiceTest {
 
     @Test
     void deleteTest() {
-        FlightRepository flightRepository = Mockito.mock(FlightRepository.class);
-        Mockito.doNothing().when(flightRepository).deleteById(1000L);
+        Map<String, Object> setupObjects = this.getSetupObjects();
+        FlightRepository flightRepository = (FlightRepository) setupObjects.get("flightRepository");
+        FlightServiceTestWrapper flightService = (FlightServiceTestWrapper) setupObjects.get("flightService");
 
-        FlightServiceTestWrapper flightService = new FlightServiceTestWrapper();
-        flightService.SetRepository(flightRepository);
+        Mockito.doNothing().when(flightRepository).deleteById(1000L);
 
         // Act
         flightService.delete(1000L);
@@ -106,7 +101,6 @@ public class FlightServiceTest {
         verify(flightRepository, times(1)).deleteById(any(Long.class));
     }
 
-    // Todo: ----------------Try to refactor the findTest cases into a parameterised test--------------
     @Test
     // Find Case- "anywhere","alldates"
     void findTest_Case1() {
@@ -249,32 +243,31 @@ public class FlightServiceTest {
         verify(flightRepository, times(1)).findAll();
     }
 
-    // Todo: ------------------------------ Check Again -----------------------------------------
     @Test
     void sortTest() {
         // Arrange
-//        List<Flight> inputList = new ArrayList<Flight>();
-//
-//        Flight flightObject1 = Mockito.mock(Flight.class);
-//        Flight flightObject2 = Mockito.mock(Flight.class);
-//        inputList.add(flightObject1);
-//        inputList.add(flightObject2);
-//
-//        List<Flight> expectedList = new ArrayList<Flight>();
-//        expectedList.add(flightObject2);
-//        expectedList.add(flightObject1);
-//
-//        SortingStrategy sortingStrategy = Mockito.mock(SortByPriceAscending.class);
-//        Mockito.when(sortingStrategy.sort(any(List.class))).thenReturn(expectedList);
-//
-//        FlightService flightService = new FlightService();
-//
-//        // Act
-//        List<Flight> sortedList = flightService.sort(sortingStrategy, inputList);
-//
-//        // Assert
-//        // assertEquals(sortedList.get(0), flightObject2);
-//        assertEquals(sortedList.get(0), flightObject1);
+        List<Flight> inputList = new ArrayList<Flight>();
+
+        Flight flightObject1 = Mockito.mock(Flight.class);
+        Flight flightObject2 = Mockito.mock(Flight.class);
+        inputList.add(flightObject1);
+        inputList.add(flightObject2);
+
+        List<Flight> expectedList = new ArrayList<Flight>();
+        expectedList.add(flightObject1);
+        expectedList.add(flightObject2);
+
+        SortingStrategy sortingStrategy = Mockito.mock(SortByPriceAscending.class);
+        Mockito.doNothing().when(sortingStrategy).sort(any(List.class));
+
+        FlightService flightService = new FlightService();
+
+        // Act
+        List<Flight>sortedList = flightService.sort(sortingStrategy, inputList);
+
+        // Assert
+        assertEquals(expectedList, sortedList);
+        verify(sortingStrategy,times(1)).sort(inputList);
     }
 
     @Test

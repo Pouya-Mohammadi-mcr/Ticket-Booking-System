@@ -50,7 +50,7 @@ public class SortByPriceTest {
     }
 
     @Test
-    void DescendingSortTest(){
+    void descendingSortTest(){
         //Arrange
         SortByPriceDescending sortDescending = new SortByPriceDescending();
 
@@ -62,7 +62,7 @@ public class SortByPriceTest {
     }
 
     @Test
-    void AscendingSortTest(){
+    void ascendingSortTest(){
         //Arrange
         SortByPriceAscending sortAscending = new SortByPriceAscending();
 
