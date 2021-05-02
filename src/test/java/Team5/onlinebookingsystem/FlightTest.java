@@ -25,7 +25,7 @@ class FlightTest {
     void FlightConstructorTest(){
         //Arrange
         String flight_No = "1243";
-        String availableSeats = "10";
+        long availableSeats = 10l;
         String from = "London";
         String to = "Mumbai";
         String departureTime = "01:00";
@@ -36,7 +36,7 @@ class FlightTest {
 
         Map<String, String> coreAttributes = new HashMap<String, String>()
         {{
-            put("flight_No", flight_No);put("availableSeats", availableSeats);put("from", from);put("to", to);
+            put("flight_No", flight_No);put("from", from);put("to", to);
             put("departureTime", departureTime);put("arrivalTime", arrivalTime);put("date", date);put("price", price);
         }};
 
@@ -100,12 +100,12 @@ class FlightTest {
     @Test
     void AvailableSeatsTest(){
         //Arrange
-        String expectedSeat = "10";
+        int expectedSeat = 10;
 
         //Act
         Flight flight = new Flight();
         flight.setAvailableSeats(expectedSeat);
-        String actualSeat  = flight.getAvailableSeats();
+        long actualSeat  = flight.getAvailableSeats();
 
         //Assert
         assertEquals(expectedSeat, actualSeat);

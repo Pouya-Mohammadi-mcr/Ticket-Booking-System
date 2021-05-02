@@ -116,6 +116,12 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-10 my-4">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" id="5">Tickets</span>
+                                <input type="number" max="16" min="1" class="form-control" name="numberOfTickets" aria-describedby="2" placeholder="Number of Tickets" th:name="availableSeats" th:field="*{availableSeats}" id="numberOfTickets" required>
+                            </div>
+                        </div>
                         <div class="d-grid gap-2">
                             <button type="submit" class="btn btn-dark btn-lg">Search</button>
                         </div>

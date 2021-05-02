@@ -57,6 +57,7 @@ public class AppControllerTest {
         when(inputFlightMock.getFrom()).thenReturn("Manchester");
         when(inputFlightMock.getTo()).thenReturn("London");
         when(inputFlightMock.getDate()).thenReturn("01/01/2022");
+        when(inputFlightMock.getAvailableSeats()).thenReturn(5l);
 
         FlightService flightServiceMock = Mockito.mock(FlightService.class);
 
@@ -67,13 +68,13 @@ public class AppControllerTest {
         dummyList.add(matchedFlightMock);
 
         when(flightServiceMock.find(inputFlightMock.getFrom(), inputFlightMock.getTo(),
-                inputFlightMock.getDate())).thenReturn(dummyList);
+                inputFlightMock.getDate(), inputFlightMock.getAvailableSeats())).thenReturn(dummyList);
 
 
         //Act
         AppController appController = new AppController();
         List<Flight> matchedFlights = flightServiceMock.find(inputFlightMock.getFrom(), inputFlightMock.getTo(),
-                inputFlightMock.getDate());
+                inputFlightMock.getDate(), inputFlightMock.getAvailableSeats());
 
 
         //Assert
@@ -127,7 +128,7 @@ public class AppControllerTest {
 
         FlightService flightServiceMock = Mockito.mock(FlightService.class);
         when(flightServiceMock.find(inputFlightMock.getFrom(), inputFlightMock.getTo(),
-                inputFlightMock.getDate())).thenReturn(dummyFlightList);
+                inputFlightMock.getDate(),inputFlightMock.getAvailableSeats())).thenReturn(dummyFlightList);
 
 
         //Act

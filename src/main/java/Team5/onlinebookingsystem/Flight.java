@@ -7,7 +7,7 @@ import javax.persistence.Id;
 public class Flight {
     private long id;
     private String flightNumber;
-    private String availableSeats;
+    private long availableSeats;
     private String from;
     private String to;
     private String departureTime;
@@ -15,7 +15,7 @@ public class Flight {
     private String date;
     private String price;
 
-    public Flight(long id, String flightNumber, String availableSeats, String from, String to, String departureTime, String arrivalTime, String date, String price) {
+    public Flight(long id, String flightNumber, long availableSeats, String from, String to, String departureTime, String arrivalTime, String date, String price) {
         this.id = id;
         this.flightNumber = flightNumber;
         this.availableSeats = availableSeats;
@@ -27,7 +27,7 @@ public class Flight {
         this.price = price;
     }
 
-    public Flight(String flightNumber, String availableSeats, String from, String to, String departureTime, String arrivalTime, String date, String price) {
+    public Flight(String flightNumber, long availableSeats, String from, String to, String departureTime, String arrivalTime, String date, String price) {
         this.flightNumber = flightNumber;
         this.availableSeats = availableSeats;
         this.from = from;
@@ -63,11 +63,11 @@ public class Flight {
         this.flightNumber = flightNo;
     }
 
-    public String getAvailableSeats() {
+    public long getAvailableSeats() {
         return availableSeats;
     }
 
-    public void setAvailableSeats(String availableSeats) {
+    public void setAvailableSeats(long availableSeats) {
         this.availableSeats = availableSeats;
     }
 

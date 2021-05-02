@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Checkout</title>
+    <title>Ticket</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -11,8 +11,9 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <script type="text/javascript">
-        function goBack() {
-            window.history.back();
+
+        window.onload= function () {
+            document.getElementById("finalPrice").value = document.getElementById("hiddenPrice").innerHTML;
         }
 
         function addToPrice() {
@@ -24,7 +25,6 @@
             var add = "0";
             var percent = 0;
             for (var i = 0, lengthC = radio_class.length; i < lengthC; i++) {
-                // alert("Hello");
                 if (radio_class[i].checked){
                     if(radio_class[i].value === "first"){
                         add = +add + 50;
@@ -37,7 +37,6 @@
                 }
             }
             for (var j = 0, lengthR = radio_insurance.length; j < lengthR; j++) {
-                // alert("Hello");
                 if (radio_insurance[j].checked){
                     if(radio_insurance[j].value === "yes"){
                         add = +add + 20;
@@ -47,12 +46,10 @@
                 }
             }
             for (var k = 0, lengthA = radio_age.length; k < lengthA; k++) {
-                // alert("Hello");
                 if (radio_age[k].checked){
                     if(radio_age[k].value === "child"){
                         percent = 20/100;
                     }
-
                     break;
                 }
             }
@@ -62,28 +59,24 @@
 
         }
 
+
     </script>
 
 </head>
 <body >
 
 <h1>Ticket Builder</h1>
-<div class="row">
+<div class="row" >
     <div class="col-50">
-        <div class="container">
-            <!--    <h1 class="h1 text-center text-info mt-3">Find Flights</h1>-->
-            <button type="button"  class="btn" onclick="goBack()" id="return">Go Back</button>
+        <div class="container" >
             <form id="extraInfo"  action="#" th:action="@{/setTicketInformation}"  method="post">
                 <h3>Make Your Ticket</h3>
                 <div class="row" >
                     <div class="col-50">
                         <label> <i class="fa fa-user"></i> Class</label>
                         <input type="radio" id="first" name="radio_class" value="first"  onclick="addToPrice()"> First Class <i class="fa fa-info-circle"></i>
-                        <!--                        <label  for="option1">First Class (+ £50)</label>-->
                         <input type="radio" id="business" name="radio_class" value="business"  onclick="addToPrice()"> Business Class <i class="fa fa-info-circle"></i>
-                        <!--                        <label  for="option2">Business Class (+ £20)</label>-->
                         <input type="radio" id="economy" name="radio_class"  value="economy"  onclick="addToPrice()" checked="checked"> Economy Class <i class="fa fa-info-circle"></i>
-                        <!--                        <label  for="option3">Economy Class</label>-->
                     </div>
                 </div>
                 <hr>
@@ -91,9 +84,7 @@
                     <div class="col-50">
                         <label> <i class="fa fa-user"></i> Age Group</label>
                         <input type="radio" id="adult" name="radio_age" value="adult"  onclick="addToPrice()" checked="checked"> Adult <i class="fa fa-info-circle"></i>
-                        <!--                        <label  for="option1">First Class (+ £50)</label>-->
                         <input type="radio" id="child" name="radio_age" value="child"  onclick="addToPrice()"> Child <i class="fa fa-info-circle"></i>
-                        <!--                        <label  for="option2">Business Class (+ £20)</label>-->
                     </div>
                 </div>
                 <hr>
@@ -108,11 +99,8 @@
                     <div class="col-50">
                         <label><i class="fa fa-cutlery"></i> Meal <i class="fa fa-info-circle"></i></label>
                         <input type="radio" id="omnivore" name="meal"  value="omnivore" checked="checked" > Omnivore
-                        <!--                        <label  for="option6">Omnivore</label>-->
                         <input type="radio" id="vegetarian" name="meal"  value="vegetarian" > Vegetarian
-                        <!--                        <label  for="option7">Vegetarian</label>-->
                         <input type="radio" id="vegan" name="meal"  value="vegan" > Vegan
-                        <!--                        <label  for="option8">Vegan</label>-->
                     </div>
                 </div>
                 <hr>
@@ -124,12 +112,12 @@
                     <div hidden class="col-50">
                         <input id="finalPrice" name="finalPrice" value="">
                     </div>
-                    <button class="btn btn-primary" id="btn-ticket" type="submit">Add Ticket</button>
+                    <button class="btn btn-primary" id="btn-ticket" onclick="addNewTicket()"  type="submit" th:text="${button}" th:value="${button}" >Build Ticket</button>
                 </div>
             </form>
         </div>
     </div>
-    <div class="col-25">
+    <div class="col-25" id="ticketDiv">
         <div class="container">
             <h4>Your Flight<span class="price" style="color:black" th:text=" 'ID: '+${flight.id}" th:value="${flight.id}" id="flightId">ID: </span> <i class="fa fa-plane"></i></h4>
             <hr>
@@ -158,16 +146,39 @@
             <p hidden>
                 Total
                 <span  class="price" style="color:black">
-                    £<b id="hiddenPrice" th:text=" ${flight.price} "></b>
+                    £<b id="hiddenPrice" th:text=" ${flight.price}" ></b>
                 </span>
             </p>
 
         </div>
     </div>
 </div>
-<button class="btn btn-primary" style="float: right" id="btn-pay" onclick="document.getElementById('extraInfo').submit();" type="submit">Pay</button>
+<!--<button class="btn btn-primary" style="float: right" id="btn-pay" onclick="document.getElementById('extraInfo').submit();" type="submit">Pay</button>-->
 
 
+<table th:if="${!tickets.isEmpty()}" class="table" id="tickets">
+    <thead>
+    <tr class="table-active">
+        <th>Class</th>
+        <th>Age Group</th>
+        <th>Insurance</th>
+        <th>Meal</th>
+        <th>Luggage</th>
+        <th>Price</th>
+
+    </tr>
+</thead>
+<tbody>
+<tr th:each="ticket : ${tickets}" >
+    <td th:text="${ticket.seatClass}">Class</td>
+    <td th:text="${ticket.ageGroup}">Age Group</td>
+    <td th:text="${ticket.insurance != null} ? ${ticket.insurance} : 'no'">insurance</td>
+    <td th:text="${ticket.meal}">Meal</td>
+    <td th:text="${ticket.luggage != null} ? ${ticket.luggage} : 'no'">Luggage</td>
+    <td th:text="'£ '+${ticket.priceBought}">Price</td>
+</tr>
+</tbody>
+</table>
 </body>
 </html>
 
