@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Random;
 
 
 @Service
@@ -34,11 +34,28 @@ public class TicketService {
         }
 
         public String findByTicketRef(String ref){
-            List<Ticket> ticket = new ArrayList<Ticket>();
+            Ticket ticket = new Ticket();
             ticket =  tRepo.findByTicketRef(ref);
-            if (ticket.size() == 0) {
+            if (ticket == null) {
                 return "no";
             }
             return "yes";
         }
+
+        public Ticket getTicketInformationByRef(String ref){
+            Ticket ticket = new Ticket();
+            ticket =  tRepo.findByTicketRef(ref);
+            return ticket;
+        }
+
+
+        public String buildRandomTicketRef(){
+            Random rand = new Random();
+            StringBuilder randBookingReference = new StringBuilder();
+            for(int i=0;i<10;i++){
+                randBookingReference.append(Integer.toString(rand.nextInt(10)));
+            }
+            return randBookingReference.toString();
+        }
+
 }

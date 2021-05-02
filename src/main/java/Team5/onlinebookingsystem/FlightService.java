@@ -103,19 +103,19 @@ public class FlightService {
 
     //    Service for fetching the flight information by ID -- ck
     public Flight fetchById(long id){
-        List<Flight> matchedFlights = new ArrayList<Flight>();
-//        String longToString = String.valueOf(id);
-//        int stringToInt = Integer.parseInt(longToString);
+//        List<Flight> matchedFlights = new ArrayList<Flight>();
         List<Flight> theFlight = new ArrayList<Flight>();
         theFlight = repo.getFlightById(id);
-        for (int i=0 ; i<theFlight.size(); i++){
-            matchedFlights.add(theFlight.get(i));
+        if (theFlight.size() == 0) {
+            return null;
         }
-        if (matchedFlights.size() == 0) {
-            System.out.print("NO RESULTS");
-        }
-        return matchedFlights.get(0);
+//        for (int i=0 ; i<theFlight.size(); i++){
+//            matchedFlights.add(theFlight.get(i));
+//        }
+//        if (matchedFlights.size() == 0) {
+//            System.out.print("NO RESULTS");
+//        }
+        return theFlight.get(0);
     }
-
 
 }

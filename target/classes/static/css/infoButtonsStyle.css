@@ -24,8 +24,8 @@ ul li .content{
     bottom: 34px;
     width: 150px;
     background: rgb(254,250,237);
-    padding: 20px;
-    box-sizing: content-box;
+    padding: 2px;
+    box-sizing:border-box;
     border-radius: 4px;
     visibility: hidden;
     opacity: 0;
