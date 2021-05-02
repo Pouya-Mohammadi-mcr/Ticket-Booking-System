@@ -48,10 +48,10 @@ public class SortByDepartureTimeTest {
         SortingStrategy strategy = factory.getStrategy("Sort by Departure Time Ascending");
 
         // Act
-        List<Flight> sortedList = strategy.sort(inputList);
+        strategy.sort(inputList);
 
         // Assert
-        assertEquals(ascendingList, sortedList);
+        assertEquals(ascendingList, inputList);
     }
 
     @Test
@@ -61,9 +61,9 @@ public class SortByDepartureTimeTest {
         SortingStrategy strategy = factory.getStrategy("Sort by Departure Time Descending");
 
         // Act
-        List<Flight> sortedList = strategy.sort(inputList);
+        strategy.sort(inputList);
 
         // Assert
-        assertEquals(descendingList, sortedList);
+        assertEquals(descendingList, inputList);
     }
 }
