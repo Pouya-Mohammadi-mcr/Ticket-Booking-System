@@ -14,7 +14,7 @@ public class SortingContext {
         this.strategy = strategy;
     }
 
-    public List<Flight> sortFlights (List<Flight> flightList){
-        return strategy.sort(flightList);
+    public void sortFlights (List<Flight> flightList){
+        strategy.sort(flightList);
     }
 }
