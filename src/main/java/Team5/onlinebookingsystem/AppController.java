@@ -150,7 +150,7 @@ public class AppController<HttpPost> {
 	public String getBookingSearchPage(Model model){
 		Flight flightInfo = new Flight();
 		Ticket ticketInfo = new Ticket();
-		ticketInfo.bookingRef="null";
+		ticketInfo.bookingRef="nosearch";
 		model.addAttribute("ticketInfo",ticketInfo);
 		model.addAttribute("flightInfo",flightInfo);
 		return "BookingSearchPage";

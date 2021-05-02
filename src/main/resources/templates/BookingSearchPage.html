@@ -15,6 +15,13 @@
 
 </head>
 <body>
+<!--navbar-->
+<div id="navbar-temp"> </div>
+<script>
+  $(function(){
+    $("#navbar-temp").load("navbar.html");
+  });
+</script>
 <!--<img th:src="@{/images/index_bg.jpeg}">-->
 <div class="container" id="flightContainer">
   <h1 class="h1 text-center mt-3">Find Booking</h1>
@@ -41,6 +48,8 @@
 
 <table class="table" id="matchedBooking">
   <thead>
+  <tr th:if="${ticketInfo.bookingRef=='nosearch'}">
+  </tr>
   <tr th:if="${ticketInfo.bookingRef=='null'}">
     Wrong booking reference.
   </tr>
@@ -48,7 +57,7 @@
     Hmmm...
     There seems to be a problem with the flight information! Please contact the airlines to sort this out.
   </tr>
-  <tr class="table-active" th:if="${ticketInfo.bookingRef!='null'} and ${ticketInfo.priceBought!='null'}">
+  <tr class="table-active" th:if="${ticketInfo.bookingRef!='null'} and ${ticketInfo.bookingRef!='nosearch'} and ${ticketInfo.priceBought!='null'}">
     <th>flightInfo Number</th>
     <th>From</th>
     <th>To</th>
@@ -63,7 +72,7 @@
   </tr>
   <tr th:if="${ticketInfo.priceBought=='null'}">
   </tr>
-  <tr th:if="${ticketInfo.bookingRef!='null'} and ${ticketInfo.priceBought!='null'}">
+  <tr th:if="${ticketInfo.bookingRef!='null'} and ${ticketInfo.bookingRef!='nosearch'} and ${ticketInfo.priceBought!='null'}">
     <td th:text="${flightInfo.flightNumber}">flightInfo Number</td>
     <td th:text="${flightInfo.from}">From</td>
     <td th:text="${flightInfo.to}">To</td>
@@ -91,7 +100,7 @@
   </tr>
   <tr th:if="${ticketInfo.priceBought=='null'}">
   </tr>
-  <tr class="table-active" th:if="${ticketInfo.bookingRef!='null'} and ${ticketInfo.priceBought!='null'}">
+  <tr class="table-active" th:if="${ticketInfo.bookingRef!='null'} and ${ticketInfo.bookingRef!='nosearch'} and ${ticketInfo.priceBought!='null'}">
     <th>Booking Reference</th>
     <th>Class</th>
     <th>Meal</th>
@@ -105,7 +114,7 @@
   </tr>
   <tr th:if="${ticketInfo.priceBought=='null'}">
   </tr>
-  <tr th:if="${ticketInfo.bookingRef!='null'} and ${ticketInfo.priceBought!='null'}">
+  <tr th:if="${ticketInfo.bookingRef!='null'} and ${ticketInfo.bookingRef!='nosearch'} and ${ticketInfo.priceBought!='null'}">
     <td th:text="${ticketInfo.bookingRef}">Booking Reference</td>
     <td th:text="${ticketInfo.seatClass}">Class</td>
     <td th:text="${ticketInfo.meal}">Meal</td>
