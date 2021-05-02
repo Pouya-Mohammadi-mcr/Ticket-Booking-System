@@ -106,23 +106,19 @@ public class FlightService {
 
     //    Service for fetching the flight information by ID -- ck
     public Flight fetchById(long id){
-        List<Flight> matchedFlights = new ArrayList<Flight>();
-//        String longToString = String.valueOf(id);
-//        int stringToInt = Integer.parseInt(longToString);
-        // Todo: ------------------ Rename List ---------------------------
+//        List<Flight> matchedFlights = new ArrayList<Flight>();
         List<Flight> theFlight = new ArrayList<Flight>();
         theFlight = repo.getFlightById(id);
-        for (int i=0 ; i<theFlight.size(); i++){
-            matchedFlights.add(theFlight.get(i));
-        }
-        if (matchedFlights.size() == 0) {
-            // Todo: ------------------ Remove??? ---------------------------
-            System.out.print("NO RESULTS");
+        if (theFlight.size() == 0) {
             return null;
         }
-        return matchedFlights.get(0);
-// Todo: ------------------ Alternative approach? ---------------------------
-//        matchedFlights = repo.getFlightById(id);
-//        return matchedFlights.get(0);
+//        for (int i=0 ; i<theFlight.size(); i++){
+//            matchedFlights.add(theFlight.get(i));
+//        }
+//        if (matchedFlights.size() == 0) {
+//            System.out.print("NO RESULTS");
+//        }
+        return theFlight.get(0);
     }
+
 }

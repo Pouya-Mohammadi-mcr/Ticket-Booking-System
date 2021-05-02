@@ -9,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Controller
 public class AppController<HttpPost> {
@@ -21,6 +22,7 @@ public class AppController<HttpPost> {
 	private SortingStrategyFactory sortFactory = SortingStrategyFactory.getInstance();
 	private String flightOrigin;
 	private long the_flightId;
+	private int numberOfTickets;
 //	public Ticket theTicket = new Ticket();
 
 	@RequestMapping("/")
@@ -109,17 +111,23 @@ public class AppController<HttpPost> {
 		return "BuildTicket";
 	}
 
-
 	// ck --- Here I get and set the ticket information (extra information)
 	@RequestMapping(value = "/setTicketInformation", method = RequestMethod.POST)
 	public String saveTicket(Model model,@ModelAttribute(name = "radio_class") String radio_class,@ModelAttribute(name = "insurance") String insurance,@ModelAttribute(name = "meal") String meal,@ModelAttribute(name = "luggage") String luggage,@ModelAttribute(name = "finalPrice") String finalPrice) {
 		System.out.println(" The class is: "+radio_class + " Luggage: " + luggage  + " Meal: " +meal+ " Insur: " + insurance + "Final price: " + finalPrice);
-//		Flight flight = service.fetchById(the_flightId);
-//		model.addAttribute("flight", flight);
-//		model.addAttribute("customer", new Customer());
 		TicketBuilder ticketBuilder = new FlightTicketBuilder();
 		ticketBuilder.addAgeGroup("Adult");
-		ticketBuilder.addBookingRef("1");
+		Flight flight = service.fetchById(the_flightId);
+
+
+
+		/// building new random non existent booking refs - ck
+		String bookingRef= tService.buildRandomTicketRef();
+		while(tService.findByTicketRef(bookingRef).equals("yes")){
+			bookingRef= tService.buildRandomTicketRef();
+		}
+		ticketBuilder.addBookingRef(bookingRef);
+
 		ticketBuilder.addFlightId(the_flightId);
 		if (insurance.equals("yes")) {
 			ticketBuilder.addInsurance(insurance);
@@ -127,7 +135,6 @@ public class AppController<HttpPost> {
 		if (!"".equals(luggage) && !"0".equals(luggage)){
 			ticketBuilder.addLuggage(luggage);
 		}
-
 		ticketBuilder.addSeatClass(radio_class);
 		ticketBuilder.addMeal(meal);
 		ticketBuilder.addPriceBought(finalPrice);
@@ -136,6 +143,42 @@ public class AppController<HttpPost> {
 		tService.save(ticket);
 		System.out.print(tService.listAll());
 		return "ResultPage";
+	}
+
+	// search for booking  -- ck
+	@RequestMapping("/getBooking")
+	public String getBookingSearchPage(Model model){
+		Flight flightInfo = new Flight();
+		Ticket ticketInfo = new Ticket();
+		ticketInfo.bookingRef="null";
+		model.addAttribute("ticketInfo",ticketInfo);
+		model.addAttribute("flightInfo",flightInfo);
+		return "BookingSearchPage";
+	}
+	@RequestMapping(value = "/returnBooking", method = RequestMethod.POST)
+	public String showBookingSearchPage(Model model,@ModelAttribute(name = "bookingRef") String bookingRef,@ModelAttribute(name = "email") String email){
+		model.addAttribute("bookingRef",bookingRef);
+		model.addAttribute("email",email);
+//		System.out.println("bookingRef: "+ bookingRef + "email: " + email);
+		Flight flightInfo = new Flight();
+		Ticket ticketInfo = tService.getTicketInformationByRef(bookingRef);
+		//		Customer customerInfo = new Customer();
+		if (ticketInfo != null){
+			flightInfo = service.fetchById(ticketInfo.flightId);
+			// If flight information for some reason can not be found
+			if(flightInfo==null){
+				// adding null here in order to catch it in the html page!!
+				flightInfo = new Flight();
+				ticketInfo.priceBought = "null";
+			}
+		}else{
+			ticketInfo = new Ticket();
+			ticketInfo.bookingRef = "null";
+		}
+		model.addAttribute("ticketInfo",ticketInfo);
+		model.addAttribute("flightInfo",flightInfo);
+
+		return "BookingSearchPage";
 	}
 
 
