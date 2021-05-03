@@ -33,29 +33,29 @@ public class FlightService {
         repo.deleteById(id);
     }
 
-    public List<Flight> find(String from, String to, String date){
+    public List<Flight> find(String from, String to, String date, long tickets){
         List<Flight> matchedFlights = new ArrayList<Flight>();
         if(to.equals("anywhere") ){
             if(date.equals("alldates")){
-                List<Flight> allFlights = repo.getAllConnectingFlightsAllDates(from);
+                List<Flight> allFlights = repo.getAllConnectingFlightsAllDates(from,tickets);
                 for (int i=0 ; i<allFlights.size(); i++){
                     matchedFlights.add(allFlights.get(i));
                 }
             }else{
-                List<Flight> allFlights = repo.getAllConnectingFlights(from,date);
+                List<Flight> allFlights = repo.getAllConnectingFlights(from,date,tickets);
                 for (int i=0 ; i<allFlights.size(); i++){
                     matchedFlights.add(allFlights.get(i));
                 }
             }
         }else if(date.equals("alldates")){
-            List<Flight> allFlights = repo.getFlightsAllDates(from,to);
+            List<Flight> allFlights = repo.getFlightsAllDates(from,to,tickets);
             for (int i=0 ; i<allFlights.size(); i++){
                 matchedFlights.add(allFlights.get(i));
             }
         }else{
             List<Flight> allFlights = listAll();
             for (int i=0 ; i<allFlights.size(); i++){
-                if ( allFlights.get(i).getFrom().equals(from)  && allFlights.get(i).getTo().equals(to)  && allFlights.get(i).getDate().equals(date) ) {
+                if ( allFlights.get(i).getFrom().equals(from)  && allFlights.get(i).getTo().equals(to)  && allFlights.get(i).getDate().equals(date) && allFlights.get(i).getAvailableSeats()>=tickets ) {
                     matchedFlights.add(allFlights.get(i));
                 }
             }
@@ -106,19 +106,20 @@ public class FlightService {
 
     //    Service for fetching the flight information by ID -- ck
     public Flight fetchById(long id){
-//        List<Flight> matchedFlights = new ArrayList<Flight>();
         List<Flight> theFlight = new ArrayList<Flight>();
         theFlight = repo.getFlightById(id);
         if (theFlight.size() == 0) {
             return null;
         }
-//        for (int i=0 ; i<theFlight.size(); i++){
-//            matchedFlights.add(theFlight.get(i));
-//        }
-//        if (matchedFlights.size() == 0) {
-//            System.out.print("NO RESULTS");
-//        }
         return theFlight.get(0);
+
     }
 
+
+    public void decreaseCapacity(long id, long l) {
+        Flight flight = get(id);
+        long seats = flight.getAvailableSeats()-l ;
+        repo.updateSeats(seats,id);
+//        repo.save(flight);
+    }
 }

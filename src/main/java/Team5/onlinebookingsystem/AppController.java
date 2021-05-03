@@ -8,8 +8,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+
+import static java.lang.Math.round;
 
 @Controller
 public class AppController<HttpPost> {
@@ -18,28 +21,37 @@ public class AppController<HttpPost> {
 	private FlightService service;
 	@Autowired
 	private TicketService tService;
+	@Autowired
+	private CustomerService cService;
+	@Autowired
+	private BookingService bService;
 
 	private SortingStrategyFactory sortFactory = SortingStrategyFactory.getInstance();
 	private String flightOrigin;
 	private long the_flightId;
-	private int numberOfTickets;
+	private long numberOfTickets;
+
+	private List<Ticket> ticketsMade = new ArrayList<Ticket>();
 //	public Ticket theTicket = new Ticket();
 
 	@RequestMapping("/")
 	public String showSearchPage(Model model){
 		Flight flight = new Flight();
+		flight.setAvailableSeats(1);
 		model.addAttribute("flight", flight);
 		return "SearchPage";
 	}
 
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
 	public ModelAndView search(@ModelAttribute(name = "Flight") Flight flight) {
-		ModelAndView mav = new ModelAndView("MatchedFlights");
-		List<Flight> matchedFlights = service.find(flight.getFrom(), flight.getTo(), flight.getDate());
+		ModelAndView mav = new  ModelAndView("MatchedFlights");
+		numberOfTickets = flight.getAvailableSeats();
+		List<Flight> matchedFlights = service.find(flight.getFrom(), flight.getTo(), flight.getDate(), numberOfTickets);
 		mav.addObject("matchedFlights", matchedFlights);
 		Flight flightInfo = new Flight(flight.getFrom(), flight.getTo(), flight.getDate());
 		mav.addObject("flightInfo", flightInfo);
 		Flight newFlight = new Flight();
+		newFlight.setAvailableSeats(flight.getAvailableSeats());
 		mav.addObject("newFlight",newFlight);
 		String sortingMethod = new String();
 		mav.addObject(sortingMethod);
@@ -49,12 +61,10 @@ public class AppController<HttpPost> {
 	@RequestMapping(value = "/sort", method = RequestMethod.POST)
 	public ModelAndView sort(@ModelAttribute(name = "Flight") Flight flight,@ModelAttribute(name = "sortingMethod") String sortingMethod) {
 		ModelAndView mav = new ModelAndView("MatchedFlights");
-		List<Flight> flightList = service.find(flight.getFrom(), flight.getTo(), flight.getDate());
+		List<Flight> flightList = service.find(flight.getFrom(), flight.getTo(), flight.getDate(), numberOfTickets);
 		List<Flight> matchedFlights = new ArrayList<Flight>();
-
 		SortingStrategy strategy = sortFactory.getStrategy(sortingMethod);
 		matchedFlights = service.sort(strategy, flightList);
-
 		mav.addObject("matchedFlights", matchedFlights);
 		Flight flightInfo = new Flight(flight.getFrom(), flight.getTo(), flight.getDate());
 		mav.addObject("flightInfo", flightInfo);
@@ -91,11 +101,13 @@ public class AppController<HttpPost> {
 	@RequestMapping(value = "/updateFlightTable", method = RequestMethod.POST)
 	public ModelAndView updateFlightTable(@ModelAttribute(name = "Flight") Flight flight) {
 		ModelAndView mav = new ModelAndView("MatchedFlights");
-		List<Flight> matchedFlights = service.find(flight.getFrom(), flight.getTo(), flight.getDate());
+		numberOfTickets = flight.getAvailableSeats();
+		List<Flight> matchedFlights = service.find(flight.getFrom(), flight.getTo(), flight.getDate(), numberOfTickets);
 		mav.addObject("matchedFlights", matchedFlights);
 		Flight flightInfo = new Flight(flight.getFrom(), flight.getTo(), flight.getDate());
 		mav.addObject("flightInfo", flightInfo);
 		Flight newFlight = new Flight();
+		newFlight.setAvailableSeats(flight.getAvailableSeats());
 		mav.addObject("newFlight",newFlight);
 		String sortingMethod = new String();
 		mav.addObject(sortingMethod);
@@ -108,41 +120,86 @@ public class AppController<HttpPost> {
 		the_flightId = Long.parseLong(id);
 		Flight flight = service.fetchById(the_flightId);
 		model.addAttribute("flight", flight);
+		String button = new String("Add Ticket");
+		model.addAttribute("button",button);
+		List<Ticket> tickets = new ArrayList<Ticket>();
+		model.addAttribute("tickets", tickets);
+		ticketsMade.clear();
 		return "BuildTicket";
 	}
 
+
 	// ck --- Here I get and set the ticket information (extra information)
 	@RequestMapping(value = "/setTicketInformation", method = RequestMethod.POST)
-	public String saveTicket(Model model,@ModelAttribute(name = "radio_class") String radio_class,@ModelAttribute(name = "insurance") String insurance,@ModelAttribute(name = "meal") String meal,@ModelAttribute(name = "luggage") String luggage,@ModelAttribute(name = "finalPrice") String finalPrice) {
+	public String saveTicket(Model model,@ModelAttribute(name = "radio_class") String radio_class,@ModelAttribute(name = "insurance") String insurance,@ModelAttribute(name = "meal") String meal,@ModelAttribute(name = "luggage") String luggage,@ModelAttribute(name = "finalPrice") String finalPrice,@ModelAttribute(name = "radio_age") String radio_age) {
 		System.out.println(" The class is: "+radio_class + " Luggage: " + luggage  + " Meal: " +meal+ " Insur: " + insurance + "Final price: " + finalPrice);
-		TicketBuilder ticketBuilder = new FlightTicketBuilder();
-		ticketBuilder.addAgeGroup("Adult");
+
+		String button = new String();
+			if (ticketsMade.size()<numberOfTickets) {
+				button = "Add Ticket";
+				TicketBuilder ticketBuilder = new FlightTicketBuilder();
+				ticketBuilder.addAgeGroup(radio_age);
+
+
+/// building new random non existent booking refs - ck
+				String bookingRef = tService.buildRandomTicketRef();
+				while (tService.findByTicketRef(bookingRef).equals("yes")) {
+					bookingRef = tService.buildRandomTicketRef();
+				}
+				ticketBuilder.addBookingRef(bookingRef);
+				ticketBuilder.addFlightId(the_flightId);
+				if (insurance.equals("yes")) {
+					ticketBuilder.addInsurance(insurance);
+				}
+				if (!"".equals(luggage) && !"0".equals(luggage)) {
+					ticketBuilder.addLuggage(luggage);
+				}
+				ticketBuilder.addSeatClass(radio_class);
+				ticketBuilder.addMeal(meal);
+				ticketBuilder.addPriceBought(finalPrice);
+				Ticket ticket = ticketBuilder.getTicket();
+				ticketsMade.add(ticket);
+				System.out.print(ticket.toString());
+			}
+			else {
+				List<Ticket> finalTickets = new ArrayList<Ticket>(ticketsMade);
+				model.addAttribute("finalTickets",finalTickets);
+				Customer customer = new Customer();
+				model.addAttribute("customer", customer);
+				double totalCost = 0;
+				for (int i=0; i<ticketsMade.size();i++){
+					totalCost += Double.parseDouble(ticketsMade.get(i).priceBought);
+				}
+				model.addAttribute("totalCost", Math.round(totalCost*100.0)/100.0);
+				return "Checkout";
+			}
+			if (ticketsMade.size()==numberOfTickets){
+				button ="Pay";
+			}
 		Flight flight = service.fetchById(the_flightId);
+		model.addAttribute("flight", flight);
+		model.addAttribute("tickets",ticketsMade);
+		model.addAttribute("button",button);
+
+		return "BuildTicket";
+	}
 
 
+	@RequestMapping(value = "/setCustomerInformation", method = RequestMethod.POST)
+	public ModelAndView confirm(@ModelAttribute(name = "Customer") Customer customer) {
+		ModelAndView mav = new ModelAndView("Confirmation" );
+		Booking book = new Booking();
+		book.setCustomerEmail(customer.getCustomerEmail());
+		cService.save(customer);
 
-		/// building new random non existent booking refs - ck
-		String bookingRef= tService.buildRandomTicketRef();
-		while(tService.findByTicketRef(bookingRef).equals("yes")){
-			bookingRef= tService.buildRandomTicketRef();
+		for (int i=0; i<ticketsMade.size(); i++) {
+			tService.save(ticketsMade.get(i));
+			book.setBookingRef(ticketsMade.get(i).bookingRef);
+			bService.save(book);
 		}
-		ticketBuilder.addBookingRef(bookingRef);
+		service.decreaseCapacity(the_flightId, ticketsMade.size());
 
-		ticketBuilder.addFlightId(the_flightId);
-		if (insurance.equals("yes")) {
-			ticketBuilder.addInsurance(insurance);
-		}
-		if (!"".equals(luggage) && !"0".equals(luggage)){
-			ticketBuilder.addLuggage(luggage);
-		}
-		ticketBuilder.addSeatClass(radio_class);
-		ticketBuilder.addMeal(meal);
-		ticketBuilder.addPriceBought(finalPrice);
-		Ticket ticket = ticketBuilder.getTicket();
-		System.out.print(ticket.toString());
-		tService.save(ticket);
-		System.out.print(tService.listAll());
-		return "ResultPage";
+		return mav;
 	}
 
 	// search for booking  -- ck
