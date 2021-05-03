@@ -1,6 +1,5 @@
 package Team5.onlinebookingsystem;
 
-import antlr.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,11 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Random;
-
-import static java.lang.Math.round;
 
 @Controller
 public class AppController<HttpPost> {
@@ -216,25 +211,36 @@ public class AppController<HttpPost> {
 	public String showBookingSearchPage(Model model,@ModelAttribute(name = "bookingRef") String bookingRef,@ModelAttribute(name = "email") String email){
 		model.addAttribute("bookingRef",bookingRef);
 		model.addAttribute("email",email);
-//		System.out.println("bookingRef: "+ bookingRef + "email: " + email);
-		Flight flightInfo = new Flight();
+		boolean wrongEmail =false;
+		boolean wrongBookingRef =false;
+
+		boolean validation = bService.validate(email,bookingRef);
+		Flight flightInfo =new Flight();
 		Ticket ticketInfo = tService.getTicketInformationByRef(bookingRef);
-		//		Customer customerInfo = new Customer();
-		if (ticketInfo != null){
-			flightInfo = service.fetchById(ticketInfo.flightId);
-			// If flight information for some reason can not be found
-			if(flightInfo==null){
-				// adding null here in order to catch it in the html page!!
-				flightInfo = new Flight();
-				ticketInfo.priceBought = "null";
+		Customer customerInfo = cService.findByEmail(email);
+
+		if(validation) {
+			if(ticketInfo==null){
+				wrongBookingRef=true;
+			}else{
+				flightInfo = service.fetchById(ticketInfo.flightId);
+			}
+			if(customerInfo==null){
+				wrongEmail=true;
 			}
 		}else{
-			ticketInfo = new Ticket();
-			ticketInfo.bookingRef = "null";
+			if(ticketInfo==null){
+				wrongBookingRef=true;
+			}
+			if(customerInfo==null){
+				wrongEmail=true;
+			}
 		}
 		model.addAttribute("ticketInfo",ticketInfo);
 		model.addAttribute("flightInfo",flightInfo);
-
+		model.addAttribute("wrongBookingRef",wrongBookingRef);
+		model.addAttribute("wrongEmail",wrongEmail);
+		model.addAttribute("validation",validation);
 		return "BookingSearchPage";
 	}
 

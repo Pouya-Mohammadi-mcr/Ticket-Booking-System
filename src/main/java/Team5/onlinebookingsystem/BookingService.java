@@ -28,4 +28,13 @@ public class BookingService {
     public void delete(long id) {
         repo.deleteById(id);
     }
+
+    public boolean validate(String email,String bookingRef){
+        Booking book = new Booking();
+        book = repo.validation(email, bookingRef);
+        if(book==null){
+            return false;
+        }
+        return true;
+    }
 }
