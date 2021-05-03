@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import static java.lang.Math.round;
 
@@ -128,6 +129,7 @@ public class AppController<HttpPost> {
 	}
 
 
+	// ck --- Here I get and set the ticket information (extra information)
 	@RequestMapping(value = "/setTicketInformation", method = RequestMethod.POST)
 	public String saveTicket(Model model,@ModelAttribute(name = "radio_class") String radio_class,@ModelAttribute(name = "insurance") String insurance,@ModelAttribute(name = "meal") String meal,@ModelAttribute(name = "luggage") String luggage,@ModelAttribute(name = "finalPrice") String finalPrice,@ModelAttribute(name = "radio_age") String radio_age) {
 		System.out.println(" The class is: "+radio_class + " Luggage: " + luggage  + " Meal: " +meal+ " Insur: " + insurance + "Final price: " + finalPrice);
@@ -198,6 +200,42 @@ public class AppController<HttpPost> {
 		service.decreaseCapacity(the_flightId, ticketsMade.size());
 
 		return mav;
+	}
+
+	// search for booking  -- ck
+	@RequestMapping("/getBooking")
+	public String getBookingSearchPage(Model model){
+		Flight flightInfo = new Flight();
+		Ticket ticketInfo = new Ticket();
+		ticketInfo.bookingRef="nosearch";
+		model.addAttribute("ticketInfo",ticketInfo);
+		model.addAttribute("flightInfo",flightInfo);
+		return "BookingSearchPage";
+	}
+	@RequestMapping(value = "/returnBooking", method = RequestMethod.POST)
+	public String showBookingSearchPage(Model model,@ModelAttribute(name = "bookingRef") String bookingRef,@ModelAttribute(name = "email") String email){
+		model.addAttribute("bookingRef",bookingRef);
+		model.addAttribute("email",email);
+//		System.out.println("bookingRef: "+ bookingRef + "email: " + email);
+		Flight flightInfo = new Flight();
+		Ticket ticketInfo = tService.getTicketInformationByRef(bookingRef);
+		//		Customer customerInfo = new Customer();
+		if (ticketInfo != null){
+			flightInfo = service.fetchById(ticketInfo.flightId);
+			// If flight information for some reason can not be found
+			if(flightInfo==null){
+				// adding null here in order to catch it in the html page!!
+				flightInfo = new Flight();
+				ticketInfo.priceBought = "null";
+			}
+		}else{
+			ticketInfo = new Ticket();
+			ticketInfo.bookingRef = "null";
+		}
+		model.addAttribute("ticketInfo",ticketInfo);
+		model.addAttribute("flightInfo",flightInfo);
+
+		return "BookingSearchPage";
 	}
 
 

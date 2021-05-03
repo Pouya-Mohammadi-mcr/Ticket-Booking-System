@@ -50,27 +50,27 @@ public class SortByPriceTest {
     }
 
     @Test
-    void DescendingSortTest(){
+    void descendingSortTest(){
         //Arrange
         SortByPriceDescending sortDescending = new SortByPriceDescending();
 
         //Act
-        List<Flight> sortedList = sortDescending.sort(unsortedList);
+        sortDescending.sort(unsortedList);
 
         //Assert
-        assertEquals(descendingList, sortedList);
+        assertEquals(descendingList, unsortedList);
     }
 
     @Test
-    void AscendingSortTest(){
+    void ascendingSortTest(){
         //Arrange
         SortByPriceAscending sortAscending = new SortByPriceAscending();
 
         //Act
-        List<Flight> sortedList = sortAscending.sort(unsortedList);
+        sortAscending.sort(unsortedList);
 
         //Assert
-        assertEquals(ascendingList, sortedList);
+        assertEquals(ascendingList, unsortedList);
     }
 
 }

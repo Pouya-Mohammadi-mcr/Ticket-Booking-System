@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface SortingStrategy {
 
-    public List<Flight> sort(List<Flight> flightList);
+    public void sort(List<Flight> flightList);
 }

@@ -21,7 +21,7 @@ public class SortingContextTest {
 
     @ParameterizedTest
     @MethodSource(value =  "data")
-    void SortingStrategyTest_temp(SortingStrategy data){
+    void sortingStrategyParameterisedTest(SortingStrategy data){
         //Arrange
         SortingContext context = new SortingContext();
 
@@ -34,7 +34,7 @@ public class SortingContextTest {
     }
 
     @Test
-    void SortingStrategyTest(){
+    void sortingStrategyStrategyTest(){
         //Arrange
         SortingStrategy strategy = Mockito.mock(SortingStrategy.class);
         SortingContext context = new SortingContext();
@@ -48,7 +48,7 @@ public class SortingContextTest {
     }
 
     @Test
-    void SortingStrategyTest_NullCase(){
+    void sortingStrategyTest_NullCase(){
         //Arrange
         SortingContext context = new SortingContext();
 
@@ -61,31 +61,22 @@ public class SortingContextTest {
     }
 
     @Test
-    void SortFlightsTest(){
-        //Arrange
-        List<Flight> dummyList = new ArrayList<Flight>();
+    void sortFlightsTest(){
+        // Arrange
+        List<Flight> flightListList = new ArrayList<Flight>();
         Flight flightObject1 = Mockito.mock(Flight.class);
-        dummyList.add(flightObject1);
-
-        List<Flight> sortedList = new ArrayList<Flight>();
-        Flight flightObject2 = Mockito.mock(Flight.class);
-        sortedList.add(flightObject2);
+        flightListList.add(flightObject1);
 
         SortingStrategy strategy = Mockito.mock(SortingStrategy.class);
         SortingContext context = new SortingContext();
         context.setStrategy(strategy);
-        when(strategy.sort(dummyList)).thenReturn(sortedList);
 
-        //Act
-        List<Flight> sortedFlights = context.sortFlights(dummyList);
+        Mockito.doNothing().when(strategy).sort(flightListList);
 
-        //Assert
+        // Act
+        context.sortFlights(flightListList);
+
+        // Assert
         verify(strategy, times(1)).sort(any( List.class));
-        assertEquals(sortedList, sortedFlights);
     }
-
-    //ToDo
-    // Can strategy possibly be null?
-    // If yes, then throw exception in the prod method and handle it in the test code
-
 }

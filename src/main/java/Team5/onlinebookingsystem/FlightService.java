@@ -61,6 +61,7 @@ public class FlightService {
             }
         }
         if (matchedFlights.size() == 0) {
+            // Todo: ------------------ Remove? ---------------------------
             System.out.print("NO RESULTS");
         }
         matchedFlights.removeIf(flightEntry -> flightEntry.getDepartureTime().equals("NA"));
@@ -76,6 +77,7 @@ public class FlightService {
     }
 //    Service for fetching airport-city names -- ck
     public List<String> fetchOriginAirports(String keyword){
+        // Todo:------------------- Rename List ------------------------
         List<Flight> listOfAirports = repo.findByOrigin(keyword);
         List<String> suggestions = new ArrayList<String>();
         for (int i=0 ; i<listOfAirports.size(); i++){
@@ -89,6 +91,7 @@ public class FlightService {
 
     //    Service for fetching airport-city names -- ck
     public List<String> fetchDestinationAirports(String keyword,String origin){
+        // Todo: ------------------- Rename List ------------------------
         List<Flight> listOfAirports = repo.findByDestination(keyword,origin);
         List<String> suggestions = new ArrayList<String>();
 

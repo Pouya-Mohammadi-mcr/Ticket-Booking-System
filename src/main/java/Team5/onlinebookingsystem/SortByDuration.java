@@ -9,8 +9,7 @@ public class SortByDuration implements SortingStrategy {
 
 
     @Override
-    public List<Flight> sort(List<Flight> flightList) {
-        //float f=Float.parseFloat();
+    public void sort(List<Flight> flightList) {
         Comparator<Flight> compareByDuration = new Comparator<Flight>() {
             @Override
             public int compare(Flight f1, Flight f2) {
@@ -82,6 +81,5 @@ public class SortByDuration implements SortingStrategy {
             }
         };
         Collections.sort(flightList, compareByDuration);
-        return flightList;
     }
 }

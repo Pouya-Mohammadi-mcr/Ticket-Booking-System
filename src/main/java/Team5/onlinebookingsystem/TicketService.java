@@ -33,22 +33,29 @@ public class TicketService {
             tRepo.deleteById(id);
         }
 
-        public String buildRandomTicketRef(){
-        Random rand = new Random();
-        StringBuilder randBookingReference = new StringBuilder();
-        for(int i=0;i<10;i++){
-            randBookingReference.append(Integer.toString(rand.nextInt(10)));
-        }
-        return randBookingReference.toString();
-    }
-
         public String findByTicketRef(String ref){
-        Ticket ticket = new Ticket();
-        ticket =  tRepo.findByTicketRef(ref);
-        if (ticket == null) {
-            return "no";
+            Ticket ticket = new Ticket();
+            ticket =  tRepo.findByTicketRef(ref);
+            if (ticket == null) {
+                return "no";
+            }
+            return "yes";
         }
-        return "yes";
-    }
+
+        public Ticket getTicketInformationByRef(String ref){
+            Ticket ticket = new Ticket();
+            ticket =  tRepo.findByTicketRef(ref);
+            return ticket;
+        }
+
+
+        public String buildRandomTicketRef(){
+            Random rand = new Random();
+            StringBuilder randBookingReference = new StringBuilder();
+            for(int i=0;i<10;i++){
+                randBookingReference.append(Integer.toString(rand.nextInt(10)));
+            }
+            return randBookingReference.toString();
+        }
 
 }
