@@ -83,13 +83,15 @@
     <td th:if="*{flightInfo.departureTime!=null and flightInfo.departureTime=='NA'}" th:text="${flightInfo.departureTime}">Departure Time</td>
     <td th:if="*{flightInfo.departureTime!=null and #strings.length(flightInfo.departureTime)==4 and flightInfo.departureTime!='NA'}" th:text="${#strings.substring(flightInfo.departureTime,0,2)} + ':'+${#strings.substring(flightInfo.departureTime,2,4)}">Departure Time</td>
     <td th:if="*{flightInfo.departureTime!=null and #strings.length(flightInfo.departureTime)==3 and flightInfo.departureTime!='NA'}" th:text="${#strings.substring(flightInfo.departureTime,0,1)} + ':'+${#strings.substring(flightInfo.departureTime,1,3)}">Departure Time</td>
-    <td th:if="*{flightInfo.departureTime!=null and #strings.length(flightInfo.departureTime)<3 and flightInfo.departureTime!='NA'}" th:text="${flightInfo.departureTime}+':00'">Departure Time</td>
+    <td th:if="*{flightInfo.departureTime!=null and #strings.length(flightInfo.departureTime)==2 and flightInfo.departureTime!='NA'}" th:text="'00:'+${flightInfo.departureTime}">Departure Time</td>
+    <td th:if="*{flightInfo.departureTime!=null and #strings.length(flightInfo.departureTime)==1 and flightInfo.departureTime!='NA'}" th:text="'00:0'+${flightInfo.departureTime}">Departure Time</td>
 
     <!--                        <td th:text="${flightInfo.arrivalTime}">Arrival Time</td>-->
     <td th:if="*{flightInfo.arrivalTime!=null and flightInfo.arrivalTime=='NA'}" th:text="${flightInfo.arrivalTime}">Arrival Time</td>
-    <td th:if="*{flightInfo.arrivalTime!=null and #strings.length(flightInfo.arrivalTime)==4  and flightInfo.arrivalTime!='NA'}" th:text="${#strings.substring(flightInfo.arrivalTime,0,2)} + ':'+${#strings.substring(flightInfo.arrivalTime,2,4)}">Arrival Time</td>
+    <td th:if="*{flightInfo.arrivalTime!=null and #strings.length(flightInfo.arrivalTime)==4 and flightInfo.arrivalTime!='NA'}" th:text="${#strings.substring(flightInfo.arrivalTime,0,2)} + ':'+${#strings.substring(flightInfo.arrivalTime,2,4)}">Arrival Time</td>
     <td th:if="*{flightInfo.arrivalTime!=null and #strings.length(flightInfo.arrivalTime)==3 and flightInfo.arrivalTime!='NA'}" th:text="${#strings.substring(flightInfo.arrivalTime,0,1)} + ':'+${#strings.substring(flightInfo.arrivalTime,1,3)}">Arrival Time</td>
-    <td th:if="*{flightInfo.arrivalTime!=null and #strings.length(flightInfo.arrivalTime)<3 and flightInfo.arrivalTime!='NA'}" th:text="${flightInfo.arrivalTime}+':00'">Arrival Time</td>
+    <td th:if="*{flightInfo.arrivalTime!=null and #strings.length(flightInfo.arrivalTime)==2 and flightInfo.arrivalTime!='NA'}" th:text="'00:'+ ${flightInfo.arrivalTime}">Arrival Time</td>
+    <td th:if="*{flightInfo.arrivalTime!=null and #strings.length(flightInfo.arrivalTime)==1 and flightInfo.arrivalTime!='NA'}" th:text="'00:0'+ ${flightInfo.arrivalTime}">Arrival Time</td>
 
     <td th:text="${flightInfo.date}">Date</td>
     <td th:text="'£' + ${ticketInfo.priceBought}">Price</td>

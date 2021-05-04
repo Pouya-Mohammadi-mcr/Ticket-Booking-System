@@ -27,7 +27,6 @@ public class AppController<HttpPost> {
 	private long numberOfTickets;
 
 	private List<Ticket> ticketsMade = new ArrayList<Ticket>();
-//	public Ticket theTicket = new Ticket();
 
 	@RequestMapping("/")
 	public String showSearchPage(Model model){
@@ -127,15 +126,11 @@ public class AppController<HttpPost> {
 	// ck --- Here I get and set the ticket information (extra information)
 	@RequestMapping(value = "/setTicketInformation", method = RequestMethod.POST)
 	public String saveTicket(Model model,@ModelAttribute(name = "radio_class") String radio_class,@ModelAttribute(name = "insurance") String insurance,@ModelAttribute(name = "meal") String meal,@ModelAttribute(name = "luggage") String luggage,@ModelAttribute(name = "finalPrice") String finalPrice,@ModelAttribute(name = "radio_age") String radio_age) {
-		System.out.println(" The class is: "+radio_class + " Luggage: " + luggage  + " Meal: " +meal+ " Insur: " + insurance + "Final price: " + finalPrice);
-
 		String button = new String();
 			if (ticketsMade.size()<numberOfTickets) {
 				button = "Add Ticket";
 				TicketBuilder ticketBuilder = new FlightTicketBuilder();
 				ticketBuilder.addAgeGroup(radio_age);
-
-
 /// building new random non existent booking refs - ck
 				String bookingRef = tService.buildRandomTicketRef();
 				while (tService.findByTicketRef(bookingRef).equals("yes")) {
@@ -175,7 +170,6 @@ public class AppController<HttpPost> {
 		model.addAttribute("flight", flight);
 		model.addAttribute("tickets",ticketsMade);
 		model.addAttribute("button",button);
-
 		return "BuildTicket";
 	}
 
@@ -183,17 +177,16 @@ public class AppController<HttpPost> {
 	@RequestMapping(value = "/setCustomerInformation", method = RequestMethod.POST)
 	public ModelAndView confirm(@ModelAttribute(name = "Customer") Customer customer) {
 		ModelAndView mav = new ModelAndView("Confirmation" );
-		Booking book = new Booking();
-		book.setCustomerEmail(customer.getCustomerEmail());
 		cService.save(customer);
 
-		for (int i=0; i<ticketsMade.size(); i++) {
+		for(int i=0; i<ticketsMade.size(); i++){
+			Booking book = new Booking();
+			book.setCustomerEmail(customer.getCustomerEmail());
 			tService.save(ticketsMade.get(i));
 			book.setBookingRef(ticketsMade.get(i).bookingRef);
 			bService.save(book);
 		}
 		service.decreaseCapacity(the_flightId, ticketsMade.size());
-
 		return mav;
 	}
 
@@ -213,12 +206,10 @@ public class AppController<HttpPost> {
 		model.addAttribute("email",email);
 		boolean wrongEmail =false;
 		boolean wrongBookingRef =false;
-
 		boolean validation = bService.validate(email,bookingRef);
 		Flight flightInfo =new Flight();
 		Ticket ticketInfo = tService.getTicketInformationByRef(bookingRef);
 		Customer customerInfo = cService.findByEmail(email);
-
 		if(validation) {
 			if(ticketInfo==null){
 				wrongBookingRef=true;
