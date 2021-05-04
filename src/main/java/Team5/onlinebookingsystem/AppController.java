@@ -44,9 +44,9 @@ public class AppController<HttpPost> {
 		List<Flight> matchedFlights = service.find(flight.getFrom(), flight.getTo(), flight.getDate(), numberOfTickets);
 		mav.addObject("matchedFlights", matchedFlights);
 		Flight flightInfo = new Flight(flight.getFrom(), flight.getTo(), flight.getDate());
+		flightInfo.setAvailableSeats(numberOfTickets);
 		mav.addObject("flightInfo", flightInfo);
 		Flight newFlight = new Flight();
-		newFlight.setAvailableSeats(flight.getAvailableSeats());
 		mav.addObject("newFlight",newFlight);
 		String sortingMethod = new String();
 		mav.addObject(sortingMethod);
@@ -62,6 +62,7 @@ public class AppController<HttpPost> {
 		matchedFlights = service.sort(strategy, flightList);
 		mav.addObject("matchedFlights", matchedFlights);
 		Flight flightInfo = new Flight(flight.getFrom(), flight.getTo(), flight.getDate());
+		flightInfo.setAvailableSeats(numberOfTickets);
 		mav.addObject("flightInfo", flightInfo);
 		Flight newFlight = new Flight();
 		mav.addObject("newFlight", newFlight);
@@ -94,12 +95,13 @@ public class AppController<HttpPost> {
 
 	// ck observer pattern -- get all new input values
 	@RequestMapping(value = "/updateFlightTable", method = RequestMethod.POST)
-	public ModelAndView updateFlightTable(@ModelAttribute(name = "Flight") Flight flight) {
+	public ModelAndView updateFlightTable(@ModelAttribute(name = "Flight") Flight flight ) {
 		ModelAndView mav = new ModelAndView("MatchedFlights");
 		numberOfTickets = flight.getAvailableSeats();
 		List<Flight> matchedFlights = service.find(flight.getFrom(), flight.getTo(), flight.getDate(), numberOfTickets);
 		mav.addObject("matchedFlights", matchedFlights);
 		Flight flightInfo = new Flight(flight.getFrom(), flight.getTo(), flight.getDate());
+		flightInfo.setAvailableSeats(numberOfTickets);
 		mav.addObject("flightInfo", flightInfo);
 		Flight newFlight = new Flight();
 		newFlight.setAvailableSeats(flight.getAvailableSeats());
