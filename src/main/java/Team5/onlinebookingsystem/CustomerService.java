@@ -29,4 +29,8 @@ public class CustomerService {
         repo.deleteById(id);
     }
 
+    public Customer findByEmail(String email){
+        return repo.findByEmail(email);
+    }
+
 }
