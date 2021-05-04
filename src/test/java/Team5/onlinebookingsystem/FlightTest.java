@@ -12,7 +12,7 @@ class FlightTest {
 
     private void AssertFlightObject(Flight flight, Map<String, String> coreAttributes){
         assertEquals(coreAttributes.get("flight_No"),flight.getFlightNumber());
-        assertEquals(coreAttributes.get("availableSeats"),flight.getAvailableSeats());
+        assertEquals(Long.parseLong(coreAttributes.get("availableSeats")),flight.getAvailableSeats());
         assertEquals(coreAttributes.get("from"),flight.getFrom());
         assertEquals(coreAttributes.get("to"),flight.getTo());
         assertEquals(coreAttributes.get("departureTime"),flight.getDepartureTime());
@@ -36,7 +36,7 @@ class FlightTest {
 
         Map<String, String> coreAttributes = new HashMap<String, String>()
         {{
-            put("flight_No", flight_No);put("from", from);put("to", to);
+            put("flight_No", flight_No);put("from", from);put("to", to);put("availableSeats", String.valueOf(availableSeats));
             put("departureTime", departureTime);put("arrivalTime", arrivalTime);put("date", date);put("price", price);
         }};
 
@@ -100,15 +100,15 @@ class FlightTest {
     @Test
     void AvailableSeatsTest(){
         //Arrange
-        int expectedSeat = 10;
+        long expectedSeats = 10l;
 
         //Act
         Flight flight = new Flight();
-        flight.setAvailableSeats(expectedSeat);
+        flight.setAvailableSeats(expectedSeats);
         long actualSeat  = flight.getAvailableSeats();
 
         //Assert
-        assertEquals(expectedSeat, actualSeat);
+        assertEquals(expectedSeats, actualSeat);
     }
 
     @Test

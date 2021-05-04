@@ -115,10 +115,9 @@ public class FlightService {
 
     }
 
-
-    public void decreaseCapacity(long id, long l) {
+    public void decreaseCapacity(long id, long decrementValue) {
         Flight flight = get(id);
-        long seats = flight.getAvailableSeats()-l ;
+        long seats = flight.getAvailableSeats()-decrementValue ;
         repo.updateSeats(seats,id);
 //        repo.save(flight);
     }

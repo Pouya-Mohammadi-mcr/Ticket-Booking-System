@@ -48,17 +48,18 @@
 
 <table class="table" id="matchedBooking">
   <thead>
-  <tr th:if="${ticketInfo.bookingRef=='nosearch'}">
+  <tr th:if="${validation==false} and ${wrongEmail==true}">
+       Wrong Email.
   </tr>
-  <tr th:if="${ticketInfo.bookingRef=='null'}">
+  <tr th:if="${validation==false} and ${wrongBookingRef==true}">
     Wrong booking reference.
   </tr>
-  <tr th:if="${ticketInfo.priceBought=='null'}">
+  <tr th:if="(${validation==true} and ${wrongBookingRef==true}) or (${validation==true} and ${wrongEmail==true})">
     Hmmm...
     There seems to be a problem with the flight information! Please contact the airlines to sort this out.
   </tr>
-  <tr class="table-active" th:if="${ticketInfo.bookingRef!='null'} and ${ticketInfo.bookingRef!='nosearch'} and ${ticketInfo.priceBought!='null'}">
-    <th>flightInfo Number</th>
+  <tr class="table-active" th:if="${validation==true} and ${wrongBookingRef==false} and ${wrongEmail==false}">
+    <th>Flight Number</th>
     <th>From</th>
     <th>To</th>
     <th>Departure Time</th>
@@ -68,12 +69,14 @@
   </tr>
   </thead>
   <tbody>
-  <tr th:if="${ticketInfo.bookingRef =='null'}">
+  <tr th:if="${validation==false} and ${wrongEmail==true}">
   </tr>
-  <tr th:if="${ticketInfo.priceBought=='null'}">
+  <tr th:if="${validation==false} and ${wrongBookingRef==true}">
   </tr>
-  <tr th:if="${ticketInfo.bookingRef!='null'} and ${ticketInfo.bookingRef!='nosearch'} and ${ticketInfo.priceBought!='null'}">
-    <td th:text="${flightInfo.flightNumber}">flightInfo Number</td>
+  <tr th:if="(${validation==true} and ${wrongBookingRef==true}) or (${validation==true} and ${wrongEmail==true})">
+  </tr>
+  <tr th:if="${validation==true} and ${wrongBookingRef==false} and ${wrongEmail==false}">
+    <td th:text="${flightInfo.flightNumber}">Flight Number</td>
     <td th:text="${flightInfo.from}">From</td>
     <td th:text="${flightInfo.to}">To</td>
     <!--                        <td th:text="${flightInfo.departureTime}">Departure Time</td>-->
@@ -96,11 +99,13 @@
 
 <table class="table" id="bookingInformatiom">
   <thead>
-  <tr th:if="${ticketInfo.bookingRef=='null'}">
+  <tr th:if="${validation==false} and ${wrongEmail==true}">
   </tr>
-  <tr th:if="${ticketInfo.priceBought=='null'}">
+  <tr th:if="${validation==false} and ${wrongBookingRef==true}">
   </tr>
-  <tr class="table-active" th:if="${ticketInfo.bookingRef!='null'} and ${ticketInfo.bookingRef!='nosearch'} and ${ticketInfo.priceBought!='null'}">
+  <tr th:if="(${validation==true} and ${wrongBookingRef==true}) or (${validation==true} and ${wrongEmail==true})">
+  </tr>
+  <tr class="table-active" th:if="${validation==true} and ${wrongBookingRef==false} and ${wrongEmail==false}">
     <th>Booking Reference</th>
     <th>Class</th>
     <th>Meal</th>
@@ -110,18 +115,20 @@
   </tr>
   </thead>
   <tbody>
-  <tr th:if="${ticketInfo.bookingRef =='null'}">
+  <tr th:if="${validation==false} and ${wrongEmail==true}">
   </tr>
-  <tr th:if="${ticketInfo.priceBought=='null'}">
+  <tr th:if="${validation==false} and ${wrongBookingRef==true}">
   </tr>
-  <tr th:if="${ticketInfo.bookingRef!='null'} and ${ticketInfo.bookingRef!='nosearch'} and ${ticketInfo.priceBought!='null'}">
+  <tr th:if="(${validation==true} and ${wrongBookingRef==true}) or (${validation==true} and ${wrongEmail==true})">
+  </tr>
+  <tr th:if="${validation==true} and ${wrongBookingRef==false} and ${wrongEmail==false}">
     <td th:text="${ticketInfo.bookingRef}">Booking Reference</td>
     <td th:text="${ticketInfo.seatClass}">Class</td>
     <td th:text="${ticketInfo.meal}">Meal</td>
     <td th:if="${ticketInfo.insurance!=null}" th:text="${ticketInfo.insurance}">Insurance</td>
-    <td th:if="${ticketInfo.insurance==null}">NO</td>
+    <td th:if="${ticketInfo.insurance==null}">no</td>
     <td th:if="${ticketInfo.luggage!=null}" th:text="${ticketInfo.luggage}">Insurance</td>
-    <td th:if="${ticketInfo.luggage==null}">NO</td>
+    <td th:if="${ticketInfo.luggage==null}">no</td>
     <td th:text="${ticketInfo.ageGroup}">Age</td>
   </tr>
   </tbody>
