@@ -16,7 +16,6 @@ public class TicketService {
         @Autowired
         protected TicketRepository tRepo;
 
-
         public List<Ticket> listAll() {
             return tRepo.findAll();
         }
