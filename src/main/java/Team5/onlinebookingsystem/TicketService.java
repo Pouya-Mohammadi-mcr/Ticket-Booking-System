@@ -33,8 +33,7 @@ public class TicketService {
         }
 
         public String findByTicketRef(String ref){
-            Ticket ticket = new Ticket();
-            ticket =  tRepo.findByTicketRef(ref);
+            Ticket ticket =  tRepo.findByTicketRef(ref);
             if (ticket == null) {
                 return "no";
             }
@@ -42,8 +41,7 @@ public class TicketService {
         }
 
         public Ticket getTicketInformationByRef(String ref){
-            Ticket ticket = new Ticket();
-            ticket =  tRepo.findByTicketRef(ref);
+            Ticket ticket =  tRepo.findByTicketRef(ref);
             return ticket;
         }
 
