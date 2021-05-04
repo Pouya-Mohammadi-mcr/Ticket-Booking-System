@@ -188,11 +188,11 @@ public class AppController<HttpPost> {
 	@RequestMapping(value = "/setCustomerInformation", method = RequestMethod.POST)
 	public ModelAndView confirm(@ModelAttribute(name = "Customer") Customer customer) {
 		ModelAndView mav = new ModelAndView("Confirmation" );
-		Booking book = new Booking();
-		book.setCustomerEmail(customer.getCustomerEmail());
 		cService.save(customer);
 
 		for (int i=0; i<ticketsMade.size(); i++) {
+			Booking book = new Booking();
+			book.setCustomerEmail(customer.getCustomerEmail());
 			tService.save(ticketsMade.get(i));
 			book.setBookingRef(ticketsMade.get(i).bookingRef);
 			bService.save(book);
