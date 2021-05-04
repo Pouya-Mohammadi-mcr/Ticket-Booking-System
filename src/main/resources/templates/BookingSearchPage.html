@@ -48,17 +48,18 @@
 
 <table class="table" id="matchedBooking">
   <thead>
-  <tr th:if="${validation==false} and ${wrongEmail==true}">
-       Wrong Email.
-  </tr>
-  <tr th:if="${validation==false} and ${wrongBookingRef==true}">
-    Wrong booking reference.
-  </tr>
-  <tr th:if="(${validation==true} and ${wrongBookingRef==true}) or (${validation==true} and ${wrongEmail==true})">
-    Hmmm...
-    There seems to be a problem with the flight information! Please contact the airlines to sort this out.
-  </tr>
-  <tr class="table-active" th:if="${validation==true} and ${wrongBookingRef==false} and ${wrongEmail==false}">
+  <div class="alert alert-info" role="alert" th:if="${validation==false} and ${wrongEmail==true}">
+    <strong>Wrong Email!</strong>
+  </div>
+  <div class="alert alert-info" th:if="${validation==false} and ${wrongBookingRef==true}">
+    <strong>Wrong booking reference!</strong>
+  </div>
+  <div class="alert alert-warning" th:if="(${validation==true} and ${wrongBookingRef==true}) or (${validation==true} and ${wrongEmail==true})">
+    <strong>
+      Hmmm...
+      There seems to be a problem with the flight information! Please contact the airlines to sort this out.</strong>
+  </div>
+  <tr style="background: grey" class="table-active" th:if="${validation==true} and ${wrongBookingRef==false} and ${wrongEmail==false}">
     <th>Flight Number</th>
     <th>From</th>
     <th>To</th>
@@ -75,7 +76,7 @@
   </tr>
   <tr th:if="(${validation==true} and ${wrongBookingRef==true}) or (${validation==true} and ${wrongEmail==true})">
   </tr>
-  <tr th:if="${validation==true} and ${wrongBookingRef==false} and ${wrongEmail==false}">
+  <tr style="background: rgb(225,225,224)" th:if="${validation==true} and ${wrongBookingRef==false} and ${wrongEmail==false}">
     <td th:text="${flightInfo.flightNumber}">Flight Number</td>
     <td th:text="${flightInfo.from}">From</td>
     <td th:text="${flightInfo.to}">To</td>
@@ -107,7 +108,7 @@
   </tr>
   <tr th:if="(${validation==true} and ${wrongBookingRef==true}) or (${validation==true} and ${wrongEmail==true})">
   </tr>
-  <tr class="table-active" th:if="${validation==true} and ${wrongBookingRef==false} and ${wrongEmail==false}">
+  <tr style="background: grey" class="table-active" th:if="${validation==true} and ${wrongBookingRef==false} and ${wrongEmail==false}">
     <th>Booking Reference</th>
     <th>Class</th>
     <th>Meal</th>
@@ -123,7 +124,7 @@
   </tr>
   <tr th:if="(${validation==true} and ${wrongBookingRef==true}) or (${validation==true} and ${wrongEmail==true})">
   </tr>
-  <tr th:if="${validation==true} and ${wrongBookingRef==false} and ${wrongEmail==false}">
+  <tr style="background: rgb(225,225,224)" th:if="${validation==true} and ${wrongBookingRef==false} and ${wrongEmail==false}">
     <td th:text="${ticketInfo.bookingRef}">Booking Reference</td>
     <td th:text="${ticketInfo.seatClass}">Class</td>
     <td th:text="${ticketInfo.meal}">Meal</td>
