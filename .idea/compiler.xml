@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="online-booking-system" target="1.8" />
+      <module name="online-booking-system" target="8" />
       <module name="team-5" target="1.8" />
     </bytecodeTargetLevel>
   </component>

@@ -20,6 +20,8 @@ public class AppController<HttpPost> {
 	private CustomerService cService;
 	@Autowired
 	private BookingService bService;
+	@Autowired
+	private MailingService mailingService;
 
 	private SortingStrategyFactory sortFactory = SortingStrategyFactory.getInstance();
 	private String flightOrigin;
@@ -182,14 +184,17 @@ public class AppController<HttpPost> {
 		ModelAndView mav = new ModelAndView("Confirmation" );
 		cService.save(customer);
 
+		List<Booking> currentBookings = new ArrayList<>();
 		for(int i=0; i<ticketsMade.size(); i++){
 			Booking book = new Booking();
 			book.setCustomerEmail(customer.getCustomerEmail());
 			tService.save(ticketsMade.get(i));
 			book.setBookingRef(ticketsMade.get(i).bookingRef);
 			bService.save(book);
+			currentBookings.add(book);
 		}
 		service.decreaseCapacity(the_flightId, ticketsMade.size());
+		sendConfirmationMail(customer.getCustomerEmail(), currentBookings, customer.getFullName());
 		return mav;
 	}
 
@@ -238,5 +243,37 @@ public class AppController<HttpPost> {
 		return "BookingSearchPage";
 	}
 
+	private void sendConfirmationMail(String emailAddress, List<Booking> bookingList, String customerName){
+		String bookingReferences = "";
 
+		for(int i =0 ; i< bookingList.size(); i++){
+			if(i!= bookingList.size()-1){
+				bookingReferences = bookingReferences+bookingList.get(i).getBookingRef()+", ";
+			}
+			else{
+				bookingReferences = bookingReferences+bookingList.get(i).getBookingRef()+".";
+			}
+		}
+		Flight bookedFlight = (service.get(ticketsMade.get(0).flightId));
+		String source = bookedFlight.getFrom();
+		String destination = bookedFlight.getTo();
+		String dateOfJourney = bookedFlight.getDate();
+		String passengers = String.valueOf(ticketsMade.size());
+
+		String subject = "Confirmation of your flight booking from "+source+" to "+destination;
+		String message = "Hi "+customerName+ ",\n\nWe are glad to inform you that your booking of "+ passengers +
+				" flight tickets from "+source+" to "+destination+" on "+dateOfJourney+ " has been successfully " +
+				"confirmed with booking reference/s: " + bookingReferences +"\n\n"+
+				"Your booking details are:" +
+				"\n•\tDate of Journey: "+ dateOfJourney+
+				"\n•\tNumber of Passengers: "+ passengers+
+				"\n•\tFlight Number: "+ bookedFlight.getFlightNumber()+
+				"\n•\tOrigin City: "+ bookedFlight.getFrom()+
+				"\n•\tDeparture Time: "+ bookedFlight.getDepartureTime()+
+				"\n•\tDestination City: "+ bookedFlight.getTo()+
+				"\n•\tArrival Time: "+ bookedFlight.getArrivalTime()+
+				"\n\n";
+
+		mailingService.sendEmail(subject, emailAddress, message);
+	}
 }
