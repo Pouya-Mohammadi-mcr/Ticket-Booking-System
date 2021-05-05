@@ -56,16 +56,26 @@
             });
         });
 
-        function anyValCheck(var_id, text_id, var_input) {
+        function saveToHidden(date, dateHidden) {
+            const hidden_textBox = document.getElementById(dateHidden);
+            const textBox = document.getElementById(date);
+            hidden_textBox.value = textBox.value.replaceAll("-", "/");
+        }
+
+        function anyValCheck(var_id, text_id, var_input,var_hidden) {
             const checkBox = document.getElementById(var_id);
             const textBox = document.getElementById(text_id);
+            const hidden_textBox = document.getElementById(var_hidden);
             if (checkBox.checked){
                 textBox.value = var_input;
                 textBox.readOnly = true;
+                hidden_textBox.value = var_input;
+
             }
             else{
                 textBox.value = "";
                 textBox.readOnly = false;
+                hidden_textBox.value = "";
             }
         }
     </script>
@@ -106,7 +116,7 @@
                             </div>
                             <div class="col-2 my-1">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="destinationBox" onclick="anyValCheck('destinationBox', 'destination', 'anywhere')">
+                                    <input class="form-check-input" type="checkbox" id="destinationBox" onclick="anyValCheck('destinationBox', 'destination', 'anywhere','')">
                                     <label class="form-check-label" for="destinationBox">Anywhere</label>
                                 </div>
                             </div>
@@ -115,19 +125,20 @@
                             <div class="col-10 my-1">
                                 <div class="input-group mb-3">
                                     <span class="input-group-text" id="4">Date</span>
-                                    <input type="text" class="form-control  " aria-describedby="4" placeholder="yyyy/mm/dd" th:name="date" th:value="${flightInfo.date}" id="date"  required>
+                                    <input type="date" class="form-control  " aria-describedby="4" onchange="saveToHidden('date','dateHidden')" id="date"  required>
+                                    <input HIDDEN type="text" class="form-control" name="date" value="" aria-describedby="4" th:value="${flightInfo.date}" id="dateHidden">
                                 </div>
                             </div>
                             <div class="col-2 my-1">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="dateBox" onclick="anyValCheck('dateBox', 'date', 'alldates')">
+                                    <input class="form-check-input" type="checkbox" id="dateBox" onclick="anyValCheck('dateBox', 'date', 'alldates','dateHidden')">
                                     <label class="form-check-label" for="dateBox">All Dates</label>
                                 </div>
                             </div>
                         </div>
                         <div class="col-10 my-4">
                             <div class="input-group mb-3">
-                                <span class="input-group-text" id="5">Tickets</span>
+                                <span class="input-group-text" id="5">Passengers</span>
                                 <input type="number" max="16" min="1" class="form-control"  aria-describedby="2" placeholder="Number of Tickets" th:name="availableSeats" th:value="${flightInfo.availableSeats}" id="availableSeats" required>
                             </div>
                         </div>
