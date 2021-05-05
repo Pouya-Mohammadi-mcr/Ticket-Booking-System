@@ -54,7 +54,17 @@
         function saveToHidden(date, dateHidden) {
             const hidden_textBox = document.getElementById(dateHidden);
             const textBox = document.getElementById(date);
-            hidden_textBox.value = textBox.value.replaceAll("-", "/");
+            const fields = textBox.value.split("-");
+            var year = fields[0];
+            var month = fields[1];
+            var day = fields[2];
+            if(month.startsWith("0")){
+                month = month.substring(1);
+            }
+            if(day.startsWith("0")){
+                day = day.substring(1);
+            }
+            hidden_textBox.value = year + "/" + month + "/" + day ;
         }
 
         function anyValCheck(var_id, text_id, var_input,var_hidden) {
