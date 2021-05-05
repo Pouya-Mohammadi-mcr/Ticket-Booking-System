@@ -35,37 +35,39 @@
         $("#navbar-temp").load("/navbar.html");
     });
 </script>
-<h1>Checkout</h1>
+<h1 class="my-3">Checkout</h1>
+<div class="container">
+
+    <table th:if="${!finalTickets.isEmpty()}" class="table table-bordered border-dark" id="tickets">
+        <thead>
+        <h3 class="text-center">Your Tickets</h3>
+        <tr class="table-active">
+            <th>Class</th>
+            <th>Age Group</th>
+            <th>Insurance</th>
+            <th>Meal</th>
+            <th>Luggage</th>
+            <th>Price</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="ticket : ${finalTickets}" >
+            <td th:text="${ticket.seatClass}">Class</td>
+            <td th:text="${ticket.ageGroup}">Age Group</td>
+            <td th:text="${ticket.insurance != null} ? ${ticket.insurance} : 'no'">insurance</td>
+            <td th:text="${ticket.meal}">Meal</td>
+            <td th:text="${ticket.luggage != null} ? ${ticket.luggage} : 'no'">Luggage</td>
+            <td th:text="'£ '+${ticket.priceBought}">Price</td>
+        </tr>
+        </tbody>
+    </table>
+    <p class="text-end text-dark fw-bold" th:text="'Total: £'+${totalCost}"></p>
+
+</div>
 <div class="row" id="billingContainer">
     <div class="col-50">
         <div class="container">
-            <table th:if="${!finalTickets.isEmpty()}" class="table table-bordered border-dark" id="tickets">
-                <thead>
-                <h3 class="text-center">Your Tickets</h3>
-                <tr class="table-active">
-                    <th>Class</th>
-                    <th>Age Group</th>
-                    <th>Insurance</th>
-                    <th>Meal</th>
-                    <th>Luggage</th>
-                    <th>Price</th>
-
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="ticket : ${finalTickets}" >
-                    <td th:text="${ticket.seatClass}">Class</td>
-                    <td th:text="${ticket.ageGroup}">Age Group</td>
-                    <td th:text="${ticket.insurance != null} ? ${ticket.insurance} : 'no'">insurance</td>
-                    <td th:text="${ticket.meal}">Meal</td>
-                    <td th:text="${ticket.luggage != null} ? ${ticket.luggage} : 'no'">Luggage</td>
-                    <td th:text="'£ '+${ticket.priceBought}">Price</td>
-                </tr>
-                </tbody>
-            </table>
-            <p class="text-end text-dark fw-bold" th:text="'Total: £'+${totalCost}"></p>
-
-
             <form id="billingInfo" th:object="${customer}" action="#" th:action="@{/setCustomerInformation}"  method="post"  >
                 <div class="row">
                     <div class="col-50">
@@ -120,7 +122,7 @@
                         </label>
                         <!--                        <input type="submit"  value="Checkout" id="btn-checkout"  class="btn">-->
                         <!--                        <button class="btn" id="btn-checkout" type="submit">Submit</button>-->
-                        <button class="btn btn-primary" id="btn-checkout"  >Checkout</button>
+                        <button class="btn btn-dark" id="btn-checkout"  >Checkout</button>
                     </div>
                 </div>
             </form>

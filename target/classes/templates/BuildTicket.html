@@ -152,10 +152,11 @@
 <!--<button class="btn btn-primary" style="float: right" id="btn-pay" onclick="document.getElementById('extraInfo').submit();" type="submit">Pay</button>-->
 
 <div class="row">
-    <div class="col-50">
-<table th:if="${!tickets.isEmpty()}" class="table" id="tickets">
+    <div  th:if="${!tickets.isEmpty()}" class="container col-50">
+<table  class="table table-bordered border-dark" id="tickets">
     <thead>
-    <tr style="background: grey" class="table-active">
+    <h3 class="text-center">Added Tickets</h3>
+    <tr class="table-active">
         <th>Class</th>
         <th>Age Group</th>
         <th>Insurance</th>
@@ -166,7 +167,7 @@
     </tr>
 </thead>
 <tbody>
-<tr style="background: rgb(225,225,224)" th:each="ticket : ${tickets}" >
+<tr th:each="ticket : ${tickets}" >
     <td th:text="${ticket.seatClass}">Class</td>
     <td th:text="${ticket.ageGroup}">Age Group</td>
     <td th:text="${ticket.insurance != null} ? ${ticket.insurance} : 'no'">insurance</td>
