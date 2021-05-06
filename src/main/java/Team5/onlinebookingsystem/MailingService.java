@@ -11,6 +11,7 @@ public class MailingService {
     @Autowired
     private JavaMailSender mailSender;
 
+    // The set of common instructions and guidelines that are to be sent with each email confirmation.
     String commonMessage = "\nSome General Instructions to keep in mind:\n" +
             "•       Check-in Time : Check-in desks will close 1 hour before departure.\n" +
             "•       Valid ID proof needed : Carry a valid photo identification proof (Driving Licence, Passport " +
@@ -38,12 +39,12 @@ public class MailingService {
             "Thank you for choosing us,\n" +
             "Team Fly Away";
 
-    public void sendEmail(String subject, String receipient, String message) {
+    public void sendEmail(String subject, String recipient, String message) {
         String mailFrom = "boookflights@gmail.com";
 
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         simpleMailMessage.setFrom(mailFrom);
-        simpleMailMessage.setTo(receipient);
+        simpleMailMessage.setTo(recipient);
         simpleMailMessage.setSubject(subject);
         simpleMailMessage.setText(message+commonMessage);
 
