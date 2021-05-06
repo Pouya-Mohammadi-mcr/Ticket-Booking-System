@@ -29,7 +29,7 @@ public class SortByDuration implements SortingStrategy {
                 f1AT= (Integer.parseInt(getFormattedTime(f1,"arrival").substring(0,2))*60)
                         +(Integer.parseInt(getFormattedTime(f1,"arrival").substring(2,4)));
 
-                //calculate minute time values for flight f1
+                //calculate minute time values for flight f2
                 //minute time for HH:MM = (HH)*60 + (MM)
                 f2DT= (Integer.parseInt(getFormattedTime(f2,"departure").substring(0,2))*60)
                         +(Integer.parseInt(getFormattedTime(f2,"departure").substring(2,4)));

@@ -1,8 +1,12 @@
 package Team5.onlinebookingsystem;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -16,6 +20,18 @@ import static org.mockito.Mockito.*;
 
 public class AppControllerTest {
     // ToDo Needs more test methods
+
+    @Mock
+    FlightService flightServiceMock;
+
+    @InjectMocks
+    AppController appController;
+
+    @BeforeEach
+    void setup(){
+        MockitoAnnotations.openMocks(this);
+    }
+
 
     @Test
     void showSearchPageTest_ValidCase(){
@@ -138,6 +154,51 @@ public class AppControllerTest {
 
         //Assert
         assertEquals(matchedFlights.get(0).getFrom(), "success");
+    }
 
+    @Test
+    public void updateFlightTableTest(){
+        // Arrange
+        Flight flight = mock(Flight.class);
+        when(flight.getFrom()).thenReturn("Manchester");
+        when(flight.getTo()).thenReturn("London");
+        when(flight.getDate()).thenReturn("01/01/2022");
+        when(flight.getAvailableSeats()).thenReturn(122L);
+
+        Flight matchedFlightMock = mock(Flight.class);
+        when(matchedFlightMock.getFrom()).thenReturn("success");
+        List<Flight> flightList = new ArrayList<Flight>();
+        flightList.add(matchedFlightMock);
+
+        when(flightServiceMock.find(flight.getFrom(), flight.getTo(),
+                flight.getDate(),flight.getAvailableSeats())).thenReturn(flightList);
+
+        // Act
+        ModelAndView mav = appController.updateFlightTable(flight);
+
+        // Assert
+        verify(flightServiceMock, times(1)).find(flight.getFrom(), flight.getTo(),
+                flight.getDate(),flight.getAvailableSeats());
+        assertEquals("Manchester", ((Flight)(mav.getModelMap().get("flightInfo"))).getFrom());
+    }
+
+    @Test
+    public void selectedFlightIdTest(){
+        // Arrange
+        String id = "1237";
+        Flight flight = mock(Flight.class);
+        String expectedResult = "BuildTicket";
+
+        Model model = mock(Model.class);
+        when(flightServiceMock.fetchById(Long.parseLong(id))).thenReturn(flight);
+
+        // Act
+        String result = appController.selectedFlightId(id, model);
+
+        //Assert
+        verify(model, times(1)).addAttribute(any(String.class), any(List.class));
+        verify(model, times(1)).addAttribute("flight", flight);
+        verify(model, times(1)).addAttribute(any(String.class), any(String.class));
+        assertEquals(expectedResult, result);
     }
 }
