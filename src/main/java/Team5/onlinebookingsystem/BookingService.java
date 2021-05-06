@@ -11,29 +11,26 @@ import java.util.List;
 public class BookingService {
 
     @Autowired
-    protected BookingRepository repo;
+    protected BookingRepository bookingRepository;
 
     public List<Booking> listAll() {
-        return repo.findAll();
+        return bookingRepository.findAll();
     }
 
     public void save(Booking booking) {
-        repo.save(booking);
+        bookingRepository.save(booking);
     }
 
     public Booking get(long id) {
-        return repo.findById(id).get();
+        return bookingRepository.findById(id).get();
     }
 
     public void delete(long id) {
-        repo.deleteById(id);
+        bookingRepository.deleteById(id);
     }
 
     public boolean validate(String email,String bookingRef){
-        Booking book = repo.validation(email, bookingRef);
-        if(book==null){
-            return false;
-        }
-        return true;
+        Booking book = bookingRepository.validation(email, bookingRef);
+        return (book != null);
     }
 }
