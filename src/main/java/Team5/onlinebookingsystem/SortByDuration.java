@@ -21,59 +21,40 @@ public class SortByDuration implements SortingStrategy {
                 Integer f2Duration = 0;
 
 
-                //calculate values for flight f1
-                if (f1.getDepartureTime().length()==4){
-                    f1DT= (Integer.parseInt(f1.getDepartureTime().substring(0,2))*60)+(Integer.parseInt(f1.getDepartureTime().substring(2,4)));
-                }
-                else if (f1.getDepartureTime().length()==3){
-                    f1DT= (Integer.parseInt(f1.getDepartureTime().substring(0,1))*60)+(Integer.parseInt(f1.getDepartureTime().substring(1,3)));
-                }
-                else if (f1.getDepartureTime().length()<3 ){
-                    f1DT= (Integer.parseInt(f1.getDepartureTime())*60);
-                }
+                //calculate minute time values for flight f1
+                //minute time for HH:MM = (HH)*60 + (MM)
+                f1DT= (Integer.parseInt(getFormattedTime(f1,"departure").substring(0,2))*60)
+                        +(Integer.parseInt(getFormattedTime(f1,"departure").substring(2,4)));
 
-                if (f1.getArrivalTime().length()==4){
-                    f1AT= (Integer.parseInt(f1.getArrivalTime().substring(0,2))*60)+(Integer.parseInt(f1.getArrivalTime().substring(2,4)));
-                }
-                else if (f1.getArrivalTime().length()==3){
-                    f1AT= (Integer.parseInt(f1.getArrivalTime().substring(0,1))*60)+(Integer.parseInt(f1.getArrivalTime().substring(1,3)));
-                }
-                else if (f1.getArrivalTime().length()<3 ){
-                    f1AT= (Integer.parseInt(f1.getArrivalTime())*60);
-                }
+                f1AT= (Integer.parseInt(getFormattedTime(f1,"arrival").substring(0,2))*60)
+                        +(Integer.parseInt(getFormattedTime(f1,"arrival").substring(2,4)));
 
-                //calculate values for flight f2
-                if (f2.getDepartureTime().length()==4){
-                    f2DT= (Integer.parseInt(f2.getDepartureTime().substring(0,2))*60)+(Integer.parseInt(f2.getDepartureTime().substring(2,4)));
-                }
-                else if (f2.getDepartureTime().length()==3){
-                    f2DT= (Integer.parseInt(f2.getDepartureTime().substring(0,1))*60)+(Integer.parseInt(f2.getDepartureTime().substring(1,3)));
-                }
-                else if (f2.getDepartureTime().length()<3 ){
-                    f2DT= (Integer.parseInt(f2.getDepartureTime())*60);
-                }
-                if (f2.getArrivalTime().length()==4){
-                    f2AT= (Integer.parseInt(f2.getArrivalTime().substring(0,2))*60)+(Integer.parseInt(f2.getArrivalTime().substring(2,4)));
-                }
-                else if (f2.getArrivalTime().length()==3){
-                    f2AT= (Integer.parseInt(f2.getArrivalTime().substring(0,1))*60)+(Integer.parseInt(f2.getArrivalTime().substring(1,3)));
-                }
-                else if (f2.getArrivalTime().length()<3 ){
-                    f2AT= (Integer.parseInt(f2.getArrivalTime())*60);
-                }
+                //calculate minute time values for flight f1
+                //minute time for HH:MM = (HH)*60 + (MM)
+                f2DT= (Integer.parseInt(getFormattedTime(f2,"departure").substring(0,2))*60)
+                        +(Integer.parseInt(getFormattedTime(f2,"departure").substring(2,4)));
 
-                //When arrival is in the next day
+                f2AT= (Integer.parseInt(getFormattedTime(f2,"arrival").substring(0,2))*60)
+                        +(Integer.parseInt(getFormattedTime(f2,"arrival").substring(2,4)));
+
+                //Flight f1's duration when its arrival is on the next day of its departure
                 if (f1AT<f1DT){
-                    f1Duration = (1440-f1DT)+f1AT;
+                    //Duration = duration on departing day + duration on day of arrival
+                    //Duration = (24*60 - f1DT) + (f1AT - 0*60)
+                    f1Duration = (1440 - f1DT) + (f1AT - 0);
                 }
+                //Flight f1's duration when its arrival and departure are on the same day
                 else{
                     f1Duration = f1AT-f1DT;
                 }
 
-                //When arrival is in the next day
+                //Flight f2's duration when its arrival is on the next day of its departure
                 if (f2AT<f2DT){
-                    f2Duration = (1440-f2DT)+f2AT;
+                    //Duration = duration on departing day + duration on day of arrival
+                    //Duration = (24*60 - f1DT) + (f1AT - 0*60)
+                    f2Duration = (1440 - f2DT) + (f2AT - 0);
                 }
+                //Flight f2's duration when its arrival and departure are on the same day
                 else{
                     f2Duration = f2AT-f2DT;
                 }
@@ -81,5 +62,21 @@ public class SortByDuration implements SortingStrategy {
             }
         };
         Collections.sort(flightList, compareByDuration);
+    }
+
+    String getFormattedTime(Flight flight, String timeParameter){
+        String time = "";
+        if(timeParameter == "arrival"){
+            time = flight.getArrivalTime();
+        }
+        else if(timeParameter == "departure"){
+            time = flight.getDepartureTime();
+        }
+
+        int zerosNeeded = 4-time.length();
+        for(int i =0; i<zerosNeeded; i++){
+            time="0"+time;
+        }
+        return time;
     }
 }
