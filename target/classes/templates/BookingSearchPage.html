@@ -21,6 +21,7 @@
   $(function(){
     $("#navbar-temp").load("navbar.html");
   });
+
 </script>
 <div class="container" id="flightContainer">
   <h1 class="h1 text-center mt-3">Find Tickets</h1>
@@ -63,6 +64,7 @@
   </div>
 
   <div class="container-fluid" th:if="${validation==true} and ${wrongBookingRef==false} and ${wrongEmail==false}">
+    <h4 style="margin-top: 1.5em;">Your ticket information is displayed below.</h4>
     <div class="row content">
 <!--      <div class="col-sm-1"></div>-->
       <div class="col-sm-12 ticketInfo">
