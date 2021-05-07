@@ -121,4 +121,34 @@ public class FlightService {
         repo.updateSeats(seats,id);
 //        repo.save(flight);
     }
+
+    public  List<Boolean> validation(boolean validation,Ticket ticketInfo,Customer customerInfo,boolean wrongBookingRef,boolean wrongEmail){
+        List<Boolean> val = new ArrayList<>();
+        if(validation){
+            if(ticketInfo==null){
+                wrongBookingRef=true;
+            }
+            if(customerInfo==null){
+                wrongEmail=true;
+            }
+        }else{
+            if(ticketInfo==null){
+                wrongBookingRef=true;
+            }
+            if(customerInfo==null){
+                wrongEmail=true;
+            }
+        }
+        val.add(wrongBookingRef);
+        val.add(wrongEmail);
+        return val;
+    }
+    public Flight getFlightInfoIfTicketExists(Ticket ticketInfo){
+        if(ticketInfo==null){
+            return null;
+        }else{
+            return this.fetchById(ticketInfo.flightId);
+        }
+    }
+
 }
