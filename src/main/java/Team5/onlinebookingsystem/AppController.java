@@ -135,26 +135,9 @@ public class AppController<HttpPost> {
 			if (ticketsMade.size()<numberOfTickets) {
 				button = "Add Ticket";
 				TicketBuilder ticketBuilder = new FlightTicketBuilder();
-				ticketBuilder.addAgeGroup(radio_age);
-/// building new random non existent booking refs - ck
-				String bookingRef = tService.buildRandomTicketRef();
-				while (tService.findByTicketRef(bookingRef).equals("yes")) {
-					bookingRef = tService.buildRandomTicketRef();
-				}
-				ticketBuilder.addBookingRef(bookingRef);
-				ticketBuilder.addFlightId(the_flightId);
-				if (insurance.equals("yes")) {
-					ticketBuilder.addInsurance(insurance);
-				}
-				if (!"".equals(luggage) && !"0".equals(luggage)) {
-					ticketBuilder.addLuggage(luggage);
-				}
-				ticketBuilder.addSeatClass(radio_class);
-				ticketBuilder.addMeal(meal);
-				ticketBuilder.addPriceBought(finalPrice);
-				Ticket ticket = ticketBuilder.getTicket();
+				TicketDirector ticketDirector = new TicketDirector();
+				Ticket ticket = ticketDirector.makeTicket(ticketBuilder,tService,radio_class,meal,luggage,finalPrice,insurance,radio_age,the_flightId);
 				ticketsMade.add(ticket);
-				System.out.print(ticket.toString());
 			}
 			else {
 				List<Ticket> finalTickets = new ArrayList<Ticket>(ticketsMade);
