@@ -218,27 +218,12 @@ public class AppController<HttpPost> {
 		Flight flightInfo =new Flight();
 		Ticket ticketInfo = tService.getTicketInformationByRef(bookingRef);
 		Customer customerInfo = cService.findByEmail(email);
-		if(validation) {
-			if(ticketInfo==null){
-				wrongBookingRef=true;
-			}else{
-				flightInfo = service.fetchById(ticketInfo.flightId);
-			}
-			if(customerInfo==null){
-				wrongEmail=true;
-			}
-		}else{
-			if(ticketInfo==null){
-				wrongBookingRef=true;
-			}
-			if(customerInfo==null){
-				wrongEmail=true;
-			}
-		}
+		List<Boolean> val = service.validation(validation,ticketInfo,customerInfo,wrongBookingRef,wrongEmail);
+		flightInfo = service.getFlightInfoIfTicketExists(ticketInfo);
 		model.addAttribute("ticketInfo",ticketInfo);
 		model.addAttribute("flightInfo",flightInfo);
-		model.addAttribute("wrongBookingRef",wrongBookingRef);
-		model.addAttribute("wrongEmail",wrongEmail);
+		model.addAttribute("wrongBookingRef",val.get(0));
+		model.addAttribute("wrongEmail",val.get(1));
 		model.addAttribute("validation",validation);
 		return "BookingSearchPage";
 	}
