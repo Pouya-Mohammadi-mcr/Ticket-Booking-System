@@ -24,12 +24,19 @@
 </script>
 <!--<img th:src="@{/images/index_bg.jpeg}">-->
 <div class="container" id="flightContainer">
-  <h1 class="h1 text-center mt-3">Find Booking</h1>
+  <h1 class="h1 text-center mt-3">Find Tickets</h1>
   <form class="col-12, form my-3"  action="#"  th:action="@{/returnBooking}" method="post">
-    <div class="col-10 my-4">
-      <div class="input-group mb-3">
-        <span class="input-group-text" id="2">Booking Reference: </span>
-        <input type="text" class="form-control" name="bookingRef" th:value="${bookingRef}" aria-describedby="2" placeholder="1234567890"  id="bookingRef" required>
+    <div class="row mb-3">
+      <div class="col-10 my-1">
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="2">Ticket Reference: </span>
+          <input type="text" class="form-control" name="bookingRef" th:value="${bookingRef}" aria-describedby="2" placeholder="1234567890"  id="bookingRef" required>
+        </div>
+      </div>
+      <div class="col-2 my-1">
+        <div class="alert alert-danger" th:if="${validation==false} and ${wrongBookingRef==true}">
+          <strong>Wrong Reference!</strong>
+        </div>
       </div>
     </div>
     <div class="row mb-3">
@@ -37,6 +44,11 @@
         <div class="input-group">
           <span class="input-group-text" id="3">Email: </span>
           <input type="text" class="form-control" name="email" th:value="${email}" aria-describedby="3" placeholder="email@email.com"  id="email" required>
+        </div>
+      </div>
+      <div class="col-2 my-1">
+        <div class="alert alert-danger" role="alert" th:if="${validation==false} and ${wrongEmail==true}">
+          <strong>Wrong Email!</strong>
         </div>
       </div>
     </div>
@@ -48,12 +60,12 @@
 
 <table class="table" id="matchedBooking">
   <thead>
-  <div class="alert alert-info" role="alert" th:if="${validation==false} and ${wrongEmail==true}">
-    <strong>Wrong Email!</strong>
-  </div>
-  <div class="alert alert-info" th:if="${validation==false} and ${wrongBookingRef==true}">
-    <strong>Wrong booking reference!</strong>
-  </div>
+  <!--  <div class="alert alert-info" role="alert" th:if="${validation==false} and ${wrongEmail==true}">-->
+  <!--    <strong>Wrong Email!</strong>-->
+  <!--  </div>-->
+  <!--<div class="alert alert-danger" th:if="${validation==false} and ${wrongBookingRef==true}">-->
+  <!--  <strong>Wrong booking reference!</strong>-->
+  <!--</div>-->
   <div class="alert alert-warning" th:if="(${validation==true} and ${wrongBookingRef==true}) or (${validation==true} and ${wrongEmail==true})">
     <strong>
       Hmmm...
