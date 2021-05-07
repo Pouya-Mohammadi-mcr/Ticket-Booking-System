@@ -50,8 +50,6 @@ public class AppController<HttpPost> {
 		mav.addObject("flightInfo", flightInfo);
 		Flight newFlight = new Flight();
 		mav.addObject("newFlight",newFlight);
-		String sortingMethod = new String();
-		mav.addObject(sortingMethod);
 		return mav;
 	}
 
@@ -59,16 +57,14 @@ public class AppController<HttpPost> {
 	public ModelAndView sort(@ModelAttribute(name = "Flight") Flight flight,@ModelAttribute(name = "sortingMethod") String sortingMethod) {
 		ModelAndView mav = new ModelAndView("MatchedFlights");
 		List<Flight> flightList = service.find(flight.getFrom(), flight.getTo(), flight.getDate(), numberOfTickets);
-		List<Flight> matchedFlights = new ArrayList<Flight>();
 		SortingStrategy strategy = sortFactory.getStrategy(sortingMethod);
-		matchedFlights = service.sort(strategy, flightList);
+		List<Flight> matchedFlights = service.sort(strategy, flightList);
 		mav.addObject("matchedFlights", matchedFlights);
 		Flight flightInfo = new Flight(flight.getFrom(), flight.getTo(), flight.getDate());
 		flightInfo.setAvailableSeats(numberOfTickets);
 		mav.addObject("flightInfo", flightInfo);
 		Flight newFlight = new Flight();
 		mav.addObject("newFlight", newFlight);
-		mav.addObject(sortingMethod);
 		return mav;
 	}
 	// ck function get origin Airport name from search form
