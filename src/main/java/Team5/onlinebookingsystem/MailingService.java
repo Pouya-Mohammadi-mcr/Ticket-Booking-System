@@ -15,10 +15,10 @@ public class MailingService {
 
     String subject;
     String message;
-    private static final String MAILFROM = "boookflights@gmail.com";
+    private static final String mailFrom = "boookflights@gmail.com";
 
     // The set of common instructions and guidelines that are to be sent with each email confirmation.
-    private static final String COMMONMESSAGE = "Some General Instructions to keep in mind:\n" +
+    private static final String commonMessage = "Some General Instructions to keep in mind:\n" +
                 "•       Check-in Time : Check-in desks will close 1 hour before departure.\n" +
                 "•       Valid ID proof needed : Carry a valid photo identification proof (Driving Licence, Passport " +
                 "or any other Government recognised photo identification)\n" +
@@ -50,12 +50,14 @@ public class MailingService {
         this.composeMailBody(bookingList, customerName, flightService, ticketList);
 
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-        simpleMailMessage.setFrom(MAILFROM);
+        simpleMailMessage.setFrom(mailFrom);
         simpleMailMessage.setTo(recipient);
         simpleMailMessage.setSubject(subject);
-        simpleMailMessage.setText(message+COMMONMESSAGE);
+        simpleMailMessage.setText(message + commonMessage);
 
-        mailSender.send(simpleMailMessage);
+        if(isValid(recipient)){
+            mailSender.send(simpleMailMessage);
+        }
     }
 
     private void composeMailBody(List<Booking> bookingList, String customerName, FlightService flightService,
@@ -85,9 +87,25 @@ public class MailingService {
                 "\n•\tNumber of Passengers: " + passengers +
                 "\n•\tFlight Number: " + bookedFlight.getFlightNumber() +
                 "\n•\tOrigin City: " + bookedFlight.getFrom() +
-                "\n•\tDeparture Time: " + bookedFlight.getDepartureTime() +
+                "\n•\tDeparture Time: " + formatTime(bookedFlight.getDepartureTime()) +
                 "\n•\tDestination City: " + bookedFlight.getTo() +
-                "\n•\tArrival Time: " + bookedFlight.getArrivalTime() +
+                "\n•\tArrival Time: " + formatTime(bookedFlight.getArrivalTime()) +
                 "\n\n";
+    }
+
+    private String formatTime(String time){
+        StringBuilder formattedTime = new StringBuilder(time);
+
+        int zerosNeeded = 4-time.length();
+        for(int i =0; i<zerosNeeded; i++){
+            formattedTime.insert(0, "0");
+        }
+        formattedTime.insert(2, ":");
+        return formattedTime.toString();
+    }
+
+    static boolean isValid(String email) {
+        String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
+        return email.matches(regex);
     }
 }
