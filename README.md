@@ -61,7 +61,7 @@ HOW TO USE
   ![Confirmation Email](./imagesForReadMe/confirmationEmail.png)
   
 * You can always navigate to the View Booked Tickets page from the navigation bar and find your booking information.
-  * You will need to use your booking reference and the email used to book the ticket. This information was sent to the email given when booking the ticket.
+  * You will need to use your booking reference, and the email used to book the ticket. This information was sent to the email given when booking the ticket.
   ![View Booked Tickets](./imagesForReadMe/viewBookedTickets.png)
     
 
@@ -85,7 +85,7 @@ A: Yes, this is necessary in order to be able to find the available flights.
 
 Q: Is there a way to check my bookings?
 
-A: Yes, go to View Booking (on the navigation bar) add your booking reference and the email used to book the ticket.
+A: Yes, go to View Booking (on the navigation bar) add your booking reference, and the email used to book the ticket.
 - This was sent to the email given when booking the ticket.
 
 
