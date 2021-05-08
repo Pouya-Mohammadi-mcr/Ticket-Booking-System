@@ -157,32 +157,34 @@
 </div>
 <!--<button class="btn btn-primary" style="float: right" id="btn-pay" onclick="document.getElementById('extraInfo').submit();" type="submit">Pay</button>-->
 
-<div class="row">
-    <div  th:if="${!tickets.isEmpty()}" class="container col-50">
-<table  class="table table-bordered border-dark" id="tickets">
-    <thead>
-    <h3 class="text-center">Added Tickets</h3>
-    <tr class="table-active">
-        <th>Class</th>
-        <th>Age Group</th>
-        <th>Insurance</th>
-        <th>Meal</th>
-        <th>Luggage</th>
-        <th>Price</th>
+<div class="ticketTable">
+    <div class="row">
+        <div  th:if="${!tickets.isEmpty()}" class="container col-50">
+            <table class="table table-bordered border-dark" id="tickets">
+                <thead>
+                <h3 class="text-center">Added Tickets</h3>
+                <tr class="table-active">
+                    <th>Class</th>
+                    <th>Age Group</th>
+                    <th>Insurance</th>
+                    <th>Meal</th>
+                    <th>Luggage</th>
+                    <th>Price</th>
 
-    </tr>
-</thead>
-<tbody>
-<tr th:each="ticket : ${tickets}" >
-    <td th:text="${ticket.seatClass}">Class</td>
-    <td th:text="${ticket.ageGroup}">Age Group</td>
-    <td th:text="${ticket.insurance != null} ? ${ticket.insurance} : 'no'">insurance</td>
-    <td th:text="${ticket.meal}">Meal</td>
-    <td th:text="${ticket.luggage != null} ? ${ticket.luggage} : 'no'">Luggage</td>
-    <td th:text="'£ '+${ticket.priceBought}">Price</td>
-</tr>
-</tbody>
-</table>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="ticket : ${tickets}" >
+                    <td class="capitalize" th:text="${ticket.seatClass}">Class</td>
+                    <td class="capitalize" th:text="${ticket.ageGroup}">Age Group</td>
+                    <td class="capitalize" th:text="${ticket.insurance != null} ? ${ticket.insurance} : 'no'">insurance</td>
+                    <td class="capitalize" th:text="${ticket.meal}">Meal</td>
+                    <td class="capitalize" th:text="${ticket.luggage != null} ? ${ticket.luggage} : 'no'">Luggage</td>
+                    <td th:text="'£ '+${ticket.priceBought}">Price</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 </body>
