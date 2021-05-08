@@ -146,7 +146,8 @@ public class AppController{
 			currentBookings.add(book);
 		}
 		service.decreaseCapacity(the_flightId, ticketsMade.size());
-		sendConfirmationMail(customer.getCustomerEmail(), currentBookings, customer.getFullName());
+		mailingService.sendConfirmationEmail(customer.getCustomerEmail(), currentBookings, customer.getFullName(),
+				service, ticketsMade);
 		return mav;
 	}
 
@@ -177,39 +178,5 @@ public class AppController{
 		model.addAttribute("wrongEmail",val.get(1));
 		model.addAttribute("validation",validation);
 		return "BookingSearchPage";
-	}
-
-	private void sendConfirmationMail(String emailAddress, List<Booking> bookingList, String customerName){
-		StringBuilder bookingReferences = new StringBuilder();
-
-		for(int i =0 ; i< bookingList.size(); i++){
-			if(i!= bookingList.size()-1){
-				bookingReferences.append(bookingList.get(i).getBookingRef()).append(", ");
-			}
-			else{
-				bookingReferences.append(bookingList.get(i).getBookingRef()).append(".");
-			}
-		}
-		Flight bookedFlight = (service.get(ticketsMade.get(0).flightId));
-		String source = bookedFlight.getFrom();
-		String destination = bookedFlight.getTo();
-		String dateOfJourney = bookedFlight.getDate();
-		String passengers = String.valueOf(ticketsMade.size());
-
-		String subject = "Confirmation of your flight booking from "+source+" to "+destination;
-		String message = "Hi "+customerName+ ",\n\nWe are glad to inform you that your booking of "+ passengers +
-				" flight tickets from "+source+" to "+destination+" on "+dateOfJourney+ " has been successfully " +
-				"confirmed with booking reference/s: " + bookingReferences +"\n\n"+
-				"Your booking details are:" +
-				"\n•\tDate of Journey: "+ dateOfJourney+
-				"\n•\tNumber of Passengers: "+ passengers+
-				"\n•\tFlight Number: "+ bookedFlight.getFlightNumber()+
-				"\n•\tOrigin City: "+ bookedFlight.getFrom()+
-				"\n•\tDeparture Time: "+ bookedFlight.getDepartureTime()+
-				"\n•\tDestination City: "+ bookedFlight.getTo()+
-				"\n•\tArrival Time: "+ bookedFlight.getArrivalTime()+
-				"\n\n";
-
-		mailingService.sendEmail(subject, emailAddress, message);
 	}
 }

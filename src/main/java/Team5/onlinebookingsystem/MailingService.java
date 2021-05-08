@@ -5,49 +5,89 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class MailingService {
 
     @Autowired
     private JavaMailSender mailSender;
 
-    // The set of common instructions and guidelines that are to be sent with each email confirmation.
-    String commonMessage = "\nSome General Instructions to keep in mind:\n" +
-            "•       Check-in Time : Check-in desks will close 1 hour before departure.\n" +
-            "•       Valid ID proof needed : Carry a valid photo identification proof (Driving Licence, Passport " +
-            "or any other Government recognised photo identification)\n" +
-            "•       Web Check-in (opens 48 hrs. before departure): Use Booking Reference and full name to check-in.\n"+
-            "•       Visa and Passports : If you journey is international, you are required to hold a valid passport" +
-            " and visa. Some countries won’t let you in without a valid visa, so double-check any visa requirements " +
-            "before you leave.\n" +
-            "\n" +
-            "Pre-Flight Travel Checklist During Covid:\n" +
-            "•       Face mask : All passengers need to wear a face mask in all public spaces throughout " +
-            "your journey. \n" +
-            "•       Negative COVID-19 Test  :  Passengers are required to provide a negative COVID-19 test result" +
-            " before you can board a flight, which cannot be older than 72 hours from the departure time.\n" +
-            "•       Health Declaration Form  :  It is a declaration that you do not have any symptoms of COVID-19" +
-            " to the best of your knowledge. Passengers are required to fill in and submit this form online and also" +
-            " carry a hard copy of the document.\n" +
-            "•       Travel Permit : If you are travelling to a state that doesn’t permit non-essential travel due" +
-            " to the coronavirus, you will most likely need to get a travel permit from the border control to enter" +
-            " the state, regardless of the nature of your travel. Make sure to check the border restrictions of both" +
-            " your own state and your destination state.\n" +
-            "\n" +
-            "We wish you a safe and a comfortable journey.\n" +
-            "\n" +
-            "Thank you for choosing us,\n" +
-            "Team Fly Away";
+    String subject;
+    String message;
+    private static final String MAILFROM = "boookflights@gmail.com";
 
-    public void sendEmail(String subject, String recipient, String message) {
-        String mailFrom = "boookflights@gmail.com";
+    // The set of common instructions and guidelines that are to be sent with each email confirmation.
+    private static final String COMMONMESSAGE = "Some General Instructions to keep in mind:\n" +
+                "•       Check-in Time : Check-in desks will close 1 hour before departure.\n" +
+                "•       Valid ID proof needed : Carry a valid photo identification proof (Driving Licence, Passport " +
+                "or any other Government recognised photo identification)\n" +
+                "•       Web Check-in (opens 48 hrs. before departure): Use Booking Reference and full name to check-in.\n" +
+                "•       Visa and Passports : If you journey is international, you are required to hold a valid passport" +
+                " and visa. Some countries won’t let you in without a valid visa, so double-check any visa requirements " +
+                "before you leave.\n" +
+                "\n" +
+                "Pre-Flight Travel Checklist During Covid:\n" +
+                "•       Face mask : All passengers need to wear a face mask in all public spaces throughout " +
+                "your journey. \n" +
+                "•       Negative COVID-19 Test  :  Passengers are required to provide a negative COVID-19 test result" +
+                " before you can board a flight, which cannot be older than 72 hours from the departure time.\n" +
+                "•       Health Declaration Form  :  It is a declaration that you do not have any symptoms of COVID-19" +
+                " to the best of your knowledge. Passengers are required to fill in and submit this form online and also" +
+                " carry a hard copy of the document.\n" +
+                "•       Travel Permit : If you are travelling to a state that doesn’t permit non-essential travel due" +
+                " to the coronavirus, you will most likely need to get a travel permit from the border control to enter" +
+                " the state, regardless of the nature of your travel. Make sure to check the border restrictions of both" +
+                " your own state and your destination state.\n" +
+                "\n" +
+                "We wish you a safe and a comfortable journey.\n" +
+                "\n" +
+                "Thank you for choosing us,\n" +
+                "Team Fly Away";
+
+    public void sendConfirmationEmail(String recipient, List<Booking> bookingList, String customerName,
+                                      FlightService flightService, List<Ticket> ticketList) {
+        this.composeMailBody(bookingList, customerName, flightService, ticketList);
 
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-        simpleMailMessage.setFrom(mailFrom);
+        simpleMailMessage.setFrom(MAILFROM);
         simpleMailMessage.setTo(recipient);
         simpleMailMessage.setSubject(subject);
-        simpleMailMessage.setText(message+commonMessage);
+        simpleMailMessage.setText(message+COMMONMESSAGE);
 
         mailSender.send(simpleMailMessage);
+    }
+
+    private void composeMailBody(List<Booking> bookingList, String customerName, FlightService flightService,
+                                 List<Ticket> ticketList){
+        StringBuilder bookingReferences = new StringBuilder();
+
+        for(int i =0 ; i< bookingList.size(); i++){
+            if(i!= bookingList.size()-1){
+                bookingReferences.append(bookingList.get(i).getBookingRef()).append(", ");
+            }
+            else{
+                bookingReferences.append(bookingList.get(i).getBookingRef()).append(".");
+            }
+        }
+        Flight bookedFlight = (flightService.get(ticketList.get(0).flightId));
+        String source = bookedFlight.getFrom();
+        String destination = bookedFlight.getTo();
+        String dateOfJourney = bookedFlight.getDate();
+        String passengers = String.valueOf(ticketList.size());
+
+        subject = "Confirmation of your flight booking from " + source +" to " + destination;
+        message = "Hi " + customerName + ",\n\nWe are glad to inform you that your booking of " + passengers +
+                " flight tickets from " + source + " to " + destination + " on " + dateOfJourney + " has been successfully " +
+                "confirmed with booking reference/s: " + bookingReferences + "\n\n" +
+                "Your booking details are:" +
+                "\n•\tDate of Journey: " + dateOfJourney +
+                "\n•\tNumber of Passengers: " + passengers +
+                "\n•\tFlight Number: " + bookedFlight.getFlightNumber() +
+                "\n•\tOrigin City: " + bookedFlight.getFrom() +
+                "\n•\tDeparture Time: " + bookedFlight.getDepartureTime() +
+                "\n•\tDestination City: " + bookedFlight.getTo() +
+                "\n•\tArrival Time: " + bookedFlight.getArrivalTime() +
+                "\n\n";
     }
 }
