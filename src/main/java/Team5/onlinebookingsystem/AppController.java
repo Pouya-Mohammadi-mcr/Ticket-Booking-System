@@ -45,26 +45,19 @@ public class AppController<HttpPost> {
 		numberOfTickets = flight.getAvailableSeats();
 		List<Flight> matchedFlights = service.find(flight.getFrom(), flight.getTo(), flight.getDate(), numberOfTickets);
 		mav.addObject("matchedFlights", matchedFlights);
-		Flight flightInfo = new Flight(flight.getFrom(), flight.getTo(), flight.getDate());
-		flightInfo.setAvailableSeats(numberOfTickets);
-		mav.addObject("flightInfo", flightInfo);
-		Flight newFlight = new Flight();
-		mav.addObject("newFlight",newFlight);
+		mav.addObject("flightInfo", flight);
 		return mav;
 	}
 
 	@RequestMapping(value = "/sort", method = RequestMethod.POST)
 	public ModelAndView sort(@ModelAttribute(name = "Flight") Flight flight,@ModelAttribute(name = "sortingMethod") String sortingMethod) {
 		ModelAndView mav = new ModelAndView("MatchedFlights");
+		numberOfTickets = flight.getAvailableSeats();
 		List<Flight> flightList = service.find(flight.getFrom(), flight.getTo(), flight.getDate(), numberOfTickets);
 		SortingStrategy strategy = sortFactory.getStrategy(sortingMethod);
 		List<Flight> matchedFlights = service.sort(strategy, flightList);
 		mav.addObject("matchedFlights", matchedFlights);
-		Flight flightInfo = new Flight(flight.getFrom(), flight.getTo(), flight.getDate());
-		flightInfo.setAvailableSeats(numberOfTickets);
-		mav.addObject("flightInfo", flightInfo);
-		Flight newFlight = new Flight();
-		mav.addObject("newFlight", newFlight);
+		mav.addObject("flightInfo", flight);
 		return mav;
 	}
 	// ck function get origin Airport name from search form
@@ -89,24 +82,6 @@ public class AppController<HttpPost> {
 	public List<String> townDestinationAirportNames(@RequestParam(value="term" , required=false,defaultValue = "") String term){
 		List<String> suggestions = service.fetchDestinationAirports(term, flightOrigin);
 		return suggestions;
-	}
-
-	// ck observer pattern -- get all new input values
-	@RequestMapping(value = "/updateFlightTable", method = RequestMethod.POST)
-	public ModelAndView updateFlightTable(@ModelAttribute(name = "Flight") Flight flight ) {
-		ModelAndView mav = new ModelAndView("MatchedFlights");
-		numberOfTickets = flight.getAvailableSeats();
-		List<Flight> matchedFlights = service.find(flight.getFrom(), flight.getTo(), flight.getDate(), numberOfTickets);
-		mav.addObject("matchedFlights", matchedFlights);
-		Flight flightInfo = new Flight(flight.getFrom(), flight.getTo(), flight.getDate());
-		flightInfo.setAvailableSeats(numberOfTickets);
-		mav.addObject("flightInfo", flightInfo);
-		Flight newFlight = new Flight();
-		newFlight.setAvailableSeats(flight.getAvailableSeats());
-		mav.addObject("newFlight",newFlight);
-		String sortingMethod = new String();
-		mav.addObject(sortingMethod);
-		return mav;
 	}
 
 	// ck function get flight id for ticket constructor
