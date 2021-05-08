@@ -395,4 +395,81 @@ public class FlightServiceTest {
          assertEquals(null ,matchedFlight1);
          verify(flightRepository, times(1)).getFlightById(noMatchId);
     }
+
+    @Test
+    void validationTest(){
+        // Arrange
+        boolean isValidationRequired = true;
+        boolean wrongBookingRef = false;
+        boolean wrongEmail = false;
+
+        // Act
+        FlightService flightService = new FlightService();
+        List<Boolean> validation = flightService.validation(isValidationRequired, null, null,
+                wrongBookingRef, wrongEmail);
+
+        // Assert
+        assertEquals(validation.get(0), true);
+        assertEquals(validation.get(1), true);
+    }
+
+    @Test
+    // Case - "isValidationRequired" = false
+    void validationTest_Case2(){
+        // Arrange
+        boolean isValidationRequired = false;
+        boolean wrongBookingRef = true;
+        boolean wrongEmail = true;
+
+        // Act
+        FlightService flightService = new FlightService();
+        List<Boolean> validation = flightService.validation(isValidationRequired, null, null,
+                wrongBookingRef, wrongEmail);
+
+        // Assert
+        assertEquals(validation.get(0), true);
+        assertEquals(validation.get(1), true);
+    }
+
+    @Test
+    void getFlightInfoIfTicketExists(){
+        // Arrange
+        Long flightId = 126L;
+
+        Ticket ticketInfo = Mockito.mock(Ticket.class);
+        ticketInfo.flightId = flightId;
+        Flight matchedFlight = Mockito.mock(Flight.class);
+        List <Flight> matchedFlightList = new ArrayList<>();
+        matchedFlightList.add(matchedFlight);
+
+        Map<String, Object> setup = this.getSetupObjects();
+        FlightRepository flightRepository = (FlightRepository) setup.get("flightRepository");
+        Mockito.when(flightRepository.getFlightById(flightId)).thenReturn(matchedFlightList);
+
+        FlightServiceTestWrapper flightService = (FlightServiceTestWrapper) setup.get("flightService");
+
+        flightService.SetRepository(flightRepository);
+
+        // Act
+        Flight returnedFlight = flightService.getFlightInfoIfTicketExists(ticketInfo);
+
+        // Assert
+        assertEquals(matchedFlight, returnedFlight);
+        Mockito.verify(flightRepository, times(1)).getFlightById(flightId);
+    }
+
+
+    @Test
+    void getFlightInfoIfTicketExists_nullCase(){
+        // Arrange
+        FlightService flightService = new FlightService();
+
+        // Act
+        Flight flight = flightService.getFlightInfoIfTicketExists(null);
+
+
+        // Assert
+        assertNull(flight);
+
+    }
 }

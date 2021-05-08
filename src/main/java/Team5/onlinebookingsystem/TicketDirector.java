@@ -29,7 +29,5 @@ public class TicketDirector {
         }
 
         return ticketBuilder.getTicket();
-
-
     }
 }

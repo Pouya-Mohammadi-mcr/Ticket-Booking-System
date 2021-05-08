@@ -112,7 +112,6 @@ public class FlightService {
             return null;
         }
         return theFlight.get(0);
-
     }
 
     public void decreaseCapacity(long id, long decrementValue) {
@@ -122,9 +121,11 @@ public class FlightService {
 //        repo.save(flight);
     }
 
-    public  List<Boolean> validation(boolean validation,Ticket ticketInfo,Customer customerInfo,boolean wrongBookingRef,boolean wrongEmail){
+    // ToDo:----------------------------- Review ----------------------------------
+    public  List<Boolean> validation(boolean isValidationRequired, Ticket ticketInfo, Customer customerInfo,
+                                     boolean wrongBookingRef, boolean wrongEmail){
         List<Boolean> val = new ArrayList<>();
-        if(validation){
+        if(isValidationRequired){
             if(ticketInfo==null){
                 wrongBookingRef=true;
             }
