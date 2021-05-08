@@ -34,29 +34,23 @@ public class FlightService {
     }
 
     public List<Flight> find(String from, String to, String date, long tickets){
-        List<Flight> matchedFlights = new ArrayList<Flight>();
+        List<Flight> matchedFlights = new ArrayList<>();
         if(to.equals("anywhere") ){
             if(date.equals("alldates")){
                 List<Flight> allFlights = repo.getAllConnectingFlightsAllDates(from,tickets);
-                for (int i=0 ; i<allFlights.size(); i++){
-                    matchedFlights.add(allFlights.get(i));
-                }
+                matchedFlights.addAll(allFlights);
             }else{
                 List<Flight> allFlights = repo.getAllConnectingFlights(from,date,tickets);
-                for (int i=0 ; i<allFlights.size(); i++){
-                    matchedFlights.add(allFlights.get(i));
-                }
+                matchedFlights.addAll(allFlights);
             }
         }else if(date.equals("alldates")){
             List<Flight> allFlights = repo.getFlightsAllDates(from,to,tickets);
-            for (int i=0 ; i<allFlights.size(); i++){
-                matchedFlights.add(allFlights.get(i));
-            }
+            matchedFlights.addAll(allFlights);
         }else{
             List<Flight> allFlights = listAll();
-            for (int i=0 ; i<allFlights.size(); i++){
-                if ( allFlights.get(i).getFrom().equals(from)  && allFlights.get(i).getTo().equals(to)  && allFlights.get(i).getDate().equals(date) && allFlights.get(i).getAvailableSeats()>=tickets ) {
-                    matchedFlights.add(allFlights.get(i));
+            for (Flight allFlight : allFlights) {
+                if (allFlight.getFrom().equals(from) && allFlight.getTo().equals(to) && allFlight.getDate().equals(date) && allFlight.getAvailableSeats() >= tickets) {
+                    matchedFlights.add(allFlight);
                 }
             }
         }
@@ -79,34 +73,30 @@ public class FlightService {
     public List<String> fetchOriginAirports(String keyword){
         // Todo:------------------- Rename List ------------------------
         List<Flight> listOfAirports = repo.findByOrigin(keyword);
-        List<String> suggestions = new ArrayList<String>();
-        for (int i=0 ; i<listOfAirports.size(); i++){
-            suggestions.add(listOfAirports.get(i).getFrom());
-		}
-        Set<String> uniqueAirports = new HashSet<String>(suggestions);
-        List<String> uniqueSuggestions = new ArrayList<String>();
-        uniqueSuggestions.addAll(uniqueAirports);
-        return uniqueSuggestions;
+        List<String> suggestions = new ArrayList<>();
+        for (Flight listOfAirport : listOfAirports) {
+            suggestions.add(listOfAirport.getFrom());
+        }
+        Set<String> uniqueAirports = new HashSet<>(suggestions);
+        return new ArrayList<>(uniqueAirports);
     }
 
     //    Service for fetching airport-city names -- ck
     public List<String> fetchDestinationAirports(String keyword,String origin){
         // Todo: ------------------- Rename List ------------------------
         List<Flight> listOfAirports = repo.findByDestination(keyword,origin);
-        List<String> suggestions = new ArrayList<String>();
+        List<String> suggestions = new ArrayList<>();
 
-        for (int i=0 ; i<listOfAirports.size(); i++){
-            suggestions.add(listOfAirports.get(i).getTo());
+        for (Flight listOfAirport : listOfAirports) {
+            suggestions.add(listOfAirport.getTo());
         }
-        Set<String> uniqueAirports = new HashSet<String>(suggestions);
-        List<String> uniqueSuggestions = new ArrayList<String>();
-        uniqueSuggestions.addAll(uniqueAirports);
-        return uniqueSuggestions;
+        Set<String> uniqueAirports = new HashSet<>(suggestions);
+        return new ArrayList<>(uniqueAirports);
     }
 
     //    Service for fetching the flight information by ID -- ck
     public Flight fetchById(long id){
-        List<Flight> theFlight = new ArrayList<Flight>();
+        List<Flight> theFlight;
         theFlight = repo.getFlightById(id);
         if (theFlight.size() == 0) {
             return null;

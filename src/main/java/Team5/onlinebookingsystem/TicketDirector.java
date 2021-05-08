@@ -1,6 +1,5 @@
 package Team5.onlinebookingsystem;
 
-import org.springframework.beans.factory.annotation.Autowired;
 
 public class TicketDirector {
 

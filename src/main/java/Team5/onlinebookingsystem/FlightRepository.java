@@ -9,31 +9,31 @@ public interface FlightRepository extends JpaRepository<Flight, Long> {
 
 //    // Query to get all connecting flights by id -- ck
     @Query("select a from Flight a Where a.id = ?1")
-    public List<Flight> getFlightById(long id);
+    List<Flight> getFlightById(long id);
 
     // Query to get all connecting flights -- ck
     @Query("select a from Flight a Where a.availableSeats >= ?3 and a.from LIKE ?1 and a.date LIKE ?2 " )
-    public List<Flight> getAllConnectingFlights(String from,String date,long tickets);
+    List<Flight> getAllConnectingFlights(String from, String date, long tickets);
 
     // Query to get all connecting flights with any/all dates -- ck
     @Query("select a from Flight a Where a.availableSeats >= ?2 and a.from LIKE ?1")
-    public List<Flight> getAllConnectingFlightsAllDates(String from,long tickets);
+    List<Flight> getAllConnectingFlightsAllDates(String from, long tickets);
 
     // Query to get all flights with any/all dates -- ck
     @Query("select a from Flight a Where a.availableSeats >= ?3 and a.from LIKE ?1 and a.to LIKE ?2")
-    public List<Flight> getFlightsAllDates(String from,String to,long tickets);
+    List<Flight> getFlightsAllDates(String from, String to, long tickets);
 
     //    Query to return all flights where from starts with the keyword -- ck
     @Query("select a from Flight a Where a.from LIKE ?1%")
-    public List<Flight> findByOrigin(String keyword);
+    List<Flight> findByOrigin(String keyword);
 
     //    Query to return all flights where to starts with the keyword -- ck
     @Query("select a from Flight a Where a.to LIKE ?1% and a.from LIKE ?2")
-    public List<Flight> findByDestination(String keyword,String origin);
+    List<Flight> findByDestination(String keyword, String origin);
 
     // Query to updated seats by id
     @Modifying
     @Query("update Flight a set a.availableSeats=?1 where a.id=?2")
-    public void updateSeats(long seats,long id);
+    void updateSeats(long seats, long id);
 
 }
