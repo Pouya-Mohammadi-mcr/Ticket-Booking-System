@@ -110,7 +110,7 @@
                 <div class="container">
                     <!--    <h1 class="h1 text-center text-info mt-3">Find Flights</h1>-->
                     <button type="button" class="btn btn-dark " id="formButton">Update</button>
-                    <form class="col-12, form my-3" id="updateForm" action="#" th:action="@{/updateFlightTable}" th:object="${newFlight}" method="post">
+                    <form class="col-12, form my-3" id="updateForm" action="#" th:action="@{/search}" th:object="${flightInfo}" method="post">
                         <h1 class="h1 text-center mt-3">Update your flight query</h1>
                         <div class="col-10 my-4">
                             <div class="input-group mb-3">
@@ -162,10 +162,11 @@
                 <div class="container">
                     <h1 class="h1 text-center mt-3">Matched Flights</h1>
                     <div>
-                        <form class="col-6, form my-3"  action="#" th:action="@{/sort}" th:object="${newFlight}"  method="post">
+                        <form class="col-6, form my-3"  action="#" th:action="@{/sort}" th:object="${flightInfo}"  method="post">
                             <input type="hidden" th:value="${flightInfo.from}"  th:name="from" th:id="from" >
                             <input type="hidden" th:value="${flightInfo.to}" th:name="to" th:id="to" >
                             <input type="hidden" th:value="${flightInfo.date}" th:name="date" th:id="date"  >
+                            <input type="hidden" th:value="${flightInfo.availableSeats}" th:name="availableSeats" th:id="availableSeats"  >
 
 
                             <select name="sortingMethod" id="sortingMethod" onchange="this.form.submit()">

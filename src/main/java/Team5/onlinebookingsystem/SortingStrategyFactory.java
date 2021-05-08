@@ -16,7 +16,7 @@ public class SortingStrategyFactory {
         return factory;
     }
 
-    // Creating and storing only single instances of the two strategies as once created,
+    // Creating and storing only single instances of the five strategies as once created,
     // the same instance can be returned when an instance is required from the factory
     private SortingStrategy priceAscendingStrategy;
     private SortingStrategy priceDescendingStrategy;

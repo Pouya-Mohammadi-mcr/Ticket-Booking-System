@@ -174,7 +174,7 @@ public class AppControllerTest {
                 flight.getDate(),flight.getAvailableSeats())).thenReturn(flightList);
 
         // Act
-        ModelAndView mav = appController.updateFlightTable(flight);
+        ModelAndView mav = appController.search(flight);
 
         // Assert
         verify(flightServiceMock, times(1)).find(flight.getFrom(), flight.getTo(),
