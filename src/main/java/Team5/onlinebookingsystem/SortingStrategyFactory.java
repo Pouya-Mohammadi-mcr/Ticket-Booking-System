@@ -26,41 +26,37 @@ public class SortingStrategyFactory {
 
     // Factory returns the appropriate object as per the requested "type"
     public SortingStrategy getStrategy(String type) {
-        if (type.equals("Sort by Price Ascending")) {
-            // Ensuring only single instance creation
-            if(priceAscendingStrategy == null){
-                priceAscendingStrategy = new SortByPriceAscending();
-            }
-            return priceAscendingStrategy;
-        }
-
-        else if (type.equals("Sort by Price Descending")) {
-            // Ensuring only single instance creation
-            if(priceDescendingStrategy == null){
-                priceDescendingStrategy = new SortByPriceDescending();
-            }
-            return priceDescendingStrategy;
-        }
-        else if (type.equals("Sort by Departure Time Ascending")) {
-            // Ensuring only single instance creation
-            if(departureTimeAscendingStrategy == null){
-                departureTimeAscendingStrategy = new SortByDepartureTimeAscending();
-            }
-            return departureTimeAscendingStrategy;
-        }
-        else if (type.equals("Sort by Departure Time Descending")) {
-            // Ensuring only single instance creation
-            if(departureTimeDescendingStrategy == null){
-                departureTimeDescendingStrategy = new SortByDepartureTimeDescending();
-            }
-            return departureTimeDescendingStrategy;
-        }
-        else if (type.equals("Sort by Duration")) {
-            // Ensuring only single instance creation
-            if(durationStrategy == null){
-                durationStrategy = new SortByDuration();
-            }
-            return durationStrategy;
+        switch (type) {
+            case "Sort by Price Ascending":
+                // Ensuring only single instance creation
+                if (priceAscendingStrategy == null) {
+                    priceAscendingStrategy = new SortByPriceAscending();
+                }
+                return priceAscendingStrategy;
+            case "Sort by Price Descending":
+                // Ensuring only single instance creation
+                if (priceDescendingStrategy == null) {
+                    priceDescendingStrategy = new SortByPriceDescending();
+                }
+                return priceDescendingStrategy;
+            case "Sort by Departure Time Ascending":
+                // Ensuring only single instance creation
+                if (departureTimeAscendingStrategy == null) {
+                    departureTimeAscendingStrategy = new SortByDepartureTimeAscending();
+                }
+                return departureTimeAscendingStrategy;
+            case "Sort by Departure Time Descending":
+                // Ensuring only single instance creation
+                if (departureTimeDescendingStrategy == null) {
+                    departureTimeDescendingStrategy = new SortByDepartureTimeDescending();
+                }
+                return departureTimeDescendingStrategy;
+            case "Sort by Duration":
+                // Ensuring only single instance creation
+                if (durationStrategy == null) {
+                    durationStrategy = new SortByDuration();
+                }
+                return durationStrategy;
         }
         return null;
     }

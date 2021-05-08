@@ -28,7 +28,7 @@ public class AppController{
 	private long the_flightId;
 	private long numberOfTickets;
 
-	private List<Ticket> ticketsMade = new ArrayList<Ticket>();
+	private List<Ticket> ticketsMade = new ArrayList<>();
 //	public Ticket theTicket = new Ticket();
 
 	@RequestMapping("/")
@@ -72,16 +72,14 @@ public class AppController{
 	@GetMapping("/townOriginAirportNames")
 	@ResponseBody
 	public List<String> townOriginAirportNames(@RequestParam(value="term" , required=false,defaultValue = "") String term){
-		List<String> suggestions = service.fetchOriginAirports(term);
-		return suggestions;
+		return service.fetchOriginAirports(term);
 	}
 
 	// ck function fetching airports name based on destination input
 	@GetMapping("/townDestinationAirportNames")
 	@ResponseBody
 	public List<String> townDestinationAirportNames(@RequestParam(value="term" , required=false,defaultValue = "") String term){
-		List<String> suggestions = service.fetchDestinationAirports(term, flightOrigin);
-		return suggestions;
+		return service.fetchDestinationAirports(term, flightOrigin);
 	}
 
 	// ck function get flight id for ticket constructor
@@ -90,9 +88,9 @@ public class AppController{
 		the_flightId = Long.parseLong(id);
 		Flight flight = service.fetchById(the_flightId);
 		model.addAttribute("flight", flight);
-		String button = new String("Add Ticket");
+		String button = "Add Ticket";
 		model.addAttribute("button",button);
-		List<Ticket> tickets = new ArrayList<Ticket>();
+		List<Ticket> tickets = new ArrayList<>();
 		model.addAttribute("tickets", tickets);
 		ticketsMade.clear();
 		return "BuildTicket";
@@ -102,7 +100,7 @@ public class AppController{
 	// ck --- Here I get and set the ticket information (extra information)
 	@RequestMapping(value = "/setTicketInformation", method = RequestMethod.POST)
 	public String saveTicket(Model model,@ModelAttribute(name = "radio_class") String radio_class,@ModelAttribute(name = "insurance") String insurance,@ModelAttribute(name = "meal") String meal,@ModelAttribute(name = "luggage") String luggage,@ModelAttribute(name = "finalPrice") String finalPrice,@ModelAttribute(name = "radio_age") String radio_age) {
-		String button = new String();
+		String button;
 			if (ticketsMade.size()<numberOfTickets) {
 				button = "Add Ticket";
 				TicketBuilder ticketBuilder = new FlightTicketBuilder();
@@ -111,13 +109,13 @@ public class AppController{
 				ticketsMade.add(ticket);
 			}
 			else {
-				List<Ticket> finalTickets = new ArrayList<Ticket>(ticketsMade);
+				List<Ticket> finalTickets = new ArrayList<>(ticketsMade);
 				model.addAttribute("finalTickets",finalTickets);
 				Customer customer = new Customer();
 				model.addAttribute("customer", customer);
 				double totalCost = 0;
-				for (int i=0; i<ticketsMade.size();i++){
-					totalCost += Double.parseDouble(ticketsMade.get(i).priceBought);
+				for (Ticket ticket : ticketsMade) {
+					totalCost += Double.parseDouble(ticket.priceBought);
 				}
 				model.addAttribute("totalCost", Math.round(totalCost*100.0)/100.0);
 				return "Checkout";
@@ -139,11 +137,11 @@ public class AppController{
 		cService.save(customer);
 
 		List<Booking> currentBookings = new ArrayList<>();
-		for(int i=0; i<ticketsMade.size(); i++){
+		for (Ticket ticket : ticketsMade) {
 			Booking book = new Booking();
 			book.setCustomerEmail(customer.getCustomerEmail());
-			tService.save(ticketsMade.get(i));
-			book.setBookingRef(ticketsMade.get(i).bookingRef);
+			tService.save(ticket);
+			book.setBookingRef(ticket.bookingRef);
 			bService.save(book);
 			currentBookings.add(book);
 		}
@@ -182,14 +180,14 @@ public class AppController{
 	}
 
 	private void sendConfirmationMail(String emailAddress, List<Booking> bookingList, String customerName){
-		String bookingReferences = "";
+		StringBuilder bookingReferences = new StringBuilder();
 
 		for(int i =0 ; i< bookingList.size(); i++){
 			if(i!= bookingList.size()-1){
-				bookingReferences = bookingReferences+bookingList.get(i).getBookingRef()+", ";
+				bookingReferences.append(bookingList.get(i).getBookingRef()).append(", ");
 			}
 			else{
-				bookingReferences = bookingReferences+bookingList.get(i).getBookingRef()+".";
+				bookingReferences.append(bookingList.get(i).getBookingRef()).append(".");
 			}
 		}
 		Flight bookedFlight = (service.get(ticketsMade.get(0).flightId));

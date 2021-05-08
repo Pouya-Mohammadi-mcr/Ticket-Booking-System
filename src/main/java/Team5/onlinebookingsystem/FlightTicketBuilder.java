@@ -2,7 +2,7 @@ package Team5.onlinebookingsystem;
 
 public class FlightTicketBuilder implements TicketBuilder {
 
-    private Ticket ticket = new Ticket();
+    private final Ticket ticket = new Ticket();
 
     @Override
     public void addBookingRef(String bookingRef) {
