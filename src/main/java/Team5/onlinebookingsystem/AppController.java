@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class AppController<HttpPost> {
+public class AppController{
 
 	@Autowired
 	private FlightService service;
@@ -198,11 +198,10 @@ public class AppController<HttpPost> {
 		boolean wrongEmail =false;
 		boolean wrongBookingRef =false;
 		boolean validation = bService.validate(email,bookingRef);
-		Flight flightInfo =new Flight();
 		Ticket ticketInfo = tService.getTicketInformationByRef(bookingRef);
 		Customer customerInfo = cService.findByEmail(email);
 		List<Boolean> val = service.validation(validation,ticketInfo,customerInfo,wrongBookingRef,wrongEmail);
-		flightInfo = service.getFlightInfoIfTicketExists(ticketInfo);
+		Flight flightInfo = service.getFlightInfoIfTicketExists(ticketInfo);
 		model.addAttribute("ticketInfo",ticketInfo);
 		model.addAttribute("flightInfo",flightInfo);
 		model.addAttribute("wrongBookingRef",val.get(0));

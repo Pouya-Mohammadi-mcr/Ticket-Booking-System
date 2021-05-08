@@ -14,7 +14,9 @@ REQUIREMENTS
 
     - We recommend you use the IntelliJ IDEA (It's very powerful to support your spring web application development and integration of many technical frameworks).
 
-* You will need to download JDK.
+* We recommend Chrome as your web browser.
+
+* You will need to have JDK.
 
 * You will need to download and install MySQL.
 
@@ -37,20 +39,31 @@ CONFIGURATION
 HOW TO USE
 -------------
 
-* Run the OnlineBookingSystemApplication.
+* Run the OnlineBookingSystemApplication in your preferred IDE.
 * Once up and running, Go to your browser and paste: http://localhost:8080/
-* You should be able now to see the Home Page. 
-
-![Home Page](./imagesForReadMe/homePage.png)
-
+  ![App Running](./imagesForReadMe/appRunning.png)
+  
+* You should be able now to see the Home Page.
+  ![Home Page](./imagesForReadMe/homePage.png)
+  
 * From the Home Page you can search for flights departing from and arriving to, on a specific date and number of passengers (tickets).
   * You can also search for flights departing from and arriving anywhere or all available dates. This will return all available connecting flights.
 * The next page is all available flights and from there you can select the one you want or update you search preferences.
+  ![Matched Flights](./imagesForReadMe/matchedFlights.png)
+  
 * By selecting the flight, you move to the next page where you add extra information/services for each passenger.
+  ![Ticket Information](./imagesForReadMe/ticketInformation.png)
+  
 * Once you have added all information press Pay and go to the checkout page where you can pay and checkout.
+  ![Checkout](./imagesForReadMe/checkout.png)
+  
 * Finally, you will receive a Confirmation email with all the information needed for your flight.
+  ![Confirmation Email](./imagesForReadMe/confirmationEmail.png)
+  
 * You can always navigate to the View Booked Tickets page from the navigation bar and find your booking information.
   * You will need to use your booking reference and the email used to book the ticket. This information was sent to the email given when booking the ticket.
+  ![View Booked Tickets](./imagesForReadMe/viewBookedTickets.png)
+    
 
 TROUBLESHOOTING
 ---------------
