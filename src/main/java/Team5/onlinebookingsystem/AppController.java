@@ -169,7 +169,7 @@ public class AppController{
 		boolean validation = bService.validate(email,bookingRef);
 		Ticket ticketInfo = tService.getTicketInformationByRef(bookingRef);
 		Customer customerInfo = cService.findByEmail(email);
-		List<Boolean> val = service.validation(validation,ticketInfo,customerInfo,wrongBookingRef,wrongEmail);
+		List<Boolean> val = service.validation(ticketInfo,customerInfo,wrongBookingRef,wrongEmail);
 		Flight flightInfo = service.getFlightInfoIfTicketExists(ticketInfo);
 		model.addAttribute("ticketInfo",ticketInfo);
 		model.addAttribute("flightInfo",flightInfo);

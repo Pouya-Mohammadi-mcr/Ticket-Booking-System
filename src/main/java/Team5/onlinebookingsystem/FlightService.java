@@ -36,13 +36,13 @@ public class FlightService {
     public List<Flight> find(String from, String to, String date, long tickets){
         List<Flight> matchedFlights = new ArrayList<>();
         if(to.equals("anywhere") ){
+            List<Flight> allFlights;
             if(date.equals("alldates")){
-                List<Flight> allFlights = repo.getAllConnectingFlightsAllDates(from,tickets);
-                matchedFlights.addAll(allFlights);
+                allFlights = repo.getAllConnectingFlightsAllDates(from, tickets);
             }else{
-                List<Flight> allFlights = repo.getAllConnectingFlights(from,date,tickets);
-                matchedFlights.addAll(allFlights);
+                allFlights = repo.getAllConnectingFlights(from, date, tickets);
             }
+            matchedFlights.addAll(allFlights);
         }else if(date.equals("alldates")){
             List<Flight> allFlights = repo.getFlightsAllDates(from,to,tickets);
             matchedFlights.addAll(allFlights);
@@ -53,10 +53,6 @@ public class FlightService {
                     matchedFlights.add(allFlight);
                 }
             }
-        }
-        if (matchedFlights.size() == 0) {
-            // Todo: ------------------ Remove? ---------------------------
-            System.out.print("NO RESULTS");
         }
         matchedFlights.removeIf(flightEntry -> flightEntry.getDepartureTime().equals("NA"));
         matchedFlights.removeIf(flightEntry -> flightEntry.getPrice().equals("NA"));
@@ -111,24 +107,14 @@ public class FlightService {
 //        repo.save(flight);
     }
 
-    // ToDo:----------------------------- Review ----------------------------------
-    public  List<Boolean> validation(boolean isValidationRequired, Ticket ticketInfo, Customer customerInfo,
+    public  List<Boolean> validation(Ticket ticketInfo, Customer customerInfo,
                                      boolean wrongBookingRef, boolean wrongEmail){
         List<Boolean> val = new ArrayList<>();
-        if(isValidationRequired){
-            if(ticketInfo==null){
-                wrongBookingRef=true;
-            }
-            if(customerInfo==null){
-                wrongEmail=true;
-            }
-        }else{
-            if(ticketInfo==null){
-                wrongBookingRef=true;
-            }
-            if(customerInfo==null){
-                wrongEmail=true;
-            }
+        if(ticketInfo==null){
+            wrongBookingRef=true;
+        }
+        if(customerInfo==null){
+            wrongEmail=true;
         }
         val.add(wrongBookingRef);
         val.add(wrongEmail);

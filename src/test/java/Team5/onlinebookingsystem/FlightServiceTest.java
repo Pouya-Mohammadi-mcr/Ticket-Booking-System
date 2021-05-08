@@ -405,7 +405,7 @@ public class FlightServiceTest {
 
         // Act
         FlightService flightService = new FlightService();
-        List<Boolean> validation = flightService.validation(isValidationRequired, null, null,
+        List<Boolean> validation = flightService.validation(null, null,
                 wrongBookingRef, wrongEmail);
 
         // Assert
@@ -423,7 +423,7 @@ public class FlightServiceTest {
 
         // Act
         FlightService flightService = new FlightService();
-        List<Boolean> validation = flightService.validation(isValidationRequired, null, null,
+        List<Boolean> validation = flightService.validation(null, null,
                 wrongBookingRef, wrongEmail);
 
         // Assert
