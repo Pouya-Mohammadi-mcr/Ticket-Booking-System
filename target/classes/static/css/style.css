@@ -46,6 +46,11 @@ body{
     position: absolute;
     z-index: -1;
 }
+
+.bookingComplete{
+    padding-top: 2em;
+}
+
 #updateForm {
     display:none;
 }
