@@ -74,7 +74,7 @@ TROUBLESHOOTING
 
     - Make sure your MySQL username:root and password:12345678.
 
-    - Reload page (Right click pom.xml, Select Maven and Reload project). 
+    - Reload project (Right click pom.xml, Select Maven and Reload project). 
 
 FAQ
 ---
