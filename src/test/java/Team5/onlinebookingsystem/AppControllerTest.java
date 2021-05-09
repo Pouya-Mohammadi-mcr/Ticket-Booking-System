@@ -11,7 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -276,28 +278,28 @@ public class AppControllerTest {
         Mockito.verify(model, times(1)).addAttribute(any(String.class), any(Flight.class));
     }
 
-//    @Test
-//    void showBookingSearchPageTest()
-//    {
-//        // Arrange
-//        Model model = Mockito.mock(Model.class);
-//        String bookingRef = "3287933454";
-//        String email = "emailme@gmail.com";
-//        List<Boolean> validations = new ArrayList<>();
-//        validations.add(true);
-//        validations.add(true);
-//
-//        Mockito.when(ticketService.getTicketInformationByRef(bookingRef)).thenReturn(mock(Ticket.class));
-//        Mockito.when(customerService.findByEmail(email)).thenReturn(mock(Customer.class));
-////        Mockito.when(flightServiceMock.validation(any(Ticket.class), any(Customer.class), any(boolean.class),
-////                any(boolean.class))).thenReturn(validations);
-//
-//        // Act
-//        appController.showBookingSearchPage(model, bookingRef, email);
-//
-//        // Assert
-//        Mockito.verify(model, times(1)).addAttribute("bookingRef",bookingRef);
-//        Mockito.verify(model, times(1)).addAttribute("email",email);
-//    }
+    @Test
+    void showBookingSearchPageTest()
+    {
+        // Arrange
+        Model model = Mockito.mock(Model.class);
+        String bookingRef = "3287933454";
+        String email = "emailme@gmail.com";
+        Map<String, Boolean> validationData = new HashMap<>();
+        validationData.put("wrongBookingRef", true);
+        validationData.put("wrongEmail", true);
+
+        Mockito.when(ticketService.getTicketInformationByRef(bookingRef)).thenReturn(mock(Ticket.class));
+        Mockito.when(customerService.findByEmail(email)).thenReturn(mock(Customer.class));
+        Mockito.when(flightServiceMock.validation(any(Ticket.class), any(Customer.class), any(boolean.class),
+                any(boolean.class))).thenReturn(validationData);
+
+        // Act
+        appController.showBookingSearchPage(model, bookingRef, email);
+
+        // Assert
+        Mockito.verify(model, times(1)).addAttribute("bookingRef",bookingRef);
+        Mockito.verify(model, times(1)).addAttribute("email",email);
+    }
 
 }
