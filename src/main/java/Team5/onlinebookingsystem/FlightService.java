@@ -13,6 +13,7 @@ public class FlightService {
     @Autowired
     protected FlightRepository repo;
 
+    private static SortingContext sortingContext;
 
     public List<Flight> listAll() {
         return repo.findAll();
@@ -57,7 +58,9 @@ public class FlightService {
     }
 
     public List<Flight> sort(SortingStrategy sortingStrategy, List<Flight> flightList) {
-        SortingContext sortingContext = new SortingContext();
+        if(sortingContext == null){
+            sortingContext = new SortingContext();
+        }
         sortingContext.setStrategy(sortingStrategy);
         sortingContext.sortFlights(flightList);
         return flightList;
