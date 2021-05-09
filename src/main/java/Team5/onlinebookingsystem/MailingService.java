@@ -47,6 +47,10 @@ public class MailingService {
 
     public void sendConfirmationEmail(String recipient, List<Booking> bookingList, String customerName,
                                       FlightService flightService, List<Ticket> ticketList) {
+        if(!isValid(recipient)){
+            return;
+        }
+
         this.composeMailBody(bookingList, customerName, flightService, ticketList);
 
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
@@ -55,9 +59,8 @@ public class MailingService {
         simpleMailMessage.setSubject(subject);
         simpleMailMessage.setText(message + commonMessage);
 
-        if(isValid(recipient)){
-            mailSender.send(simpleMailMessage);
-        }
+        mailSender.send(simpleMailMessage);
+
     }
 
     private void composeMailBody(List<Booking> bookingList, String customerName, FlightService flightService,
@@ -104,7 +107,7 @@ public class MailingService {
         return formattedTime.toString();
     }
 
-    static boolean isValid(String email) {
+    private boolean isValid(String email) {
         String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
         return email.matches(regex);
     }

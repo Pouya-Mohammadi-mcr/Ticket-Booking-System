@@ -1,7 +1,6 @@
 package Team5.onlinebookingsystem;
 
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
@@ -399,36 +398,17 @@ public class FlightServiceTest {
     @Test
     void validationTest(){
         // Arrange
-        boolean isValidationRequired = true;
         boolean wrongBookingRef = false;
         boolean wrongEmail = false;
 
         // Act
         FlightService flightService = new FlightService();
-        List<Boolean> validation = flightService.validation(null, null,
+        Map<String, Boolean> validationData = flightService.validation(null, null,
                 wrongBookingRef, wrongEmail);
 
         // Assert
-        assertEquals(validation.get(0), true);
-        assertEquals(validation.get(1), true);
-    }
-
-    @Test
-    // Case - "isValidationRequired" = false
-    void validationTest_Case2(){
-        // Arrange
-        boolean isValidationRequired = false;
-        boolean wrongBookingRef = true;
-        boolean wrongEmail = true;
-
-        // Act
-        FlightService flightService = new FlightService();
-        List<Boolean> validation = flightService.validation(null, null,
-                wrongBookingRef, wrongEmail);
-
-        // Assert
-        assertEquals(validation.get(0), true);
-        assertEquals(validation.get(1), true);
+        assertEquals(validationData.get("wrongBookingRef"), true);
+        assertEquals(validationData.get("wrongEmail"), true);
     }
 
     @Test
@@ -466,7 +446,6 @@ public class FlightServiceTest {
 
         // Act
         Flight flight = flightService.getFlightInfoIfTicketExists(null);
-
 
         // Assert
         assertNull(flight);

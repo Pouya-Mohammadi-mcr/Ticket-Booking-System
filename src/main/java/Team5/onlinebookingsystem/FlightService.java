@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @Transactional
@@ -70,10 +67,9 @@ public class FlightService {
     }
 //    Service for fetching airport-city names -- ck
     public List<String> fetchOriginAirports(String keyword){
-        // Todo:------------------- Rename List ------------------------
-        List<Flight> listOfAirports = repo.findByOrigin(keyword);
+        List<Flight> listOfFlightsFromKeyword = repo.findByOrigin(keyword);
         List<String> suggestions = new ArrayList<>();
-        for (Flight listOfAirport : listOfAirports) {
+        for (Flight listOfAirport : listOfFlightsFromKeyword) {
             suggestions.add(listOfAirport.getFrom());
         }
         Set<String> uniqueAirports = new HashSet<>(suggestions);
@@ -82,11 +78,10 @@ public class FlightService {
 
     //    Service for fetching airport-city names -- ck
     public List<String> fetchDestinationAirports(String keyword,String origin){
-        // Todo: ------------------- Rename List ------------------------
-        List<Flight> listOfAirports = repo.findByDestination(keyword,origin);
+        List<Flight> listOfMatchedFlights = repo.findByDestination(keyword,origin);
         List<String> suggestions = new ArrayList<>();
 
-        for (Flight listOfAirport : listOfAirports) {
+        for (Flight listOfAirport : listOfMatchedFlights) {
             suggestions.add(listOfAirport.getTo());
         }
         Set<String> uniqueAirports = new HashSet<>(suggestions);
@@ -107,21 +102,21 @@ public class FlightService {
         Flight flight = get(id);
         long seats = flight.getAvailableSeats()-decrementValue ;
         repo.updateSeats(seats,id);
-//        repo.save(flight);
     }
 
-    public  List<Boolean> validation(Ticket ticketInfo, Customer customerInfo,
+    public  Map<String, Boolean> validation(Ticket ticketInfo, Customer customerInfo,
                                      boolean wrongBookingRef, boolean wrongEmail){
-        List<Boolean> val = new ArrayList<>();
+        Map<String, Boolean> validationData = new HashMap<String, Boolean>();
+
         if(ticketInfo==null){
             wrongBookingRef=true;
         }
         if(customerInfo==null){
             wrongEmail=true;
         }
-        val.add(wrongBookingRef);
-        val.add(wrongEmail);
-        return val;
+        validationData.put("wrongBookingRef", wrongBookingRef);
+        validationData.put("wrongEmail", wrongEmail);
+        return validationData;
     }
     public Flight getFlightInfoIfTicketExists(Ticket ticketInfo){
         if(ticketInfo==null){

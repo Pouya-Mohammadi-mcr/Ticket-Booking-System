@@ -11,7 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,6 +25,12 @@ public class AppControllerTest {
 
     @Mock
     FlightService flightServiceMock;
+    @Mock
+    TicketService ticketService;
+    @Mock
+    CustomerService customerService;
+    @Mock
+    BookingService bookingService;
 
     @InjectMocks
     AppController appController;
@@ -97,33 +105,6 @@ public class AppControllerTest {
         assertEquals("success" ,matchedFlights.get(0).getFrom());
     }
 
-//    @Test
-//    void searchTest_Incomplete() {
-//        //Arrange
-//        Flight inputFlightMock = Mockito.mock(Flight.class);
-//        when(inputFlightMock.getFrom()).thenReturn("Manchester");
-//        when(inputFlightMock.getTo()).thenReturn("London");
-//        when(inputFlightMock.getDate()).thenReturn("01/01/2022");
-//
-//        FlightService flightServiceMock = Mockito.mock(FlightService.class);
-//
-//        Flight matchedFlightMock = Mockito.mock(Flight.class);
-//        when(matchedFlightMock.getFrom()).thenReturn("success");
-//
-//        List<Flight> dummyList = new ArrayList<Flight>();
-//        dummyList.add(matchedFlightMock);
-//
-//        when(flightServiceMock.find(inputFlightMock.getFrom(), inputFlightMock.getTo(),
-//                inputFlightMock.getDate())).thenReturn(dummyList);
-//
-//
-//        //Act
-//        AppController appController = new AppController();
-//        ModelAndView mav = appController.search(inputFlightMock);
-//
-//        //Assert
-//    }
-
     @Test
     @DisplayName("Not a proper test")
     void SearchTest_1() {
@@ -157,7 +138,7 @@ public class AppControllerTest {
     }
 
     @Test
-    public void updateFlightTableTest(){
+    public void searchTest(){
         // Arrange
         Flight flight = mock(Flight.class);
         when(flight.getFrom()).thenReturn("Manchester");
@@ -183,6 +164,85 @@ public class AppControllerTest {
     }
 
     @Test
+    void sortTest()
+    {
+        // Arrange
+        String sortingMethod = "Sort by Price Ascending";
+
+        Flight flight1 = mock(Flight.class);
+        when(flight1.getFrom()).thenReturn("Manchester");
+        when(flight1.getTo()).thenReturn("London");
+        when(flight1.getDate()).thenReturn("01/01/2022");
+        when(flight1.getAvailableSeats()).thenReturn(12L);
+        Flight flight2 = mock(Flight.class);
+
+        List<Flight> flightList =new ArrayList<>();
+        flightList.add(flight1);
+        flightList.add(flight2);
+
+        List<Flight> sortedFlightList =new ArrayList<>();
+        flightList.add(flight2);
+        flightList.add(flight1);
+
+        when(flightServiceMock.find(any(String.class), any(String.class), any(String.class),
+                any(Long.class))).thenReturn(flightList);
+        when(flightServiceMock.sort(any(SortingStrategy.class), any(List.class))).thenReturn(sortedFlightList);
+
+        // Act
+        ModelAndView mav = appController.sort(flight1, sortingMethod);
+
+        // Assert
+        verify(flightServiceMock, times(1)).find(any(String.class), any(String.class), any(String.class),
+                any(Long.class));
+
+        assertEquals(sortedFlightList, mav.getModelMap().get("matchedFlights"));
+        assertEquals(flight1, mav.getModelMap().get("flightInfo"));
+    }
+
+    @Test
+    void setOriginTest(){
+        // Arrange
+        String origin = "Origin=New+York";
+        String expectedOrigin = "New York";
+        String term = "New";
+
+        // Act
+        appController.setOrigin(origin);
+
+        // Assert
+        appController.townDestinationAirportNames(term);
+        Mockito.verify(flightServiceMock, times(1)).fetchDestinationAirports(term,
+                expectedOrigin);
+    }
+
+    @Test
+    void townOriginAirportNamesTest(){
+        // Arrange
+        String term = "New";
+
+        // Act
+        appController.townOriginAirportNames(term);
+
+        // Assert
+        Mockito.verify(flightServiceMock, times(1)).fetchOriginAirports(term);
+    }
+
+    @Test
+    void townDestinationAirportNamesTest(){
+        // Arrange
+        String origin = "Origin=Cape+Town";
+        String actualOrigin = "Cape Town";
+        String term = "Cape";
+        appController.setOrigin(origin);
+
+        // Act
+        appController.townDestinationAirportNames(term);
+
+        // Assert
+        Mockito.verify(flightServiceMock, times(1)).fetchDestinationAirports(term, actualOrigin);
+    }
+
+    @Test
     public void selectedFlightIdTest(){
         // Arrange
         String id = "1237";
@@ -201,4 +261,45 @@ public class AppControllerTest {
         verify(model, times(1)).addAttribute(any(String.class), any(String.class));
         assertEquals(expectedResult, result);
     }
+
+
+
+    @Test
+    void getBookingSearchPageTest()
+    {
+        // Arrange
+        Model model = Mockito.mock(Model.class);
+
+        // Act
+        appController.getBookingSearchPage(model);
+
+        // Assert
+        Mockito.verify(model, times(1)).addAttribute(any(String.class), any(Ticket.class));
+        Mockito.verify(model, times(1)).addAttribute(any(String.class), any(Flight.class));
+    }
+
+    @Test
+    void showBookingSearchPageTest()
+    {
+        // Arrange
+        Model model = Mockito.mock(Model.class);
+        String bookingRef = "3287933454";
+        String email = "emailme@gmail.com";
+        Map<String, Boolean> validationData = new HashMap<>();
+        validationData.put("wrongBookingRef", true);
+        validationData.put("wrongEmail", true);
+
+        Mockito.when(ticketService.getTicketInformationByRef(bookingRef)).thenReturn(mock(Ticket.class));
+        Mockito.when(customerService.findByEmail(email)).thenReturn(mock(Customer.class));
+        Mockito.when(flightServiceMock.validation(any(Ticket.class), any(Customer.class), any(boolean.class),
+                any(boolean.class))).thenReturn(validationData);
+
+        // Act
+        appController.showBookingSearchPage(model, bookingRef, email);
+
+        // Assert
+        Mockito.verify(model, times(1)).addAttribute("bookingRef",bookingRef);
+        Mockito.verify(model, times(1)).addAttribute("email",email);
+    }
+
 }
