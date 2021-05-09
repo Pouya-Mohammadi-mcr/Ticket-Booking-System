@@ -8,6 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class AppController{
@@ -169,12 +170,12 @@ public class AppController{
 		boolean validation = bookingService.validate(email,bookingRef);
 		Ticket ticketInfo = ticketService.getTicketInformationByRef(bookingRef);
 		Customer customerInfo = customerService.findByEmail(email);
-		List<Boolean> val = flightService.validation(ticketInfo,customerInfo,wrongBookingRef,wrongEmail);
+		Map<String, Boolean> validationData = flightService.validation(ticketInfo,customerInfo,wrongBookingRef,wrongEmail);
 		Flight flightInfo = flightService.getFlightInfoIfTicketExists(ticketInfo);
 		model.addAttribute("ticketInfo",ticketInfo);
 		model.addAttribute("flightInfo",flightInfo);
-		model.addAttribute("wrongBookingRef",val.get(0));
-		model.addAttribute("wrongEmail",val.get(1));
+		model.addAttribute("wrongBookingRef",validationData.get("wrongBookingRef"));
+		model.addAttribute("wrongEmail",validationData.get("wrongEmail"));
 		model.addAttribute("validation",validation);
 		return "BookingSearchPage";
 	}

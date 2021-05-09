@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @Transactional
@@ -104,19 +101,19 @@ public class FlightService {
         repo.updateSeats(seats,id);
     }
 
-    // Todo:---------------------Refactor if time permits -------------------
-    public  List<Boolean> validation(Ticket ticketInfo, Customer customerInfo,
+    public  Map<String, Boolean> validation(Ticket ticketInfo, Customer customerInfo,
                                      boolean wrongBookingRef, boolean wrongEmail){
-        List<Boolean> val = new ArrayList<>();
+        Map<String, Boolean> validationData = new HashMap<String, Boolean>();
+
         if(ticketInfo==null){
             wrongBookingRef=true;
         }
         if(customerInfo==null){
             wrongEmail=true;
         }
-        val.add(wrongBookingRef);
-        val.add(wrongEmail);
-        return val;
+        validationData.put("wrongBookingRef", wrongBookingRef);
+        validationData.put("wrongEmail", wrongEmail);
+        return validationData;
     }
     public Flight getFlightInfoIfTicketExists(Ticket ticketInfo){
         if(ticketInfo==null){
