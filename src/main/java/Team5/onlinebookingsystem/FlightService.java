@@ -103,7 +103,7 @@ public class FlightService {
 
     public  Map<String, Boolean> validation(Ticket ticketInfo, Customer customerInfo,
                                      boolean wrongBookingRef, boolean wrongEmail){
-        Map<String, Boolean> validationData = new HashMap<String, Boolean>();
+        Map<String, Boolean> validationData = new HashMap<>();
 
         if(ticketInfo==null){
             wrongBookingRef=true;
