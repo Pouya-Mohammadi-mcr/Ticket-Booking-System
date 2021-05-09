@@ -67,10 +67,9 @@ public class FlightService {
     }
 //    Service for fetching airport-city names -- ck
     public List<String> fetchOriginAirports(String keyword){
-        // Todo:------------------- Rename List ------------------------
-        List<Flight> listOfAirports = repo.findByOrigin(keyword);
+        List<Flight> listOfFlightsFromKeyword = repo.findByOrigin(keyword);
         List<String> suggestions = new ArrayList<>();
-        for (Flight listOfAirport : listOfAirports) {
+        for (Flight listOfAirport : listOfFlightsFromKeyword) {
             suggestions.add(listOfAirport.getFrom());
         }
         Set<String> uniqueAirports = new HashSet<>(suggestions);
@@ -79,11 +78,10 @@ public class FlightService {
 
     //    Service for fetching airport-city names -- ck
     public List<String> fetchDestinationAirports(String keyword,String origin){
-        // Todo: ------------------- Rename List ------------------------
-        List<Flight> listOfAirports = repo.findByDestination(keyword,origin);
+        List<Flight> listOfMatchedFlights = repo.findByDestination(keyword,origin);
         List<String> suggestions = new ArrayList<>();
 
-        for (Flight listOfAirport : listOfAirports) {
+        for (Flight listOfAirport : listOfMatchedFlights) {
             suggestions.add(listOfAirport.getTo());
         }
         Set<String> uniqueAirports = new HashSet<>(suggestions);
@@ -104,9 +102,9 @@ public class FlightService {
         Flight flight = get(id);
         long seats = flight.getAvailableSeats()-decrementValue ;
         repo.updateSeats(seats,id);
-//        repo.save(flight);
     }
 
+    // Todo:---------------------Refactor if time permits -------------------
     public  List<Boolean> validation(Ticket ticketInfo, Customer customerInfo,
                                      boolean wrongBookingRef, boolean wrongEmail){
         List<Boolean> val = new ArrayList<>();

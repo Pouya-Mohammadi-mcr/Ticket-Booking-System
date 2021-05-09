@@ -13,13 +13,13 @@ import java.util.List;
 public class AppController{
 
 	@Autowired
-	private FlightService service;
+	private FlightService flightService;
 	@Autowired
-	private TicketService tService;
+	private TicketService ticketService;
 	@Autowired
-	private CustomerService cService;
+	private CustomerService customerService;
 	@Autowired
-	private BookingService bService;
+	private BookingService bookingService;
 	@Autowired
 	private MailingService mailingService;
 
@@ -29,7 +29,6 @@ public class AppController{
 	private long numberOfTickets;
 
 	private List<Ticket> ticketsMade = new ArrayList<>();
-//	public Ticket theTicket = new Ticket();
 
 	@RequestMapping("/")
 	public String showSearchPage(Model model){
@@ -43,7 +42,7 @@ public class AppController{
 	public ModelAndView search(@ModelAttribute(name = "Flight") Flight flight) {
 		ModelAndView mav = new  ModelAndView("MatchedFlights");
 		numberOfTickets = flight.getAvailableSeats();
-		List<Flight> matchedFlights = service.find(flight.getFrom(), flight.getTo(), flight.getDate(), numberOfTickets);
+		List<Flight> matchedFlights = flightService.find(flight.getFrom(), flight.getTo(), flight.getDate(), numberOfTickets);
 		mav.addObject("matchedFlights", matchedFlights);
 		mav.addObject("flightInfo", flight);
 		return mav;
@@ -53,9 +52,9 @@ public class AppController{
 	public ModelAndView sort(@ModelAttribute(name = "Flight") Flight flight,@ModelAttribute(name = "sortingMethod") String sortingMethod) {
 		ModelAndView mav = new ModelAndView("MatchedFlights");
 		numberOfTickets = flight.getAvailableSeats();
-		List<Flight> flightList = service.find(flight.getFrom(), flight.getTo(), flight.getDate(), numberOfTickets);
+		List<Flight> flightList = flightService.find(flight.getFrom(), flight.getTo(), flight.getDate(), numberOfTickets);
 		SortingStrategy strategy = sortFactory.getStrategy(sortingMethod);
-		List<Flight> matchedFlights = service.sort(strategy, flightList);
+		List<Flight> matchedFlights = flightService.sort(strategy, flightList);
 		mav.addObject("matchedFlights", matchedFlights);
 		mav.addObject("flightInfo", flight);
 		return mav;
@@ -72,21 +71,21 @@ public class AppController{
 	@GetMapping("/townOriginAirportNames")
 	@ResponseBody
 	public List<String> townOriginAirportNames(@RequestParam(value="term" , required=false,defaultValue = "") String term){
-		return service.fetchOriginAirports(term);
+		return flightService.fetchOriginAirports(term);
 	}
 
 	// ck function fetching airports name based on destination input
 	@GetMapping("/townDestinationAirportNames")
 	@ResponseBody
 	public List<String> townDestinationAirportNames(@RequestParam(value="term" , required=false,defaultValue = "") String term){
-		return service.fetchDestinationAirports(term, flightOrigin);
+		return flightService.fetchDestinationAirports(term, flightOrigin);
 	}
 
 	// ck function get flight id for ticket constructor
 	@RequestMapping("/selectedFlightId/{id}")
 	public String selectedFlightId(@PathVariable("id") String id, Model model) {
 		the_flightId = Long.parseLong(id);
-		Flight flight = service.fetchById(the_flightId);
+		Flight flight = flightService.fetchById(the_flightId);
 		model.addAttribute("flight", flight);
 		String button = "Add Ticket";
 		model.addAttribute("button",button);
@@ -105,7 +104,7 @@ public class AppController{
 				button = "Add Ticket";
 				TicketBuilder ticketBuilder = new FlightTicketBuilder();
 				TicketDirector ticketDirector = new TicketDirector();
-				Ticket ticket = ticketDirector.makeTicket(ticketBuilder,tService,radio_class,meal,luggage,finalPrice,insurance,radio_age,the_flightId);
+				Ticket ticket = ticketDirector.makeTicket(ticketBuilder, ticketService,radio_class,meal,luggage,finalPrice,insurance,radio_age,the_flightId);
 				ticketsMade.add(ticket);
 			}
 			else {
@@ -123,7 +122,7 @@ public class AppController{
 			if (ticketsMade.size()==numberOfTickets){
 				button ="Pay";
 			}
-		Flight flight = service.fetchById(the_flightId);
+		Flight flight = flightService.fetchById(the_flightId);
 		model.addAttribute("flight", flight);
 		model.addAttribute("tickets",ticketsMade);
 		model.addAttribute("button",button);
@@ -134,20 +133,20 @@ public class AppController{
 	@RequestMapping(value = "/setCustomerInformation", method = RequestMethod.POST)
 	public ModelAndView confirm(@ModelAttribute(name = "Customer") Customer customer) {
 		ModelAndView mav = new ModelAndView("Confirmation" );
-		cService.save(customer);
+		customerService.save(customer);
 
 		List<Booking> currentBookings = new ArrayList<>();
 		for (Ticket ticket : ticketsMade) {
 			Booking book = new Booking();
 			book.setCustomerEmail(customer.getCustomerEmail());
-			tService.save(ticket);
+			ticketService.save(ticket);
 			book.setBookingRef(ticket.bookingRef);
-			bService.save(book);
+			bookingService.save(book);
 			currentBookings.add(book);
 		}
-		service.decreaseCapacity(the_flightId, ticketsMade.size());
+		flightService.decreaseCapacity(the_flightId, ticketsMade.size());
 		mailingService.sendConfirmationEmail(customer.getCustomerEmail(), currentBookings, customer.getFullName(),
-				service, ticketsMade);
+				flightService, ticketsMade);
 		return mav;
 	}
 
@@ -167,11 +166,11 @@ public class AppController{
 		model.addAttribute("email",email);
 		boolean wrongEmail =false;
 		boolean wrongBookingRef =false;
-		boolean validation = bService.validate(email,bookingRef);
-		Ticket ticketInfo = tService.getTicketInformationByRef(bookingRef);
-		Customer customerInfo = cService.findByEmail(email);
-		List<Boolean> val = service.validation(ticketInfo,customerInfo,wrongBookingRef,wrongEmail);
-		Flight flightInfo = service.getFlightInfoIfTicketExists(ticketInfo);
+		boolean validation = bookingService.validate(email,bookingRef);
+		Ticket ticketInfo = ticketService.getTicketInformationByRef(bookingRef);
+		Customer customerInfo = customerService.findByEmail(email);
+		List<Boolean> val = flightService.validation(ticketInfo,customerInfo,wrongBookingRef,wrongEmail);
+		Flight flightInfo = flightService.getFlightInfoIfTicketExists(ticketInfo);
 		model.addAttribute("ticketInfo",ticketInfo);
 		model.addAttribute("flightInfo",flightInfo);
 		model.addAttribute("wrongBookingRef",val.get(0));
