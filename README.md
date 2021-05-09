@@ -16,7 +16,7 @@ REQUIREMENTS
 
     - We recommend you use the IntelliJ IDEA (It's very powerful to support your spring web application development and integration of many technical frameworks).
 
-* We recommend Chrome as your web browser.
+* We recommend Chrome or Firefox as your web browser.
 
 * You will need to have JDK.
 
