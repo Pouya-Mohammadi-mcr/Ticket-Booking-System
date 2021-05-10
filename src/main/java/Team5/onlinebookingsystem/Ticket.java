@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-class Ticket {
+public class Ticket {
     @Id
     public String bookingRef;
     public long flightId;
