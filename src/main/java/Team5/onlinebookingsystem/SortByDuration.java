@@ -17,7 +17,7 @@ public class SortByDuration implements SortingStrategy {
             int f2Duration;
 
 
-            /*
+            /**
             calculate minute time values for flight f1
             minute time for HH:MM = (HH)*60 + (MM)
             */
@@ -27,7 +27,7 @@ public class SortByDuration implements SortingStrategy {
             f1AT= (Integer.parseInt(getFormattedTime(f1,"arrival").substring(0,2))*60)
                     +(Integer.parseInt(getFormattedTime(f1,"arrival").substring(2,4)));
 
-            /*
+            /**
             calculate minute time values for flight f2
             minute time for HH:MM = (HH)*60 + (MM)
             */
@@ -63,7 +63,7 @@ public class SortByDuration implements SortingStrategy {
         flightList.sort(compareByDuration);
     }
 
-    /*
+    /**
     Since some of the time values that are fetched from the database are of the format eg. 347 for 0347,
     we need to format these first, to properly sort by duration.
     */

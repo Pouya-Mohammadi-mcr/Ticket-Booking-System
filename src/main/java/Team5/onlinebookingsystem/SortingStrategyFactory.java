@@ -6,7 +6,7 @@ public class SortingStrategyFactory {
     private SortingStrategyFactory(){}
     private static SortingStrategyFactory factory;
 
-    /*
+    /**
      Lazy Initialization for the Singleton Factory
      Ensures that only one instance is created and that too only when
       an instance is requested(unlike Eager initialization)
@@ -18,7 +18,7 @@ public class SortingStrategyFactory {
         return factory;
     }
 
-    /*
+    /**
      Creating and storing only single instances of the five strategies as once created,
      the same instance can be returned when an instance is required from the factory
     */
