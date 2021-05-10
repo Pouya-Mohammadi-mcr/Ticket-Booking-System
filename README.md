@@ -131,3 +131,15 @@ Current maintainers:
 * Shubham Rana (ID: 10773467)
 * Pouya Mohammadi (ID: 10663656)
 * Christos Kardambikis (ID: 10800393)
+
+
+IMPORTANT
+-----------
+
+The UI Tests are a part of a different project inside the application folder. Hence, to run them, 
+first navigate to 'team-5' folder and then copy the 'UITestsProject' folder and paste it in some other directory
+outside this folder. Next, navigate to the location where you pasted the folder and then open that folder
+as a project in IntelliJ. Now you should be able to see the UI tests. To be able to successfully execute them, 
+you will have to sign up with "Test Project" at https://testproject.io/ and then configure your machine
+as a test client. For any clarifications or issues regarding this,
+please contact: shubham.rana@postgrad.manchester.ac.uk
