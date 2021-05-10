@@ -11,7 +11,7 @@ class OnlineBookingSystemApplicationTests {
 
 	@Test
 	// The main method should run without any exceptions
-	void MainTest() {
+	void mainTest() {
 		assertDoesNotThrow(() -> OnlineBookingSystemApplication.main(new String[]{}));
 	}
 }

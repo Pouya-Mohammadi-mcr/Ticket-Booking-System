@@ -12,20 +12,18 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-public class FlightServiceTest {
+class FlightServiceTest {
 
         private Map<String, Object> getSetupObjects(){
         FlightRepository flightRepository = Mockito.mock(FlightRepository.class);
         FlightServiceTestWrapper flightService = new FlightServiceTestWrapper();
         flightService.SetRepository(flightRepository);
 
-        Map<String, Object> setupObjects = new HashMap<String, Object>()
-        {{
-            put("flightRepository", flightRepository);
-            put("flightService", flightService);
-        }};
-
-        return  setupObjects;
+            return new HashMap<String, Object>()
+            {{
+                put("flightRepository", flightRepository);
+                put("flightService", flightService);
+            }};
     }
 
     @Test
@@ -36,7 +34,7 @@ public class FlightServiceTest {
         FlightRepository flightRepository = (FlightRepository) setupObjects.get("flightRepository");
         FlightServiceTestWrapper flightService = (FlightServiceTestWrapper) setupObjects.get("flightService");
 
-        List<Flight> flightList = new ArrayList<Flight>();
+        List<Flight> flightList = new ArrayList<>();
         Flight flightObject1 = Mockito.mock(Flight.class);
         Flight flightObject2 = Mockito.mock(Flight.class);
         flightList.add(flightObject1);
@@ -105,14 +103,14 @@ public class FlightServiceTest {
     // Find Case- "anywhere","alldates"
     void findTest_Case1() {
         // Arrange
-        List<Flight> flightList = new ArrayList<Flight>();
+        List<Flight> flightList = new ArrayList<>();
 
         Flight flightObject1 = Mockito.mock(Flight.class);
         Mockito.when(flightObject1.getDepartureTime()).thenReturn("00:00");
         Mockito.when(flightObject1.getPrice()).thenReturn("200");
         flightList.add(flightObject1);
 
-        long tickets = 100l;
+        long tickets = 100L;
 
         Map<String, Object> setupObjects = this.getSetupObjects();
         FlightRepository flightRepository = (FlightRepository) setupObjects.get("flightRepository");
@@ -135,13 +133,13 @@ public class FlightServiceTest {
     // Find Case- "anywhere","someDate"
     void findTest_Case2() {
         // Arrange
-        List<Flight> flightList = new ArrayList<Flight>();
+        List<Flight> flightList = new ArrayList<>();
 
         Flight flightObject1 = Mockito.mock(Flight.class);
         Mockito.when(flightObject1.getDepartureTime()).thenReturn("00:00");
         Mockito.when(flightObject1.getPrice()).thenReturn("200");
         flightList.add(flightObject1);
-        long tickets = 100l;
+        long tickets = 100L;
 
         Map<String, Object> setupObjects = this.getSetupObjects();
         FlightRepository flightRepository = (FlightRepository) setupObjects.get("flightRepository");
@@ -163,13 +161,13 @@ public class FlightServiceTest {
     // Find Case- "somewhere","alldates"
     void findTest_Case3() {
         // Arrange
-        List<Flight> flightList = new ArrayList<Flight>();
+        List<Flight> flightList = new ArrayList<>();
 
         Flight flightObject1 = Mockito.mock(Flight.class);
         Mockito.when(flightObject1.getDepartureTime()).thenReturn("00:00");
         Mockito.when(flightObject1.getPrice()).thenReturn("200");
         flightList.add(flightObject1);
-        long tickets = 100l;
+        long tickets = 100L;
 
         Map<String, Object> setupObjects = this.getSetupObjects();
         FlightRepository flightRepository = (FlightRepository) setupObjects.get("flightRepository");
@@ -191,7 +189,7 @@ public class FlightServiceTest {
         // Find Case- "somewhere","someDate"
     void findTest_Case4() {
         // Arrange
-        List<Flight> flightList = new ArrayList<Flight>();
+        List<Flight> flightList = new ArrayList<>();
 
         Flight flightObject1 = Mockito.mock(Flight.class);
         Mockito.when(flightObject1.getDepartureTime()).thenReturn("00:00");
@@ -199,9 +197,9 @@ public class FlightServiceTest {
         Mockito.when(flightObject1.getFrom()).thenReturn("London");
         Mockito.when(flightObject1.getTo()).thenReturn("somewhere");
         Mockito.when(flightObject1.getDate()).thenReturn("someDate");
-        Mockito.when(flightObject1.getAvailableSeats()).thenReturn(100l);
+        Mockito.when(flightObject1.getAvailableSeats()).thenReturn(100L);
         flightList.add(flightObject1);
-        long tickets = 10l;
+        long tickets = 10L;
 
         Map<String, Object> setupObjects = this.getSetupObjects();
         FlightRepository flightRepository = (FlightRepository) setupObjects.get("flightRepository");
@@ -223,7 +221,7 @@ public class FlightServiceTest {
         // Find Case- no matches
     void findTest_Case5() {
         // Arrange
-        List<Flight> flightList = new ArrayList<Flight>();
+        List<Flight> flightList = new ArrayList<>();
 
         Flight flightObject1 = Mockito.mock(Flight.class);
         Mockito.when(flightObject1.getDepartureTime()).thenReturn("00:00");
@@ -232,7 +230,7 @@ public class FlightServiceTest {
         Mockito.when(flightObject1.getTo()).thenReturn("somewhere");
         Mockito.when(flightObject1.getDate()).thenReturn("someDate");
         flightList.add(flightObject1);
-        long tickets = 1l;
+        long tickets = 1L;
 
         Map<String, Object> setupObjects = this.getSetupObjects();
         FlightRepository flightRepository = (FlightRepository) setupObjects.get("flightRepository");
@@ -253,14 +251,14 @@ public class FlightServiceTest {
     @Test
     void sortTest() {
         // Arrange
-        List<Flight> inputList = new ArrayList<Flight>();
+        List<Flight> inputList = new ArrayList<>();
 
         Flight flightObject1 = Mockito.mock(Flight.class);
         Flight flightObject2 = Mockito.mock(Flight.class);
         inputList.add(flightObject1);
         inputList.add(flightObject2);
 
-        List<Flight> expectedList = new ArrayList<Flight>();
+        List<Flight> expectedList = new ArrayList<>();
         expectedList.add(flightObject1);
         expectedList.add(flightObject2);
 
@@ -280,11 +278,11 @@ public class FlightServiceTest {
     @Test
     void fetchOriginAirportsTest() {
         // Arrange
-        List<Flight> inputList = new ArrayList<Flight>();
+        List<Flight> inputList = new ArrayList<>();
 
         String airport1 = "Athens";
         String airport2 = "Mumbai";
-        List<String> expectedAirports = new ArrayList<String>();
+        List<String> expectedAirports = new ArrayList<>();
         expectedAirports.add(airport1);
         expectedAirports.add(airport2);
 
@@ -315,11 +313,11 @@ public class FlightServiceTest {
         // Arrange
         String airport1 = "Athens";
         String airport2 = "Mumbai";
-        List<String> expectedAirports = new ArrayList<String>();
+        List<String> expectedAirports = new ArrayList<>();
         expectedAirports.add(airport1);
         expectedAirports.add(airport2);
 
-        List<Flight> inputList = new ArrayList<Flight>();
+        List<Flight> inputList = new ArrayList<>();
         Flight flightObject1 = Mockito.mock(Flight.class);
         Mockito.when(flightObject1.getTo()).thenReturn(airport1);
         Flight flightObject2 = Mockito.mock(Flight.class);
@@ -345,7 +343,7 @@ public class FlightServiceTest {
     @Test
     void decreaseCapacityTest() {
         // Arrange
-        long id = 1l;
+        long id = 1L;
         long initialCapacity = 50;
         long decrementValue = 2;
         long expectedCapacity = 48;
@@ -368,9 +366,9 @@ public class FlightServiceTest {
     @Test
     void fetchByIdTest() {
         // Arrange
-        long flightId = 1000l;
+        long flightId = 1000L;
         long noMatchId = 1001L;
-        List<Flight> flightList = new ArrayList<Flight>();
+        List<Flight> flightList = new ArrayList<>();
         Flight flightObject = Mockito.mock(Flight.class);
         flightList.add(flightObject);
 
@@ -391,7 +389,7 @@ public class FlightServiceTest {
         // Assert
          assertEquals(flightObject,matchedFlight);
          verify(flightRepository, times(1)).getFlightById(flightId);
-         assertEquals(null ,matchedFlight1);
+        assertNull(matchedFlight1);
          verify(flightRepository, times(1)).getFlightById(noMatchId);
     }
 
@@ -407,14 +405,14 @@ public class FlightServiceTest {
                 wrongBookingRef, wrongEmail);
 
         // Assert
-        assertEquals(validationData.get("wrongBookingRef"), true);
-        assertEquals(validationData.get("wrongEmail"), true);
+        assertEquals(true, validationData.get("wrongBookingRef"));
+        assertEquals(true, validationData.get("wrongEmail"));
     }
 
     @Test
     void getFlightInfoIfTicketExists(){
         // Arrange
-        Long flightId = 126L;
+        long flightId = 126L;
 
         Ticket ticketInfo = Mockito.mock(Ticket.class);
         ticketInfo.flightId = flightId;

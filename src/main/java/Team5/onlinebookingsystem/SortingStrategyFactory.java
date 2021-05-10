@@ -6,9 +6,11 @@ public class SortingStrategyFactory {
     private SortingStrategyFactory(){}
     private static SortingStrategyFactory factory;
 
-    // Lazy Initialization for the Singleton Factory
-    // Ensures that only one instance is created and that too only when
-    //  an instance is requested(unlike Eager initialization)
+    /*
+     Lazy Initialization for the Singleton Factory
+     Ensures that only one instance is created and that too only when
+      an instance is requested(unlike Eager initialization)
+    */
     public static SortingStrategyFactory getInstance(){
         if(factory == null){
             factory = new SortingStrategyFactory();
@@ -16,8 +18,10 @@ public class SortingStrategyFactory {
         return factory;
     }
 
-    // Creating and storing only single instances of the five strategies as once created,
-    // the same instance can be returned when an instance is required from the factory
+    /*
+     Creating and storing only single instances of the five strategies as once created,
+     the same instance can be returned when an instance is required from the factory
+    */
     private SortingStrategy priceAscendingStrategy;
     private SortingStrategy priceDescendingStrategy;
     private SortingStrategy departureTimeAscendingStrategy;
@@ -57,7 +61,9 @@ public class SortingStrategyFactory {
                     durationStrategy = new SortByDuration();
                 }
                 return durationStrategy;
+
+            default:
+                return null;
         }
-        return null;
     }
 }

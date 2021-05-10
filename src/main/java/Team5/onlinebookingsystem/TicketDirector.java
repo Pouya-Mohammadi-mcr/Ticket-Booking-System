@@ -4,13 +4,14 @@ package Team5.onlinebookingsystem;
 public class TicketDirector {
 
 
-    public Ticket makeTicket(TicketBuilder ticketBuilder, TicketService tService, String seatClass, String meal, String luggage, String priceBought, String insurance, String ageGroup, long flightID){
+    Ticket makeTicket(TicketBuilder ticketBuilder, TicketService ticketService, String seatClass, String meal, String luggage, String priceBought, String insurance, String ageGroup, long flightID){
 
-        /// building new random non existent booking refs - ck
-        String bookingRef = tService.buildRandomTicketRef();
-        while (tService.findByTicketRef(bookingRef).equals("yes")) {
-            bookingRef = tService.buildRandomTicketRef();
+        // building new random, non existing(unique) bookingRef
+        String bookingRef = ticketService.buildRandomTicketRef();
+        while (ticketService.findByTicketRef(bookingRef).equals("yes")) {
+            bookingRef = ticketService.buildRandomTicketRef();
         }
+
         //adding mandatory parameters
         ticketBuilder.addBookingRef(bookingRef);
         ticketBuilder.addSeatClass(seatClass);

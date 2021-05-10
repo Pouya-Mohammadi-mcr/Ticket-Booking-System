@@ -21,7 +21,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 public class AppControllerTest {
-    // ToDo Needs more test methods
 
     @Mock
     FlightService flightServiceMock;
@@ -70,71 +69,6 @@ public class AppControllerTest {
 
         //Assert
         assertTrue(actualMessage.contains(expectedMessage));
-    }
-
-    @Test
-    @DisplayName("Not a test")
-    // Just the mocking mechanism
-    void search_basic() {
-        //Arrange
-        Flight inputFlightMock = Mockito.mock(Flight.class);
-        when(inputFlightMock.getFrom()).thenReturn("Manchester");
-        when(inputFlightMock.getTo()).thenReturn("London");
-        when(inputFlightMock.getDate()).thenReturn("01/01/2022");
-        when(inputFlightMock.getAvailableSeats()).thenReturn(5l);
-
-        FlightService flightServiceMock = Mockito.mock(FlightService.class);
-
-        Flight matchedFlightMock = Mockito.mock(Flight.class);
-        when(matchedFlightMock.getFrom()).thenReturn("success");
-
-        List<Flight> dummyList = new ArrayList<Flight>();
-        dummyList.add(matchedFlightMock);
-
-        when(flightServiceMock.find(inputFlightMock.getFrom(), inputFlightMock.getTo(),
-                inputFlightMock.getDate(), inputFlightMock.getAvailableSeats())).thenReturn(dummyList);
-
-
-        //Act
-        AppController appController = new AppController();
-        List<Flight> matchedFlights = flightServiceMock.find(inputFlightMock.getFrom(), inputFlightMock.getTo(),
-                inputFlightMock.getDate(), inputFlightMock.getAvailableSeats());
-
-
-        //Assert
-        assertEquals("success" ,matchedFlights.get(0).getFrom());
-    }
-
-    @Test
-    @DisplayName("Not a proper test")
-    void SearchTest_1() {
-        // Not a proper test
-        // ToDo: Needs rework
-
-        //Arrange
-        Flight inputFlightMock = Mockito.mock(Flight.class);
-        when(inputFlightMock.getFrom()).thenReturn("Manchester");
-        when(inputFlightMock.getTo()).thenReturn("London");
-        when(inputFlightMock.getDate()).thenReturn("01/01/2022");
-
-        Flight matchedFlightMock = Mockito.mock(Flight.class);
-        when(matchedFlightMock.getFrom()).thenReturn("success");
-
-        List<Flight> dummyFlightList = new ArrayList<Flight>();
-        dummyFlightList.add(matchedFlightMock);
-
-        FlightService flightServiceMock = Mockito.mock(FlightService.class);
-        when(flightServiceMock.find(inputFlightMock.getFrom(), inputFlightMock.getTo(),
-                inputFlightMock.getDate(),inputFlightMock.getAvailableSeats())).thenReturn(dummyFlightList);
-
-
-        //Act
-        ModelAndView mav = new ModelAndView("MatchedFlights");
-        mav.addObject("matchedFlights", dummyFlightList);
-        List<Flight> matchedFlights = (List<Flight>) mav.getModelMap().get("matchedFlights");
-
-        //Assert
-        assertEquals(matchedFlights.get(0).getFrom(), "success");
     }
 
     @Test
@@ -261,8 +195,6 @@ public class AppControllerTest {
         verify(model, times(1)).addAttribute(any(String.class), any(String.class));
         assertEquals(expectedResult, result);
     }
-
-
 
     @Test
     void getBookingSearchPageTest()

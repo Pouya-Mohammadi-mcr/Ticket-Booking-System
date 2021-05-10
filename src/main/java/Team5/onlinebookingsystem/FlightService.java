@@ -8,27 +8,27 @@ import java.util.*;
 
 @Service
 @Transactional
-public class FlightService {
+class FlightService {
 
     @Autowired
-    protected FlightRepository repo;
+    protected FlightRepository flightRepository;
 
     private static SortingContext sortingContext;
 
     public List<Flight> listAll() {
-        return repo.findAll();
+        return flightRepository.findAll();
     }
 
     public void save(Flight flight) {
-        repo.save(flight);
+        flightRepository.save(flight);
     }
 
     public Flight get(long id) {
-        return repo.findById(id).get();
+        return flightRepository.findById(id).get();
     }
 
     public void delete(long id) {
-        repo.deleteById(id);
+        flightRepository.deleteById(id);
     }
 
     public List<Flight> find(String from, String to, String date, long tickets){
@@ -36,13 +36,13 @@ public class FlightService {
         if(to.equals("anywhere") ){
             List<Flight> allFlights;
             if(date.equals("alldates")){
-                allFlights = repo.getAllConnectingFlightsAllDates(from, tickets);
+                allFlights = flightRepository.getAllConnectingFlightsAllDates(from, tickets);
             }else{
-                allFlights = repo.getAllConnectingFlights(from, date, tickets);
+                allFlights = flightRepository.getAllConnectingFlights(from, date, tickets);
             }
             matchedFlights.addAll(allFlights);
         }else if(date.equals("alldates")){
-            List<Flight> allFlights = repo.getFlightsAllDates(from,to,tickets);
+            List<Flight> allFlights = flightRepository.getFlightsAllDates(from,to,tickets);
             matchedFlights.addAll(allFlights);
         }else{
             List<Flight> allFlights = listAll();
@@ -67,7 +67,7 @@ public class FlightService {
     }
 //    Service for fetching airport-city names -- ck
     public List<String> fetchOriginAirports(String keyword){
-        List<Flight> listOfFlightsFromKeyword = repo.findByOrigin(keyword);
+        List<Flight> listOfFlightsFromKeyword = flightRepository.findByOrigin(keyword);
         List<String> suggestions = new ArrayList<>();
         for (Flight listOfAirport : listOfFlightsFromKeyword) {
             suggestions.add(listOfAirport.getFrom());
@@ -78,7 +78,7 @@ public class FlightService {
 
     //    Service for fetching airport-city names -- ck
     public List<String> fetchDestinationAirports(String keyword,String origin){
-        List<Flight> listOfMatchedFlights = repo.findByDestination(keyword,origin);
+        List<Flight> listOfMatchedFlights = flightRepository.findByDestination(keyword,origin);
         List<String> suggestions = new ArrayList<>();
 
         for (Flight listOfAirport : listOfMatchedFlights) {
@@ -91,8 +91,8 @@ public class FlightService {
     //    Service for fetching the flight information by ID -- ck
     public Flight fetchById(long id){
         List<Flight> theFlight;
-        theFlight = repo.getFlightById(id);
-        if (theFlight.size() == 0) {
+        theFlight = flightRepository.getFlightById(id);
+        if (theFlight.isEmpty()) {
             return null;
         }
         return theFlight.get(0);
@@ -101,7 +101,7 @@ public class FlightService {
     public void decreaseCapacity(long id, long decrementValue) {
         Flight flight = get(id);
         long seats = flight.getAvailableSeats()-decrementValue ;
-        repo.updateSeats(seats,id);
+        flightRepository.updateSeats(seats,id);
     }
 
     public  Map<String, Boolean> validation(Ticket ticketInfo, Customer customerInfo,

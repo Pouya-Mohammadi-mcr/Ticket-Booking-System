@@ -15,10 +15,13 @@ public class MailingService {
 
     String subject;
     String message;
-    private static final String mailFrom = "boookflights@gmail.com";
+    
+    // As per naming rules by Oracle, constants must follow the convention like "MIN_WIDTH"
+    // Email address of thr company's mailbox, from where the confirmations are sent.
+    private static final String MAIL_FROM = "boookflights@gmail.com";
 
     // The set of common instructions and guidelines that are to be sent with each email confirmation.
-    private static final String commonMessage = "Some General Instructions to keep in mind:\n" +
+    private static final String COMMON_MESSAGE = "Some General Instructions to keep in mind:\n" +
                 "•       Check-in Time : Check-in desks will close 1 hour before departure.\n" +
                 "•       Valid ID proof needed : Carry a valid photo identification proof (Driving Licence, Passport " +
                 "or any other Government recognised photo identification)\n" +
@@ -50,17 +53,15 @@ public class MailingService {
         if(!isValid(recipient)){
             return;
         }
-
         this.composeMailBody(bookingList, customerName, flightService, ticketList);
 
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-        simpleMailMessage.setFrom(mailFrom);
+        simpleMailMessage.setFrom(MAIL_FROM);
         simpleMailMessage.setTo(recipient);
         simpleMailMessage.setSubject(subject);
-        simpleMailMessage.setText(message + commonMessage);
+        simpleMailMessage.setText(message + COMMON_MESSAGE);
 
         mailSender.send(simpleMailMessage);
-
     }
 
     private void composeMailBody(List<Booking> bookingList, String customerName, FlightService flightService,
@@ -96,6 +97,10 @@ public class MailingService {
                 "\n\n";
     }
 
+    /*
+    Since some of the time values that are fetched from the database are of the format eg. 347 for 03:47,
+    32 for 00:32, to properly display the times in the email, we need to format these first.
+    */
     private String formatTime(String time){
         StringBuilder formattedTime = new StringBuilder(time);
 
@@ -108,6 +113,7 @@ public class MailingService {
     }
 
     private boolean isValid(String email) {
+        // Regular expression for validating email
         String regex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
         return email.matches(regex);
     }

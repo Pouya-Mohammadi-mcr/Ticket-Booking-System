@@ -10,27 +10,27 @@ import java.util.List;
 @Transactional
 public class CustomerService {
     @Autowired
-    protected CustomerRepository repo;
+    protected CustomerRepository customerRepository;
 
 
     public List<Customer> listAll() {
-        return repo.findAll();
+        return customerRepository.findAll();
     }
 
     public void save(Customer customer) {
-        repo.save(customer);
+        customerRepository.save(customer);
     }
 
     public Customer get(long id) {
-        return repo.findById(id).get();
+        return customerRepository.findById(id).get();
     }
 
     public void delete(long id) {
-        repo.deleteById(id);
+        customerRepository.deleteById(id);
     }
 
     public Customer findByEmail(String email){
-        return repo.findByEmail(email);
+        return customerRepository.findByEmail(email);
     }
 
 }
