@@ -50,10 +50,6 @@ public class CustomerServiceTest {
         List<Customer> allCustomers = customerService.listAll();
 
         // Assert
-        System.out.println("Test 1");
-        System.out.println(customerRepository.hashCode());
-        System.out.println(customerService.hashCode());
-        System.out.println();
         Mockito.verify(customerRepository, Mockito.times(1)).findAll();
         assertEquals(customerList, allCustomers);
 
@@ -71,10 +67,6 @@ public class CustomerServiceTest {
         customerService.save(customer);
 
         // Assert
-        System.out.println("Test 2");
-        System.out.println(customerRepository.hashCode());
-        System.out.println(customerService.hashCode());
-        System.out.println();
         Mockito.verify(customerRepository, Mockito.times(1)).save(customer);
     }
 
@@ -93,10 +85,6 @@ public class CustomerServiceTest {
         customerService.get(customerId);
 
         // Assert
-        System.out.println("Test 3");
-        System.out.println(customerRepository.hashCode());
-        System.out.println(customerService.hashCode());
-        System.out.println();
         verify(customerRepository, times(1)).findById(customerId);
     }
 
@@ -113,10 +101,6 @@ public class CustomerServiceTest {
         customerService.delete(customerId);
 
         // Assert
-        System.out.println("Test 4");
-        System.out.println(customerRepository.hashCode());
-        System.out.println(customerService.hashCode());
-        System.out.println();
         verify(customerRepository, times(1)).deleteById(customerId);
     }
 
@@ -135,10 +119,6 @@ public class CustomerServiceTest {
         Customer searchResult = customerService.findByEmail(email);
 
         // Assert
-        System.out.println("Test 5");
-        System.out.println(customerRepository.hashCode());
-        System.out.println(customerService.hashCode());
-        System.out.println();
         verify(customerRepository, times(1)).findByEmail(email);
         assertEquals(expectedCustomer, searchResult);
     }
